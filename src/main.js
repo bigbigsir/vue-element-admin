@@ -10,7 +10,7 @@ import store from './store/store'
 import ElementUI from 'element-ui'
 
 import http from './api/http.js'
-import SvgIcon from './components/svg_icon/SvgIcon.vue'
+import SvgIcon from './components/SvgIcon.vue'
 
 Vue.use(http)
 Vue.use(ElementUI, { size: 'medium', zIndex: 3000 })
