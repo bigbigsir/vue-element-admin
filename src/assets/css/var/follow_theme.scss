@@ -1,0 +1,48 @@
+@import "../../../../element-variables.scss";
+
+a {
+  color: mix(#fff, $--color-primary, 20%);
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    color: $--color-primary;
+    text-decoration: underline;
+  }
+}
+
+.el-tabs__item.is-active {
+  border-bottom-color: $--color-primary;
+}
+
+.main-header {
+  .header-brand {
+    background-color: $--color-primary;
+  }
+}
+
+.main-header.follow-theme {
+  .header-nav {
+    background-color: $--color-primary;
+  }
+
+  .nav-item {
+    color: #f0f0f0;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.c-primary {
+  color: $--color-primary;
+}
+
+.b-c-primary {
+  border-color: $--color-primary;
+}
+
+.bg-c-primary {
+  background-color: $--color-primary;
+}

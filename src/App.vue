@@ -1,33 +1,18 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/about">About</router-link>
-    </div>
+  <transition mode="out-in" name="el-fade-in">
     <router-view/>
-  </div>
+  </transition>
 </template>
 
-<style lang="less">
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
-
-  #nav {
-    padding: 30px;
-
-    a {
-      font-weight: bold;
-      color: #2c3e50;
-
-      &.router-link-exact-active {
-        color: #42b983;
-      }
+<script>
+  /**
+   * Created by XiaoJie on 2019/3/26
+   */
+  export default {
+    name: 'App',
+    created () {
+      let theme = localStorage.getItem('theme') || 'default'
+      this.$store.commit('changeTheme', theme)
     }
   }
-</style>
+</script>

@@ -1,0 +1,346 @@
+@import "../../../element-variables.scss";
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+//* {
+//  margin: 0;
+//  padding: 0;
+//}
+
+html, body {
+  overflow: auto;
+  height: 100%;
+}
+
+body {
+  font-family: Microsoft YaHei, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, "\5FAE\8F6F\96C5\9ED1", Arial, sans-serif;
+  font-size: $--size-base;
+  line-height: 1.15;
+  color: $--color-text-primary;
+  background-color: #fff;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: $--color-primary-light-2;
+
+  &:focus,
+  &:hover {
+    color: $--color-primary;
+    text-decoration: underline;
+  }
+}
+
+img {
+  vertical-align: middle;
+}
+
+/* ------------------------------
+      Element-ui Colors Start
+------------------------------ */
+
+/* Brand-color
+-------------------------- */
+.c-primary {
+  color: $--color-primary;
+}
+
+.bg-c-primary {
+  background-color: $--color-primary;
+}
+
+.b-c-primary {
+  border-color: $--color-primary;
+}
+
+/* Secondary-color
+-------------------------- */
+.c-success {
+  color: $--color-success;
+}
+
+.c-warning {
+  color: $--color-warning;
+}
+
+.c-danger {
+  color: $--color-danger;
+}
+
+.c-info {
+  color: $--color-info;
+}
+
+.c-success-light {
+  color: $--color-success-light;
+}
+
+.c-warning-light {
+  color: $--color-warning-light;
+}
+
+.c-danger-light {
+  color: $--color-danger-light;
+}
+
+.c-info-light {
+  color: $--color-info-light;
+}
+
+.c-success-lighter {
+  color: $--color-success-lighter;
+}
+
+.c-warning-lighter {
+  color: $--color-warning-lighter;
+}
+
+.c-danger-lighter {
+  color: $--color-danger-lighter;
+}
+
+.c-info-lighter {
+  color: $--color-info-lighter;
+}
+
+/* Secondary-color-border
+-------------------------- */
+.b-c-success {
+  border-color: $--color-success;
+}
+
+.b-c-warning {
+  border-color: $--color-warning;
+}
+
+.b-c-danger {
+  border-color: $--color-danger;
+}
+
+.b-c-info {
+  border-color: $--color-info;
+}
+
+.b-c-success-light {
+  border-color: $--color-success-light;
+}
+
+.b-c-warning-light {
+  border-color: $--color-warning-light;
+}
+
+.b-c-danger-light {
+  border-color: $--color-danger-light;
+}
+
+.b-c-info-light {
+  border-color: $--color-info-light;
+}
+
+.b-c-success-lighter {
+  border-color: $--color-success-lighter;
+}
+
+.b-c-warning-lighter {
+  border-color: $--color-warning-lighter;
+}
+
+.b-c-danger-lighter {
+  border-color: $--color-danger-lighter;
+}
+
+.b-c-info-lighter {
+  border-color: $--color-info-lighter;
+}
+
+/* Secondary-color-background
+-------------------------- */
+.bg-c-success {
+  background-color: $--color-success;
+}
+
+.bg-c-warning {
+  background-color: $--color-warning;
+}
+
+.bg-c-danger {
+  background-color: $--color-danger;
+}
+
+.bg-c-info {
+  background-color: $--color-info;
+}
+
+.bg-c-success-light {
+  background-color: $--color-success-light;
+}
+
+.bg-c-warning-light {
+  background-color: $--color-warning-light;
+}
+
+.bg-c-danger-light {
+  background-color: $--color-danger-light;
+}
+
+.bg-c-info-light {
+  background-color: $--color-info-light;
+}
+
+.bg-c-success-lighter {
+  background-color: $--color-success-lighter;
+}
+
+.bg-c-warning-lighter {
+  background-color: $--color-warning-lighter;
+}
+
+.bg-c-danger-lighter {
+  background-color: $--color-danger-lighter;
+}
+
+.bg-c-info-lighter {
+  background-color: $--color-info-lighter;
+}
+
+/* Font-color
+-------------------------- */
+.c-t-primary {
+  color: $--color-text-primary;
+}
+
+.c-t-regular {
+  color: $--color-text-regular;
+}
+
+.c-t-secondary {
+  color: $--color-text-secondary;
+}
+
+.c-t-secondary {
+  color: $--color-text-placeholder;
+}
+
+/* Border-color
+-------------------------- */
+.b-c-base {
+  border-color: $--border-color-base;
+}
+
+.b-c-light {
+  border-color: $--border-color-light;
+}
+
+.b-c-lighter {
+  border-color: $--border-color-lighter;
+}
+
+.b-c-extra-light {
+  border-color: $--border-color-extra-light;
+}
+
+/* Border-radius
+-------------------------- */
+.b-r-base {
+  border-radius: $--border-radius-base;
+}
+
+.b-r-small {
+  border-radius: $--border-radius-small;
+}
+
+.b-r-circle {
+  border-radius: $--border-radius-circle;
+}
+
+/* Box-shadow
+-------------------------- */
+.b-s-base {
+  box-shadow: $--box-shadow-base;
+}
+
+.b-s-dark {
+  box-shadow: $--box-shadow-dark;
+}
+
+.b-s-light {
+  box-shadow: $--box-shadow-light;
+}
+
+/* Disable base
+-------------------------- */
+.disabled-bg {
+  background-color: $--background-color-base;
+}
+
+.disabled-c {
+  color: $--color-text-placeholder;
+}
+
+.disabled-b {
+  border-color: $--border-color-light;
+}
+
+/* ------------------------------
+      Element-ui Colors End
+------------------------------ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+:focus,
+:hover {
+  outline: none;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.w60 {
+  width: 60%;
+}
+
+.w100 {
+  width: 100% !important;
+}
+
+.w200px {
+  width: 200px !important;
+}
+
+.cursor-pr {
+  cursor: pointer;
+}
+
+.fs20px {
+  font-size: 20px;
+}
+
+/* SvgIcon component style
+------------------------------ */
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}

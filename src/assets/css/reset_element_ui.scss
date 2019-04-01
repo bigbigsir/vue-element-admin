@@ -1,0 +1,48 @@
+/* Reset element-ui begin
+------------------------------ */
+
+.reset-element-ui {
+  .el-tabs__item {
+    padding: 0 15px;
+    border-bottom: 2px solid transparent;
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+  }
+
+  .el-tabs__item:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+
+  .el-tabs__nav-wrap:after {
+    display: none;
+  }
+
+  .el-tabs__active-bar {
+    display: none;
+  }
+
+  .el-tabs--bottom .el-tabs__item.is-bottom:last-child,
+  .el-tabs--bottom .el-tabs__item.is-top:last-child,
+  .el-tabs--top .el-tabs__item.is-bottom:last-child,
+  .el-tabs--top .el-tabs__item.is-top:last-child {
+    padding-right: 15px;
+  }
+
+  .el-tabs--bottom .el-tabs__item.is-bottom:nth-child(2),
+  .el-tabs--bottom .el-tabs__item.is-top:nth-child(2),
+  .el-tabs--top .el-tabs__item.is-bottom:nth-child(2),
+  .el-tabs--top .el-tabs__item.is-top:nth-child(2) {
+    padding-left: 15px;
+  }
+
+  .el-input__icon {
+    display: inline-block;
+  }
+
+  .el-dropdown-menu__item .svg-icon {
+    margin-right: 5px;
+  }
+}
+
+/* Reset element-ui end
+------------------------------ */
