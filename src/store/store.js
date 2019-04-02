@@ -21,28 +21,22 @@ export default new Vuex.Store({
       state.sideMenuDarkSkin = val
     },
     changeTheme (state, theme) {
-      let styleList = []
-      let files = require.context(`../../public/element-theme`, true, /\.css$/).keys()
+      let styleList = [
+        {
+          id: 'elementTheme',
+          url: `${process.env.BASE_URL}element-theme/${theme}/index.css`
+        }, {
+          id: 'followTheme',
+          url: `${process.env.BASE_URL}element-theme/${theme}/follow_theme.css`
+        }
+      ]
       let headTag = document.getElementsByTagName('head')[0]
       localStorage.setItem('theme', theme)
-      if (theme === 'default') {
-        return [...headTag.children].forEach(node => {
-          if (node.id && ~node.id.indexOf('theme_')) {
-            headTag.removeChild(node)
-          }
-        })
-      }
-      files.forEach((file) => {
-        if (~file.indexOf(theme)) {
-          styleList.push({
-            id: `theme_${styleList.length}`,
-            url: `${process.env.BASE_URL}element-theme/${file.replace(/^\.\//, '')}`
-          })
-        }
-      })
       styleList.forEach(style => {
         let linkTag = document.getElementById(style.id)
-        if (linkTag) {
+        if (theme === 'default') {
+          linkTag && headTag.removeChild(linkTag)
+        } else if (linkTag) {
           linkTag.href = style.url
         } else {
           linkTag = document.createElement('link')
