@@ -1,7 +1,7 @@
 /**
  * Created by XiaoJie on 2019/3/30
  * gulp打包配置文件
- * 根据主题颜色配置文件（./src/element-ui/config.js）生成不同颜色主题的element-theme
+ * 根据主题颜色配置文件（theme_config/config.js）生成不同颜色的element-theme
  * 并将依赖于element-variables.scss样式变量的项目其他样式文件，根据不同主题生成不同样式文件，以便不同主题下的颜色统一
  */
 'use strict'
@@ -23,10 +23,28 @@ let nowTheme = null // 当前构建中的主题名字
 let etConfig = require('./package.json')['element-theme'] // element-theme配置信息
 let variablesScss = etConfig.config.replace(/.*\/(.+\.scss)/, '$1') // 变量样式文件名
 let themeList = require('./src/theme_config/config.js').filter(item => !item.hasBuild) // 主题配置列表
-let styleFileDir = './src/assets/css/var' // 项目样式文件存放目录（最好是只存放依赖element-variables.scss得样式文件）
+let styleFileDir = './src/assets/css/follow_theme' // 需要跟随主题切换颜色的样式文件存放目录
 let styleFileNames = fs.readdirSync(styleFileDir) // 样式目录下所有文件名
 let styleFileTempDir = `${styleFileDir}_temp` // 打包时自动创建的临时目录地址
 let themeFileOutDir = './public/element-theme' // 主题文件打包输出目录
+
+// 依据element-theme配置生成element-ui样式文件
+gulp.task('createDefaultTheme', () => {
+  return new Promise((resolve) => {
+    et.run(etConfig, () => {
+      // 删除主题独立组件样式文件
+      let files = [
+        `${etConfig.out}/**/*.css`,
+        `!${etConfig.out}/**/index.css`,
+        `!${etConfig.out}/**/fonts`
+      ]
+      del(files)
+      console.log('\n', '<======================== 构建完毕，删除独立组件样式文件 ========================>'.green.bold, '\n')
+      console.log(files)
+      resolve()
+    })
+  })
+})
 
 // gulp构建生成主题任务
 gulp.task('createThemes', () => {
@@ -142,21 +160,3 @@ function removeFontFace (path) {
     }
   })
 }
-
-// 依据element-theme配置生成element-ui样式文件
-gulp.task('createDefaultTheme', () => {
-  return new Promise((resolve) => {
-    et.run(etConfig, () => {
-      // 删除主题独立组件样式文件
-      let files = [
-        `${etConfig.out}/**/*.css`,
-        `!${etConfig.out}/**/index.css`,
-        `!${etConfig.out}/**/fonts`
-      ]
-      del(files)
-      console.log('\n', '<======================== 构建完毕，删除独立组件样式文件 ========================>'.green.bold, '\n')
-      console.log(files)
-      resolve()
-    })
-  })
-})

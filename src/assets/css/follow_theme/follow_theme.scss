@@ -15,18 +15,12 @@ a {
   border-bottom-color: $--color-primary;
 }
 
-.main-header {
-  .header-brand {
-    background-color: $--color-primary;
-  }
-}
-
 .main-header.follow-theme {
   .header-nav {
     background-color: $--color-primary;
   }
 
-  .nav-item {
+  .header-nav-item {
     color: #f0f0f0;
 
     &:hover {

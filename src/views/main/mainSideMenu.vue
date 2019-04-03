@@ -1,54 +1,15 @@
 <template>
-  <aside :class="{'side-menu-dark':sideMenuDarkSkin}" class="main-side-menu fl">
-    <div class="side-menu-inner">
+  <aside :class="{'dark':sideMenuDarkSkin}" class="main-side-menu fl">
+    <el-scrollbar>
       <el-menu
+        @select="selectMenuHandle"
         :collapse="isCollapse"
         :collapse-transition="false"
         class="side-menu-root"
-        default-active="2">
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>导航一</span>
-          </template>
-          <el-menu-item index="1-1">
-            <template slot="title">
-              <svg-icon className="test" icon="home"/>
-              <span>选项1</span>
-            </template>
-          </el-menu-item>
-          <el-menu-item index="1-2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>选项2</span>
-            </template>
-          </el-menu-item>
-          <el-menu-item index="1-3">选项3</el-menu-item>
-          <el-submenu index="1-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="1-4-1">选项1选项1选项1选项1选项1选项1</el-menu-item>
-          </el-submenu>
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>导航二</span>
-          </template>
-          <el-menu-item index="2-1">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二导航二导航二导航二导航二导航二</span>
-          </el-menu-item>
-        </el-submenu>
-        <el-menu-item index="3">
-          <i class="el-icon-document"></i>
-          <span slot="title">导航三</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-setting"></i>
-          <span slot="title">导航四</span>
-        </el-menu-item>
+        :default-active="menuActiveIndex">
+        <SubMenu v-for="menu in menuData" :key="menu.id" :menu="menu"></SubMenu>
       </el-menu>
-    </div>
+    </el-scrollbar>
   </aside>
 </template>
 
@@ -56,15 +17,42 @@
   /**
    * Created by XiaoJie on 2019/3/28
    */
-  import { mapState } from 'vuex'
+  import { mapState, mapMutations } from 'vuex'
+  import SubMenu from './subMenu.vue'
 
   export default {
     name: 'mainSideMenu',
+    components: { SubMenu },
     data () {
       return {}
     },
+    created () {
+    },
     computed: {
-      ...mapState(['isCollapse', 'sideMenuDarkSkin'])
+      ...mapState(['menuActiveIndex', 'menuData', 'isCollapse', 'sideMenuDarkSkin'])
+    },
+    methods: {
+      ...mapMutations(['findMenuItem', 'setMenuActiveIndex']),
+      // 点击菜单项时触发
+      selectMenuHandle (menuId) {
+        let menu = this.findMenuItem(this.menuData, menuId)
+        if (menu) this.$router.push(menu.path)
+        this.setMenuActiveIndex(menuId)
+      },
+      // 依据菜单ID在菜单数据中查找该项菜单
+      findMenuItem (menus, menuId) {
+        let menu = null
+        for (let i = menus.length; i--;) {
+          if (menus[i].id === menuId) {
+            menu = menus[i]
+            break
+          }
+          if (menus[i].children && menus[i].children.length) {
+            menu = this.findMenuItem(menus[i].children, menuId)
+          }
+        }
+        return menu
+      }
     }
   }
 </script>

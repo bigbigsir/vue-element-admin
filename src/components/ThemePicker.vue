@@ -22,7 +22,7 @@
       </div>
     </div>
     <span class="picker-toggle" slot="reference">
-      <svg-icon icon="skin"/>
+      <slot></slot>
     </span>
   </el-popover>
 </template>

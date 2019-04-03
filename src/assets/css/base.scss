@@ -43,6 +43,56 @@ img {
   vertical-align: middle;
 }
 
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+:focus,
+:hover {
+  outline: none;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.w60 {
+  width: 60%;
+}
+
+.w100 {
+  width: 100% !important;
+}
+
+.w200px {
+  width: 200px !important;
+}
+
+.cursor-pr {
+  cursor: pointer;
+}
+.fs16px {
+  font-size: 16px;
+}
+
+.fs18px {
+  font-size: 18px;
+}
+
+.fs20px {
+  font-size: 20px;
+}
+
 /* ------------------------------
       Element-ui Colors Start
 ------------------------------ */
@@ -292,48 +342,6 @@ img {
 /* ------------------------------
       Element-ui Colors End
 ------------------------------ */
-.clearfix:before,
-.clearfix:after {
-  content: " ";
-  display: table;
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-:focus,
-:hover {
-  outline: none;
-}
-
-.fl {
-  float: left;
-}
-
-.fr {
-  float: right;
-}
-
-.w60 {
-  width: 60%;
-}
-
-.w100 {
-  width: 100% !important;
-}
-
-.w200px {
-  width: 200px !important;
-}
-
-.cursor-pr {
-  cursor: pointer;
-}
-
-.fs20px {
-  font-size: 20px;
-}
 
 /* SvgIcon component style
 ------------------------------ */

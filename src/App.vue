@@ -1,5 +1,5 @@
 <template>
-  <transition mode="out-in" name="el-fade-in">
+  <transition name="el-fade-in">
     <router-view/>
   </transition>
 </template>

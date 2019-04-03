@@ -1,4 +1,4 @@
-import './element-theme/index.css'
+import './element-ui/index.css'
 import './assets/css/index.scss'
 
 import 'babel-polyfill'
@@ -9,16 +9,22 @@ import router from './router/router'
 import store from './store/store'
 import ElementUI from 'element-ui'
 
+import i18n from './lang'
 import http from './api/http.js'
 import SvgIcon from './components/SvgIcon.vue'
 
 Vue.use(http)
-Vue.use(ElementUI, { size: 'medium', zIndex: 3000 })
 Vue.component('svg-icon', SvgIcon)
+Vue.use(ElementUI, {
+  size: localStorage.getItem('size') || 'medium',
+  i18n: (key, value) => i18n.t(key, value)
+})
 
 Vue.config.productionTip = false
+
 new Vue({
-  router,
+  i18n,
   store,
+  router,
   render: h => h(App)
 }).$mount('#app')
