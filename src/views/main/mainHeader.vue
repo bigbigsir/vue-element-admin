@@ -2,7 +2,7 @@
   <header :class="{'follow-theme':headerFollowTheme}" class="main-header clearfix">
     <div class="header-brand bg-c-primary fl">
       <h1 v-if="isCollapse">
-        <svg-icon icon="crown"/>
+        TG
       </h1>
       <h1 v-else>TG管理平台</h1>
     </div>

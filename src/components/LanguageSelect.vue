@@ -4,7 +4,7 @@
       <slot></slot>
     </span>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item v-for="(val, key) in messages" :key="key" :command="key">
+      <el-dropdown-item v-for="(val, key) in messages" :disabled="key===$i18n.locale" :key="key" :command="key">
         {{ val._lang }}
       </el-dropdown-item>
     </el-dropdown-menu>
@@ -27,10 +27,8 @@
     methods: {
       // 语言选择
       handleLangSelect (lang) {
-        if (lang !== localStorage.getItem('language')) {
-          this.$i18n.locale = lang
-          localStorage.setItem('language', lang)
-        }
+        this.$i18n.locale = lang
+        localStorage.setItem('language', lang)
       }
     }
   }

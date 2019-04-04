@@ -22,7 +22,7 @@
     },
     computed: {
       iconName () {
-        return `#icon-${this.icon}`
+        return `#icon-${this.icon.replace(/^icon-/g, '')}`
       },
       svgClass () {
         if (this.className) {

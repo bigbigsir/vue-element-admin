@@ -7,7 +7,7 @@ import cookies from 'js-cookie'
 Vue.use(Router)
 
 const router = new Router({
-  scrollBehavior: () => ({ y: 0 }),
+  // scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
       path: '/',
@@ -47,7 +47,7 @@ const router = new Router({
       ]
     }, {
       path: '/login',
-      name: 'sys_login',
+      name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '../views/pages/login.vue')
     }, {
       path: '*',

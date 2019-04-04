@@ -45,10 +45,10 @@
       $route: 'routeHandle'
     },
     computed: {
-      ...mapState(['tabs', 'tabsActiveName', 'isCollapse', 'refreshContent'])
+      ...mapState(['tabs', 'menuData', 'tabsActiveName', 'isCollapse', 'refreshContent'])
     },
     methods: {
-      ...mapMutations(['addTab', 'setMenuActiveIndex', 'setTabsActiveName', 'setUserInfo', 'toggleCollapse']),
+      ...mapMutations(['addTab', 'updateMenus', 'setMenuActiveIndex', 'setTabsActiveName', 'setUserInfo', 'toggleCollapse']),
       // 获取用户信息
       getUserInfo () {
         this.$http.get('user/getUserInfo').then(({ ok, data }) => {
@@ -58,7 +58,7 @@
           } else {
             this.$router.replace('/login')
           }
-        })
+        }).catch(() => this.$router.replace('/login'))
       },
       // 窗口改变大小
       windowResizeHandle () {

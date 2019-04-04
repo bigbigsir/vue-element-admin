@@ -162,6 +162,9 @@ export default new Vuex.Store({
     },
     updateTabs (state, tabs) {
       state.tabs = tabs
+    },
+    updateMenus (state, menus) {
+      state.menuData = menus
     }
   },
   actions: {},

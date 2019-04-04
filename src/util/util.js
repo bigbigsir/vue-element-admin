@@ -7,7 +7,7 @@
  * @description 判断浏览器是否是IE
  * @return {boolean}
  */
-function isIE () {
+export function isIE () {
   return !!window.ActiveXObject || 'ActiveXObject' in window
 }
 
@@ -15,7 +15,7 @@ function isIE () {
  * @description 获取uuid
  * @return {string} uuid
  */
-function getUUId () {
+export function getUUId () {
   return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, c => {
     return (c === 'x' ? (Math.random() * 16 | 0) : ('r&0x3' | '0x8')).toString(16)
   })
@@ -26,7 +26,7 @@ function getUUId () {
  * @param  {*} target
  * @return {boolean}
  */
-function isObject (target) {
+export function isObject (target) {
   return Object.prototype.toString.call(target) === '[object Object]'
 }
 
@@ -35,7 +35,7 @@ function isObject (target) {
  * @param  {*} target
  * @return {boolean}
  */
-function isArray (target) {
+export function isArray (target) {
   return Object.prototype.toString.call(target) === '[object Array]'
 }
 
@@ -44,7 +44,7 @@ function isArray (target) {
  * @param  {*} target
  * @return {boolean}
  */
-function isFunction (target) {
+export function isFunction (target) {
   return Object.prototype.toString.call(target) === '[object Function]'
 }
 
@@ -53,7 +53,7 @@ function isFunction (target) {
  * @param  {*} target
  * @return {boolean}
  */
-function isRegExp (target) {
+export function isRegExp (target) {
   return Object.prototype.toString.call(target) === '[object RegExp]'
 }
 
@@ -62,16 +62,14 @@ function isRegExp (target) {
  * @param  {*} target
  * @return {boolean}
  */
-function isDate (target) {
+export function isDate (target) {
   return Object.prototype.toString.call(target) === '[object Date]'
 }
 
-export {
-  isIE,
-  getUUId,
-  isObject,
-  isArray,
-  isFunction,
-  isRegExp,
-  isDate
+/**
+ * 获取svg图标(id)列表
+ * @return {Array} list 全部svg-icon的id数组
+ */
+export function getSvgIconList () {
+  return [...document.querySelectorAll('svg symbol')].map(item => item['id'])
 }

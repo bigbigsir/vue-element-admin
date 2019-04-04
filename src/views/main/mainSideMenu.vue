@@ -37,7 +37,6 @@
       selectMenuHandle (menuId) {
         let menu = this.findMenuItem(this.menuData, menuId)
         if (menu) this.$router.push(menu.path)
-        this.setMenuActiveIndex(menuId)
       },
       // 依据菜单ID在菜单数据中查找该项菜单
       findMenuItem (menus, menuId) {

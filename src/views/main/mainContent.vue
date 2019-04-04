@@ -30,7 +30,9 @@
             <svg-icon :icon="item.icon" v-if="item.icon"/>
             {{item.name!=='sys_home'?item.label:''}}
           </template>
-          <router-view/>
+          <el-scrollbar>
+            <router-view v-if="item.name===tabsActiveName"/>
+          </el-scrollbar>
         </el-tab-pane>
       </el-tabs>
     </div>

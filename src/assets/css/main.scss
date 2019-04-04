@@ -7,11 +7,7 @@ $--sideMenu-fold-width: 64px;
 $--sideMenu-menu-item-height: 48px;
 // sideMenu dark
 $--sideMenu-dark-background-color: #263238;
-$--sideMenu-dark-opened-background-color: #202b30;
 $--sideMenu-dark-item-text-color: #8a979e;
-$--sideMenu-dark-item--hover-text-color: #c5cbcf;
-$--sideMenu-dark-item--hover-background-color: #2b373d;
-$--sideMenu-dark-item--active-text-color: #e8eaec;
 
 // content
 $--content-height: 100%;
@@ -141,14 +137,14 @@ $--el-tabs__header-height: 40px;
 
 .main-side-menu {
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   top: $--herder-height;
   left: 0;
   bottom: 0;
   width: $--sideMenu-width;
   box-shadow: rgba(0, 0, 0, 0.05) 1px 0 0 0;
   background-color: #fff;
-  z-index: 2;
+  z-index: 4;
   transition: width .3s ease;
 
   .el-scrollbar {
@@ -199,27 +195,28 @@ $--el-tabs__header-height: 40px;
 
   .el-menu,
   .el-submenu.is-opened {
-    background-color: $--sideMenu-dark-opened-background-color;
+    background-color: mix(#000, $--sideMenu-dark-background-color, 15%);
   }
 
   .el-menu-item,
   .el-submenu__title {
     color: $--sideMenu-dark-item-text-color;
-  }
 
-  .el-menu-item:focus,
-  .el-menu-item:hover,
-  .el-submenu__title:focus,
-  .el-submenu__title:hover {
-    color: $--sideMenu-dark-item--hover-text-color;
-    background-color: $--sideMenu-dark-item--hover-background-color;
+    &:hover,
+    &:focus {
+      color: mix(#fff, $--sideMenu-dark-item-text-color);
+      background-color: mix(#fff, $--sideMenu-dark-background-color, 2.5%);
+    }
   }
 
   .el-submenu.is-active > .el-submenu__title,
   .el-menu-item.is-active {
-    color: $--sideMenu-dark-item--active-text-color;
+    color: mix(#fff, $--sideMenu-dark-item-text-color, 80%);
   }
 
+  .el-menu--collapse .el-submenu .el-menu {
+    border: none;
+  }
 }
 
 .main-content {
@@ -239,7 +236,7 @@ $--el-tabs__header-height: 40px;
       position: absolute;
       top: 0;
       right: 0;
-      z-index: 2;
+      z-index: 3;
       width: 40px;
       height: $--el-tabs__header-height;
       line-height: $--el-tabs__header-height;
@@ -247,19 +244,19 @@ $--el-tabs__header-height: 40px;
       text-align: center;
 
       &:hover {
-        color: #303133;
+        color: inherit;
       }
     }
   }
 
   // reset element-ui el-tabs
   .main-content-tabs.el-tabs {
-    overflow: hidden;
-    position: relative;
     height: 100%;
 
     .el-tabs__header {
+
       margin: 0;
+      width: 100%;
       height: $--el-tabs__header-height;
       padding-left: 8px;
       padding-right: 40px;
@@ -273,15 +270,31 @@ $--el-tabs__header-height: 40px;
     }
 
     .el-tabs__content {
-      position: absolute;
-      top: $--el-tabs__header-height;
-      left: 0;
-      right: 0;
-      bottom: 0;
       overflow: auto;
+      position: absolute;
+      left: 0;
+      top: $--el-tabs__header-height;
+      bottom: 0;
+      right: 0;
       margin: 8px;
       border-radius: 2px;
       background-color: #fff;
+    }
+
+    .el-tab-pane {
+      height: 100%;
+    }
+
+    .el-scrollbar {
+      height: 100%;
+    }
+
+    .el-scrollbar__wrap {
+      overflow-x: hidden;
+    }
+
+    .el-scrollbar__view {
+      min-height: 100%;
     }
   }
 }

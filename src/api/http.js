@@ -16,8 +16,16 @@ const _http = axios.create({
   baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://127.0.0.1:3000'
 })
 
+// // 设置 post、put 默认 Content-Type
+// _http.defaults.headers.post['Content-Type'] = 'application/json'
+// _http.defaults.headers.put['Content-Type'] = 'application/json'
+
 // 添加请求拦截器
 _http.interceptors.request.use(config => {
+  // if (config.method === 'post' || config.method === 'put') {
+  //   // post、put 提交时，将对象转换为string, 为处理Java后台解析问题
+  //   config.data = JSON.stringify(config.data)
+  // }
   if (config.method === 'get' && isIE()) {
     // 给GET 请求后追加时间戳， 解决IE GET 请求缓存问题
     let symbol = ~config.url.indexOf('?') ? '&' : '?'
@@ -35,15 +43,15 @@ _http.interceptors.response.use(response => {
   return response.data
 }, ({ response }) => {
   let info
-  if (response.status === 401 && response.data.code === 401) {
-    cookies.remove('token')
-    return Router.replace({ name: 'login' })
-  }
   if (response) {
     info = {
       data: response.data,
       status: response.status,
       statusText: response.statusText
+    }
+    if (response.status === 401 && response.data.code === 401) {
+      cookies.remove('token')
+      return Router.replace({ name: 'login' })
     }
   } else {
     info = {

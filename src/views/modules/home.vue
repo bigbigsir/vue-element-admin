@@ -11,7 +11,6 @@
       <el-button type="warning">警告按钮</el-button>
       <el-button type="danger">危险按钮</el-button>
     </el-row>
-
     <el-row class="row">
       <el-button plain>朴素按钮</el-button>
       <el-button type="primary" plain>主要按钮</el-button>
@@ -20,7 +19,6 @@
       <el-button type="warning" plain>警告按钮</el-button>
       <el-button type="danger" plain>危险按钮</el-button>
     </el-row>
-
     <el-row class="row">
       <el-button round>圆角按钮</el-button>
       <el-button type="primary" round>主要按钮</el-button>
@@ -29,7 +27,6 @@
       <el-button type="warning" round>警告按钮</el-button>
       <el-button type="danger" round>危险按钮</el-button>
     </el-row>
-
     <el-row class="row">
       <el-button icon="el-icon-search" circle></el-button>
       <el-button type="primary" icon="el-icon-edit" circle></el-button>
@@ -128,17 +125,32 @@
           }, {
             value: '选项5',
             label: '北京烤鸭'
+          }, {
+            value: '1',
+            label: '黄金糕'
+          }, {
+            value: '2',
+            label: '双皮奶'
+          }, {
+            value: '3',
+            label: '蚵仔煎'
+          }, {
+            value: '4',
+            label: '龙须面'
+          }, {
+            value: '5',
+            label: '北京烤鸭'
           }
         ]
       }
     },
     created () {
       this.percentage = 0
-      console.log('home')
+      // console.log('home')
     },
     mounted () {
       this.percentage = 100
-      console.log('home_update')
+      // console.log('home_update')
     }
   }
 </script>
