@@ -2,10 +2,9 @@
   <el-table-column :prop="prop" v-bind="$attrs">
     <template slot-scope="scope">
       <span @click.prevent="toggleHandle(scope.$index, scope.row)"
-            :class="{'cursor-pr':scope.row[childKey].length}"
-            :style="{ 'padding-left': ((scope.row._level || 0) * 10) + 'px' }">
-        <i :class="[ scope.row._expanded ? 'el-icon-caret-bottom' : 'el-icon-caret-right' ]"
-           :style="{ 'visibility': hasChild(scope.row) ? 'visible' : 'hidden' }"></i>
+            :class="(scope.row[childKey].length?'parent-node':'child-node')"
+            :style="{ 'padding-left': ((scope.row._level || 0) * 13) + 'px' }">
+        <i :class="(scope.row._expanded ? 'el-icon-caret-bottom' : 'el-icon-caret-right')"></i>
         {{ scope.row[prop] }}
       </span>
     </template>
@@ -45,7 +44,7 @@
       hasChild (row) {
         return Array.isArray(row[this.childKey]) && row[this.childKey].length
       },
-      // 切换处理
+      // 展开、收缩切换处理
       toggleHandle (index, row) {
         if (!this.hasChild(row)) return false
         let data = [...this.menuData]
@@ -63,9 +62,9 @@
       },
       // 移除子节点
       removeChildNode (data, pId) {
+        let pIds = []
         pId = Array.isArray(pId) ? pId : [pId]
         if (!pId.length) return data
-        let pIds = []
         for (let i = data.length; i--;) {
           if (~pId.indexOf(data[i][this.parentKey]) && !~pId.indexOf(data[i][this.treeKey])) {
             pIds.push(data.splice(i, 1)[0][this.treeKey])
@@ -78,5 +77,17 @@
 </script>
 
 <style lang="scss" scoped>
+  .parent-node {
+    cursor: pointer;
 
+    i {
+      visibility: visible;
+    }
+  }
+
+  .child-node {
+    i {
+      visibility: hidden;
+    }
+  }
 </style>

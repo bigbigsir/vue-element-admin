@@ -9,7 +9,7 @@ import router from './router/router'
 import store from './store/store'
 import ElementUI from 'element-ui'
 
-import i18n from './lang'
+import i18n from './language'
 import http from './api/http.js'
 import SvgIcon from './components/SvgIcon.vue'
 

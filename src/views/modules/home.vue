@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-progress class="test" :stroke-width="2" :show-text="false" :percentage="percentage"></el-progress>
+    <el-progress :stroke-width="2" :show-text="false" :percentage="percentage"></el-progress>
     <h1>This is home page</h1>
     <h3>language: {{$t('loading')}}</h3>
     <el-row class="row">
@@ -78,6 +78,12 @@
           prop="address"
           label="地址">
         </el-table-column>
+        <el-table-column :label="$t('handle')" fixed="right" align="center" width="150">
+          <template>
+            <el-button class="pd0" type="text">{{ $t('update') }}</el-button>
+            <el-button class="pd0" type="text">{{ $t('delete') }}</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-row>
   </div>
@@ -146,11 +152,10 @@
     },
     created () {
       this.percentage = 0
-      // console.log('home')
+      console.log('home')
     },
     mounted () {
       this.percentage = 100
-      // console.log('home_update')
     }
   }
 </script>
@@ -164,7 +169,4 @@
     margin-top: 20px;
   }
 
-  .test {
-    /*transition: all .1s ease;*/
-  }
 </style>

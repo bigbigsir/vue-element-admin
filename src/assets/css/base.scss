@@ -59,15 +59,15 @@ img {
 }
 
 .fl {
-  float: left;
+  float: left !important;
 }
 
 .fr {
-  float: right;
+  float: right !important;
 }
 
 .w60 {
-  width: 60%;
+  width: 60% !important;
 }
 
 .w100 {
@@ -79,18 +79,23 @@ img {
 }
 
 .cursor-pr {
-  cursor: pointer;
+  cursor: pointer !important;
 }
+
 .fs16px {
-  font-size: 16px;
+  font-size: 16px !important;
 }
 
 .fs18px {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 
 .fs20px {
-  font-size: 20px;
+  font-size: 20px !important;
+}
+
+.pd0 {
+  padding: 0 !important;
 }
 
 /* ------------------------------

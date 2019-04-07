@@ -46,7 +46,7 @@
           <svg-icon icon="skin"/>
         </ThemePicker>
       </li>
-      <li @click="refreshRouter" class="header-nav-item fr">
+      <li @click="refreshTabRouter" class="header-nav-item fr">
         <svg-icon icon="reload"/>
       </li>
     </ul>
@@ -83,7 +83,7 @@
       }
     },
     methods: {
-      ...mapMutations(['toggleCollapse', 'refreshRouter']),
+      ...mapMutations(['toggleCollapse', 'refreshTabRouter']),
       // 切换全屏
       toggleScreenFull () {
         if (screenFull.enabled) return screenFull.toggle(null)

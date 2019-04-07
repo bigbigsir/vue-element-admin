@@ -53,7 +53,7 @@ $--el-tabs__header-height: 40px;
   overflow: hidden;
   width: 100%;
   height: $--herder-height;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
   z-index: 3;
 
   .header-brand {
@@ -157,10 +157,11 @@ $--el-tabs__header-height: 40px;
 
   .svg-icon {
     vertical-align: middle;
-    margin-right: 5px;
+    margin-right: 2px;
     width: 24px;
     text-align: center;
     font-size: 16px;
+    transition: font-size .3s ease;
   }
 
   /* reset element-ui el-menu
@@ -168,6 +169,12 @@ $--el-tabs__header-height: 40px;
   .side-menu-root {
     width: $--sideMenu-width;
     border: none;
+  }
+
+  .side-menu-root.el-menu--collapse {
+    .svg-icon {
+      font-size: 18px;
+    }
   }
 
   .el-menu-item,
@@ -249,53 +256,59 @@ $--el-tabs__header-height: 40px;
     }
   }
 
-  // reset element-ui el-tabs
+  /* reset element-ui el-tabs
+  -------------------------- */
   .main-content-tabs.el-tabs {
+    position: relative;
     height: 100%;
+  }
 
-    .el-tabs__header {
-
-      margin: 0;
-      width: 100%;
-      height: $--el-tabs__header-height;
-      padding-left: 8px;
-      padding-right: 40px;
-      background-color: #fff;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
-    }
+  .el-tabs__header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: $--el-tabs__header-height;
+    padding-left: 8px;
+    padding-right: 40px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    z-index: 2;
 
     .el-tabs__item {
       height: $--el-tabs__header-height;
       line-height: $--el-tabs__header-height;
     }
+  }
 
-    .el-tabs__content {
-      overflow: auto;
-      position: absolute;
-      left: 0;
-      top: $--el-tabs__header-height;
-      bottom: 0;
-      right: 0;
-      margin: 8px;
-      border-radius: 2px;
-      background-color: #fff;
-    }
 
-    .el-tab-pane {
-      height: 100%;
-    }
+  .el-tabs__content {
+    padding-top: $--el-tabs__header-height;
+    height: 100%;
+  }
 
-    .el-scrollbar {
-      height: 100%;
-    }
+  .el-tab-pane {
+    overflow: hidden;
+    height: 100%;
+    padding: 8px;
+  }
 
-    .el-scrollbar__wrap {
-      overflow-x: hidden;
-    }
+  .el-tab-pane.iframe-wrapper {
+    padding: 0;
+  }
 
-    .el-scrollbar__view {
-      min-height: 100%;
-    }
+  .el-scrollbar {
+    height: 100%;
+    background-color: #fff;
+  }
+
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+
+  .el-scrollbar__view {
+    min-height: 100%;
   }
 }
 

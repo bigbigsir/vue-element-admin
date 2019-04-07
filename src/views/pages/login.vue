@@ -96,8 +96,27 @@
     components: {
       LanguageSelect
     },
+    // 进入页面的路由拦截
+    beforeRouteEnter (to, from, next) {
+      let nextTarget = {
+        query: { ...from.query },
+        params: { ...from.params }
+      }
+      if (from.name) {
+        nextTarget.name = from.name
+      } else {
+        nextTarget.path = from.path
+      }
+      if (cookies.get('token')) {
+        return next(nextTarget)
+      }
+      next(vm => {
+        vm.nextTarget = nextTarget
+      })
+    },
     data () {
       return {
+        nextTarget: null,
         uuId: getUUId(),
         isLoading: false,
         loginForm: {
@@ -115,6 +134,7 @@
     created () {
     },
     methods: {
+      // 刷新验证码
       refreshCaptcha: debounce(function () {
         this.uuId = getUUId()
       }, 1000, { 'leading': true, 'trailing': false }),
@@ -132,7 +152,7 @@
           this.isLoading = false
           if (ok && token) {
             cookies.set('token', token, { expires: 1 })
-            this.$router.replace('/')
+            this.$router.replace(this.nextTarget)
           } else {
             this.refreshCaptcha()
             this.$message.error(msg)

@@ -8,7 +8,7 @@
   </el-submenu>
   <el-menu-item v-else :index="menu.id">
     <svg-icon :icon="menu.icon||'tag'"/>
-    <span>{{ menu.label }}</span>
+    <span slot="title">{{ menu.label }}</span>
   </el-menu-item>
 </template>
 

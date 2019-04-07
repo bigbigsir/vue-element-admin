@@ -73,3 +73,12 @@ export function isDate (target) {
 export function getSvgIconList () {
   return [...document.querySelectorAll('svg symbol')].map(item => item['id'])
 }
+
+/**
+ * 判断参数是否为URL地址
+ * @param {String} str
+ * @return {Boolean}
+ */
+export function isURL (str) {
+  return /^http[s]?:\/\/.*/.test(str)
+}

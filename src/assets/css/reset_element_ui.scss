@@ -42,6 +42,33 @@
   .el-dropdown-menu__item .svg-icon {
     margin-right: 5px;
   }
+
+  .box-card {
+    border: none;
+
+    .el-card__header,
+    .el-card__body {
+      padding: 10px;
+    }
+  }
+
+  .form-dialog-500px {
+    .el-dialog {
+      width: 500px;
+    }
+  }
+
+  .form-dialog-600px {
+    .el-dialog {
+      width: 600px;
+    }
+  }
+
+  .form-dialog-700px {
+    .el-dialog {
+      width: 700px;
+    }
+  }
 }
 
 /* Reset element-ui end

@@ -6,7 +6,7 @@
        class="main-container reset-element-ui clearfix">
     <MainHeader></MainHeader>
     <MainSideMenu></MainSideMenu>
-    <MainContent v-if="!refreshContent"></MainContent>
+    <MainContent></MainContent>
   </div>
 </template>
 
@@ -14,11 +14,11 @@
   /**
    * Created by XiaoJie on 2019/3/28
    */
-  import debounce from 'lodash/debounce'
-  import { mapState, mapMutations } from 'vuex'
   import MainHeader from './mainHeader.vue'
   import MainContent from './mainContent.vue'
   import MainSideMenu from './mainSideMenu.vue'
+  import debounce from 'lodash/debounce'
+  import { mapState, mapMutations } from 'vuex'
 
   export default {
     name: 'mainPage',
@@ -27,50 +27,73 @@
       MainContent,
       MainSideMenu
     },
+    watch: {
+      $route: 'routeHandle'
+    },
+    beforeRouteEnter (to, from, next) {
+      // 进入页面初始化当前路由tab
+      next(vm => {
+        vm.routeHandle(to)
+      })
+    },
+    beforeRouteLeave (to, from, next) {
+      // 离开页面清空当前菜单选中项标识
+      this.setMenuActiveIndex(null)
+      next()
+    },
     data () {
       return {
         loading: true
       }
     },
     created () {
-      this.getUserInfo()
       this.windowResizeHandle()
-    },
-    beforeRouteEnter (to, form, next) {
-      next(vm => {
-        vm.routeHandle(to)
+      if (this.userInfo && this.menuData) return (this.loading = false)
+      Promise.all([this.getMenuData(), this.getUserInfo()]).then(() => {
+        this.loading = false
+      }).catch(() => {
+        this.$router.replace('/login')
       })
     },
-    watch: {
-      $route: 'routeHandle'
-    },
     computed: {
-      ...mapState(['tabs', 'menuData', 'tabsActiveName', 'isCollapse', 'refreshContent'])
+      ...mapState(['tabs', 'tabsActiveName', 'userInfo', 'menuData', 'isCollapse'])
     },
     methods: {
-      ...mapMutations(['addTab', 'updateMenus', 'setMenuActiveIndex', 'setTabsActiveName', 'setUserInfo', 'toggleCollapse']),
+      ...mapMutations([
+        'addTab',
+        'setMenuActiveIndex',
+        'setTabsActiveName',
+        'setMenuData', 'refreshMenus',
+        'setUserInfo',
+        'toggleCollapse'
+      ]),
+      // 获取菜单数据
+      getMenuData () {
+        return this.$http.get('/api/menu/tree').then(({ ok, data }) => {
+          if (ok) {
+            this.setMenuData(data)
+          }
+        })
+      },
       // 获取用户信息
       getUserInfo () {
-        this.$http.get('user/getUserInfo').then(({ ok, data }) => {
+        return this.$http.get('user/getUserInfo').then(({ ok, data }) => {
           if (ok && data) {
-            this.loading = false
             this.setUserInfo(data)
-          } else {
-            this.$router.replace('/login')
           }
-        }).catch(() => this.$router.replace('/login'))
+        })
       },
-      // 窗口改变大小
+      // 监听窗口大小改变
       windowResizeHandle () {
         this.toggleCollapse(document.body.clientWidth < 1000)
         window.addEventListener('resize', debounce(() => {
           this.toggleCollapse(document.body.clientWidth < 1000)
         }, 200))
       },
-      // 路由, 监听
+      // 主页下路由变化的处理方法
       routeHandle (to) {
-        if (!to.meta.isTab) return false
-        let tab = this.tabs.filter(item => item.name === to.name)[0]
+        if (to.meta.openMode !== 'tab') return false
+        let tab = this.tabs.find(item => item.name === to.name)
         if (!tab) {
           tab = {
             ...to.meta,
@@ -81,8 +104,8 @@
           }
           this.addTab(tab)
         }
-        this.setMenuActiveIndex(tab.id)
         this.setTabsActiveName(to.name)
+        this.setMenuActiveIndex(tab.id)
       }
     }
   }

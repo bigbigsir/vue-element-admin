@@ -15,7 +15,7 @@
   /**
    * Created by XiaoJie on 2019/4/3
    */
-  import { messages } from '@/lang'
+  import { messages } from '../language/index'
 
   export default {
     name: 'LanguageSelect',

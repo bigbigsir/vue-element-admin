@@ -8,7 +8,7 @@
       <el-button @click="$router.back()">
         <svg-icon icon="rollback"/>&nbsp;上一页
       </el-button>
-      <el-button @click="$router.push('/home')" type="primary">
+      <el-button @click="toHomePage" type="primary">
         <svg-icon icon="home"/>&nbsp;首页
       </el-button>
     </div>
@@ -19,8 +19,15 @@
   /**
    * Created by XiaoJie on 2019/4/2
    */
+
   export default {
-    name: 'page404'
+    name: 'page404',
+    methods: {
+      toHomePage () {
+        this.$store.state.tabsActiveName = null
+        this.$router.push('/home')
+      }
+    }
   }
 </script>
 

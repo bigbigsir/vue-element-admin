@@ -17,8 +17,8 @@
   /**
    * Created by XiaoJie on 2019/3/28
    */
-  import { mapState, mapMutations } from 'vuex'
   import SubMenu from './subMenu.vue'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'mainSideMenu',
@@ -29,14 +29,13 @@
     created () {
     },
     computed: {
-      ...mapState(['menuActiveIndex', 'menuData', 'isCollapse', 'sideMenuDarkSkin'])
+      ...mapState(['menuData', 'menuActiveIndex', 'menuKey', 'isCollapse', 'sideMenuDarkSkin'])
     },
     methods: {
-      ...mapMutations(['findMenuItem', 'setMenuActiveIndex']),
       // 点击菜单项时触发
       selectMenuHandle (menuId) {
         let menu = this.findMenuItem(this.menuData, menuId)
-        if (menu) this.$router.push(menu.path)
+        if (menu) this.$router.push(menu.routerPath)
       },
       // 依据菜单ID在菜单数据中查找该项菜单
       findMenuItem (menus, menuId) {

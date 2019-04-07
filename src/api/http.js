@@ -49,15 +49,15 @@ _http.interceptors.response.use(response => {
       status: response.status,
       statusText: response.statusText
     }
-    if (response.status === 401 && response.data.code === 401) {
-      cookies.remove('token')
-      return Router.replace({ name: 'login' })
-    }
   } else {
     info = {
       status: 5000,
       statusText: 'Network Error'
     }
+  }
+  if (response.status === 401 && response.data.code === 401) {
+    cookies.remove('token')
+    Router.replace({ name: 'login' })
   }
   console.error(info)
   return Promise.reject(info)

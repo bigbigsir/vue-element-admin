@@ -6,7 +6,7 @@
         <div :data-clipboard-text="item.replace(/^icon-/g, '')" class="name cursor-pr">
           {{item.replace(/^icon-/g, '')}}
         </div>
-        <div :data-clipboard-text="'#'+item" class="code-name cursor-pr">
+        <div :data-clipboard-text="'#'+item" class="code-name">
           #{{item}}
         </div>
       </li>
@@ -22,26 +22,24 @@
   import { getSvgIconList } from '@/util/util'
 
   export default {
-    name: 'sys_svgIcon',
+    name: 'sys_icon',
     data () {
       return {
-        fullscreenLoading: true,
-        iconList: getSvgIconList()
+        iconList: [],
+        fullscreenLoading: true
       }
     },
     created () {
-      console.log(this.iconList.length)
-      console.log('sys_svgIcon')
+      console.log('sys_icon')
+      this.iconList = getSvgIconList()
+    },
+    beforeDestroy () {
+      this.clipboard.destroy()
     },
     mounted () {
       let $message = null
       this.fullscreenLoading = false
-      new Clipboard('.name').on('success', (e) => {
-        $message && $message.close()
-        $message = this.$message.success(`${e.text} 文本复制成功`)
-        e.clearSelection()
-      })
-      new Clipboard('.code-name').on('success', (e) => {
+      this.clipboard = new Clipboard('.name').on('success', (e) => {
         $message && $message.close()
         $message = this.$message.success(`${e.text} 文本复制成功`)
         e.clearSelection()
@@ -56,14 +54,15 @@
   }
 
   .icon_lists {
-    width: 100% !important;
+    margin: 0;
+    padding: 0;
+    width: 100%;
     overflow: hidden;
     *zoom: 1;
 
     .dib {
       width: 100px;
-      margin-bottom: 10px;
-      margin-right: 20px;
+      margin: 10px;
       text-align: center;
       list-style: none !important;
       cursor: default
