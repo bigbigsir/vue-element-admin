@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown @command="toggleSize" trigger="click" size="medium" placement="bottom">
+  <el-dropdown @command="changeSize" trigger="click" size="medium" placement="bottom">
       <span class="el-dropdown-link">
         <slot></slot>
       </span>
@@ -36,10 +36,10 @@
     created () {
     },
     computed: {
-      ...mapState(['size'])
+      ...mapState('main', ['size'])
     },
     methods: {
-      ...mapMutations(['toggleSize'])
+      ...mapMutations('main', ['changeSize'])
     }
   }
 </script>

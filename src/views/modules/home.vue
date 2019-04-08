@@ -2,7 +2,7 @@
   <div class="home">
     <el-progress :stroke-width="2" :show-text="false" :percentage="percentage"></el-progress>
     <h1>This is home page</h1>
-    <h3>language: {{$t('loading')}}</h3>
+    <h3>language: {{$t('lang')}}</h3>
     <el-row class="row">
       <el-button>默认按钮</el-button>
       <el-button type="primary">主要按钮</el-button>
@@ -60,6 +60,47 @@
         <el-switch v-model="value2"></el-switch>
       </el-col>
     </el-row>
+    <el-row class="block-col-2 row">
+      <el-col :span="8">
+        <el-date-picker
+          v-model="value6"
+          type="daterange"
+
+          :start-placeholder="$t('el.datepicker.startDate')"
+          :end-placeholder="$t('el.datepicker.endDate')">
+        </el-date-picker>
+      </el-col>
+      <el-col :span="4">
+        <span class="demonstration">hover 激活</span>
+        <el-dropdown placement="bottom-start">
+          <span class="el-dropdown-link el-button--text">
+            下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-check-outline">蚵仔煎</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-col>
+      <el-col :span="4">
+        <span class="demonstration">click 激活</span>
+        <el-dropdown trigger="click" placement="bottom">
+          <span class="el-dropdown-link el-button--text">
+            下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-check-outline">蚵仔煎</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-col>
+    </el-row>
     <el-row class="row">
       <el-table
         :data="tableData"
@@ -94,27 +135,29 @@
     name: 'home',
     data () {
       return {
+        value6: null,
         value2: null,
         radio: null,
         value: null,
         percentage: 0,
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }],
+        tableData: [
+          {
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+          }, {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1517 弄'
+          }, {
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }, {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1516 弄'
+          }],
         options: [
           {
             value: '选项1',
@@ -169,4 +212,19 @@
     margin-top: 20px;
   }
 
+  .el-dropdown-link {
+    cursor: pointer;
+    /*color: #409EFF;*/
+  }
+
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+
+  .demonstration {
+    display: block;
+    color: #8492a6;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 </style>

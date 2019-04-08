@@ -18,7 +18,7 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-tabs :value="tabsActiveName" @tab-click="tabSelectedHandle" @tab-remove="removeTab"
+        <el-tabs :value="tabActiveName" @tab-click="tabSelectedHandle" @tab-remove="removeTab"
                  class="main-content-tabs">
           <el-tab-pane
             v-for="tab in tabs"
@@ -31,11 +31,11 @@
               {{tab.name!=='sys_home'?tab.label:''}}
             </template>
             <template v-if="tab.isIframe">
-              <iframe :src="tab.resourceUrl" width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+              <iframe :src="tab.resourceUrl" width="100%" height="100%" style="border: none;"></iframe>
             </template>
             <template v-else>
               <el-scrollbar class="b-r-small">
-                <router-view :key="tabRouterKey" v-if="tab.name===tabsActiveName"/>
+                <router-view :key="tabRouterKey" v-if="tab.name===tabActiveName"/>
               </el-scrollbar>
             </template>
           </el-tab-pane>
@@ -43,7 +43,7 @@
       </template>
       <template v-else-if="$route.meta.openMode==='home'">
         <template v-if="$route.meta.isIframe">
-          <iframe :src="$route.meta.resourceUrl" width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+          <iframe :src="$route.meta.resourceUrl" width="100%" height="100%" style="border: none;"></iframe>
         </template>
         <template v-else>
           <el-scrollbar class="b-r-small">
@@ -67,13 +67,13 @@
       return {}
     },
     computed: {
-      ...mapState(['tabs', 'tabsActiveName', 'tabRouterKey', 'isCollapse'])
+      ...mapState('main', ['tabs', 'tabActiveName', 'tabRouterKey', 'isCollapse'])
     },
     methods: {
-      ...mapMutations(['updateTabs', 'setTabsActiveName']),
+      ...mapMutations('main', ['updateTabs', 'setTabsActiveName']),
       handleCommand (command) {
         if (command === 'now') {
-          this.removeTab(this.tabsActiveName)
+          this.removeTab(this.tabActiveName)
         } else if (command === 'other') {
           this.removeOtherTabs()
         } else {
@@ -82,7 +82,7 @@
       },
       // 选中tab事件
       tabSelectedHandle (tab) {
-        if (tab.name === this.tabsActiveName) return
+        if (tab.name === this.tabActiveName) return
         tab = this.tabs.filter(item => item.name === tab.name)[0]
         if (tab) {
           this.$router.push({
@@ -113,7 +113,7 @@
       // tabs, 关闭其它
       removeOtherTabs () {
         this.updateTabs(this.tabs.filter(item => {
-          return item.name === 'sys_home' || item.name === this.tabsActiveName
+          return item.name === 'sys_home' || item.name === this.tabActiveName
         }))
       },
       // tabs, 关闭全部

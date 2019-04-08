@@ -53,7 +53,7 @@ $--el-tabs__header-height: 40px;
   overflow: hidden;
   width: 100%;
   height: $--herder-height;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, .05);
   z-index: 3;
 
   .header-brand {
@@ -172,6 +172,10 @@ $--el-tabs__header-height: 40px;
   }
 
   .side-menu-root.el-menu--collapse {
+    .el-menu-item {
+      text-align: center;
+    }
+
     .svg-icon {
       font-size: 18px;
     }

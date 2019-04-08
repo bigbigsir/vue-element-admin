@@ -29,7 +29,13 @@
     created () {
     },
     computed: {
-      ...mapState(['menuData', 'menuActiveIndex', 'menuKey', 'isCollapse', 'sideMenuDarkSkin'])
+      ...mapState('main', [
+        'menuData',
+        'menuKey',
+        'isCollapse',
+        'menuActiveIndex',
+        'sideMenuDarkSkin'
+      ])
     },
     methods: {
       // 点击菜单项时触发

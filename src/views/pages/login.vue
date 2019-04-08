@@ -3,7 +3,7 @@
     <div class="login-inner">
       <div class="login-content">
         <div class="login-header">
-          <h1 class="login-brand">人人微服务平台</h1>
+          <h1 class="login-brand">{{ $t('brand.name') }}</h1>
         </div>
         <div class="login-main b-r-small b-s-dark">
           <h3 class="login-title">{{ $t('login.title') }}
@@ -65,16 +65,13 @@
       </div>
       <div class="login-footer">
         <p>
-          <span>参考于：</span>
-          <a href="https://demo.cloud.renren.io/renren-cloud" target="_blank">人人开源</a>
-          <a href="https://panjiachen.github.io/vue-element-admin/#/login" target="_blank">vue-element-admin</a>
+          <svg-icon icon="github-fill"/>
+          <a href="https://github.com/yomojie" target="_blank">vue-element-admin</a>
+          <a href="https://github.com/yomojie/nodeJs" target="_blank">nodeJs</a>
         </p>
         <p>
-          <svg-icon icon="github-fill"/>
-          <span>项目地址：</span>
-          <a href="https://github.com/yomojie" target="_blank">vue</a>
-          <a href="https://github.com/yomojie/nodeJs" target="_blank">nodeJs</a>
-          <span>欢迎查阅，希望能对你有所帮助</span>
+          <a href="http://opensource.org/licenses/MIT" rel="nofollow" target="_blank">MIT</a>
+          <span>Copyright (c) 2019-present yomojie</span>
         </p>
       </div>
     </div>
@@ -259,12 +256,7 @@
     }
 
     a {
-      padding: 0 5px;
-      color: rgba(255, 255, 255, .6);
-
-      &:hover {
-        color: #fff;
-      }
+      padding: 0 10px;
     }
   }
 </style>

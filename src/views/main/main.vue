@@ -56,16 +56,16 @@
       })
     },
     computed: {
-      ...mapState(['tabs', 'tabsActiveName', 'userInfo', 'menuData', 'isCollapse'])
+      ...mapState('main', ['tabs', 'userInfo', 'menuData', 'isCollapse'])
     },
     methods: {
-      ...mapMutations([
+      ...mapMutations('main', [
         'addTab',
-        'setMenuActiveIndex',
-        'setTabsActiveName',
-        'setMenuData', 'refreshMenus',
+        'setMenuData',
         'setUserInfo',
-        'toggleCollapse'
+        'toggleCollapse',
+        'setMenuActiveIndex',
+        'setTabsActiveName'
       ]),
       // 获取菜单数据
       getMenuData () {
@@ -92,6 +92,7 @@
       },
       // 主页下路由变化的处理方法
       routeHandle (to) {
+        this.setMenuActiveIndex(to.meta.id)
         if (to.meta.openMode !== 'tab') return false
         let tab = this.tabs.find(item => item.name === to.name)
         if (!tab) {
@@ -105,7 +106,6 @@
           this.addTab(tab)
         }
         this.setTabsActiveName(to.name)
-        this.setMenuActiveIndex(tab.id)
       }
     }
   }

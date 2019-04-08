@@ -38,10 +38,10 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (cookies.get('token')) {
-    if (store.state.isAddRouterComplete) return next()
+    if (store.state.addRouterIsComplete) return next()
     Vue.prototype['$http'].get('/api/menu/tree').then(({ ok, data }) => {
       if (ok) {
-        store.state.isAddRouterComplete = true
+        store.state.addRouterIsComplete = true
         addRouter(data)
         next({ ...to, replace: true })
       }

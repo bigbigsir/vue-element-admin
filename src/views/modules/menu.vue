@@ -25,7 +25,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <addOrUpdate @getMenuData="getMenuData" v-if="isShowDialog" :menuData="menuData" ref="dialog"></addOrUpdate>
+    <addOrUpdate @getMenuData="getMenuData" v-if="isShowDialog" :menuData="copyMenuData" ref="dialog"></addOrUpdate>
   </el-card>
 </template>
 
@@ -42,6 +42,7 @@
     data () {
       return {
         menuData: [],
+        copyMenuData: [],
         dataListLoading: true,
         isShowDialog: false
       }
@@ -53,7 +54,10 @@
     methods: {
       getMenuData () {
         this.$http.get('/api/menu/tree').then(({ ok, data }) => {
-          if (ok) this.menuData = data
+          if (ok) {
+            this.menuData = data
+            this.copyMenuData = [...data]
+          }
           this.dataListLoading = false
         })
       },

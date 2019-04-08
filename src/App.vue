@@ -12,7 +12,7 @@
     name: 'App',
     created () {
       let theme = localStorage.getItem('theme') || 'default'
-      this.$store.commit('changeTheme', theme)
+      this.$store.commit('main/changeTheme', theme)
     }
   }
 </script>

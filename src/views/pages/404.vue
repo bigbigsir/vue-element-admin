@@ -24,7 +24,7 @@
     name: 'page404',
     methods: {
       toHomePage () {
-        this.$store.state.tabsActiveName = null
+        this.$store.state.main.tabsActiveName = null
         this.$router.push('/home')
       }
     }

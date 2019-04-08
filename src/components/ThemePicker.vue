@@ -48,10 +48,10 @@
       this.sideMenu = this.sideMenuDarkSkin
     },
     computed: {
-      ...mapState(['headerFollowTheme', 'sideMenuDarkSkin'])
+      ...mapState('main', ['headerFollowTheme', 'sideMenuDarkSkin'])
     },
     methods: {
-      ...mapMutations(['changeTheme', 'toggleHeaderSkin', 'toggleSideMenuSkin'])
+      ...mapMutations('main', ['changeTheme', 'toggleHeaderSkin', 'toggleSideMenuSkin'])
     }
   }
 </script>

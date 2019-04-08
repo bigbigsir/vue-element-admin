@@ -2,9 +2,9 @@
   <header :class="{'follow-theme':headerFollowTheme}" class="main-header clearfix">
     <div class="header-brand bg-c-primary fl">
       <h1 v-if="isCollapse">
-        TG
+        {{$t('brand.miniName')}}
       </h1>
-      <h1 v-else>TG管理平台</h1>
+      <h1 v-else>{{$t('brand.name')}}</h1>
     </div>
     <ul class="header-nav clearfix">
       <li @click="toggleCollapse(!isCollapse)" class="header-nav-item fl">
@@ -42,11 +42,11 @@
         </SizeSelect>
       </li>
       <li class="header-nav-item fr">
-        <ThemePicker>
+        <ThemePicker ref="menuListPopover">
           <svg-icon icon="skin"/>
         </ThemePicker>
       </li>
-      <li @click="refreshTabRouter" class="header-nav-item fr">
+      <li @click="refreshRouter" class="header-nav-item fr">
         <svg-icon icon="reload"/>
       </li>
     </ul>
@@ -77,13 +77,13 @@
     created () {
     },
     computed: {
-      ...mapState(['userInfo', 'isCollapse', 'headerFollowTheme']),
+      ...mapState('main', ['userInfo', 'isCollapse', 'headerFollowTheme']),
       userAvatar () {
         return (this.userInfo && this.userInfo['photo']) || require('@/assets/img/avatar.png')
       }
     },
     methods: {
-      ...mapMutations(['toggleCollapse', 'refreshTabRouter']),
+      ...mapMutations('main', ['toggleCollapse', 'refreshRouter']),
       // 切换全屏
       toggleScreenFull () {
         if (screenFull.enabled) return screenFull.toggle(null)

@@ -4,13 +4,15 @@
     title="Icons"
     append-to-body
     custom-class="icon-select-dialog">
-    <ul class="icon-list" v-loading="loading">
-      <li v-for="item of iconList" :key="item">
-        <el-button @click="handleClick(item)">
-          <svg-icon :icon="item"/>
-        </el-button>
-      </li>
-    </ul>
+    <el-scrollbar>
+      <ul class="icon-list" v-loading="loading">
+        <li v-for="item of iconList" :key="item">
+          <el-button @click="handleClick(item)">
+            <svg-icon :icon="item"/>
+          </el-button>
+        </li>
+      </ul>
+    </el-scrollbar>
   </el-dialog>
 </template>
 
@@ -61,12 +63,20 @@
 
 <style lang="scss">
   .icon-select-dialog {
-    min-width: 500px;
+    min-width: 528px;
+
+    .el-scrollbar {
+      height: 500px;
+
+      .el-scrollbar__wrap {
+        overflow-x: hidden;
+      }
+    }
 
     .icon-list {
       margin: 0;
       padding: 0;
-      height: 500px;
+
       overflow: auto;
 
       .el-button {

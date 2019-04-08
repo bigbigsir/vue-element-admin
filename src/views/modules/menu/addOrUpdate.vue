@@ -88,7 +88,6 @@
         menuListVisible: false,
         renderIconSelect: false,
         showIconSelect: false,
-        menuList: [],
         formData: {
           id: null,
           label: '',
@@ -111,7 +110,9 @@
           this.$http.get(url, params).then(({ ok, data }) => {
             if (ok) {
               this.formData = Object.assign(this.formData, data)
-              this.formData.parentName = this.findParentName(data.parentId, this.menuData)
+              if (data.parentId) {
+                this.formData.parentName = this.findParentName(this.formData.parentId, this.menuData)
+              }
             }
           })
         }
@@ -173,7 +174,7 @@
             break
           }
           if (menus[i].children && menus[i].children.length) {
-            parentName = this.findMenuItem(menus[i].children, parentId)
+            parentName = this.findParentName(menus[i].children, parentId)
           }
         }
         return parentName
