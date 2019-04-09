@@ -40,7 +40,7 @@ module.exports = {
     }
   },
   chainWebpack: config => {
-    const svgRule = config.module.rule('svg')
+    const svgRule = config.moduleMixin.rule('svg')
     // 清除已有的所有 loader。
     // 如果你不这样做，接下来的 loader 会附加在该规则现有的 loader 之后。
     svgRule.uses.clear()
@@ -53,7 +53,7 @@ module.exports = {
       .options({
         symbolId: 'icon-[name]'
       })
-    const fileRule = config.module.rule('file')
+    const fileRule = config.moduleMixin.rule('file')
     fileRule.uses.clear()
     fileRule
       .test(/\.svg$/)

@@ -1,6 +1,6 @@
 <template>
-  <el-dropdown @command="changeSize" trigger="click" size="medium" placement="bottom">
-      <span class="el-dropdown-link">
+  <el-dropdown @command="_changeSize" trigger="click" size="medium" placement="bottom">
+      <span class="trigger">
         <slot></slot>
       </span>
     <el-dropdown-menu slot="dropdown">
@@ -9,7 +9,7 @@
         :key="item.value"
         :disabled="size===item.value"
         :command="item.value">
-        {{ item.label }}
+        {{ $t('size.'+item.label) }}
       </el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
@@ -26,10 +26,10 @@
     data () {
       return {
         sizeOptions: [
-          { label: 'Default', value: 'default' },
-          { label: 'Medium', value: 'medium' },
-          { label: 'Small', value: 'small' },
-          { label: 'Mini', value: 'mini' }
+          { label: 'default', value: 'default' },
+          { label: 'medium', value: 'medium' },
+          { label: 'small', value: 'small' },
+          { label: 'mini', value: 'mini' }
         ]
       }
     },
@@ -39,7 +39,15 @@
       ...mapState('main', ['size'])
     },
     methods: {
-      ...mapMutations('main', ['changeSize'])
+      ...mapMutations('main', ['changeSize']),
+      _changeSize (size) {
+        this.changeSize(size)
+        this.$message({
+          type: 'success',
+          message: this.$t('prompt.success'),
+          duration: 1000
+        })
+      }
     }
   }
 </script>

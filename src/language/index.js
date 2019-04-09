@@ -3,9 +3,9 @@ import VueI18n from 'vue-i18n'
 import zhCNLocale from 'element-ui/lib/locale/lang/zh-CN'
 import zhTWLocale from 'element-ui/lib/locale/lang/zh-TW'
 import enLocale from 'element-ui/lib/locale/lang/en'
-import zhCN from './zh-CN1'
-import zhTW from './zh-TW1'
-import enUS from './en-US1'
+import zhCN from './zh-CN'
+import zhTW from './zh-TW'
+import enUS from './en-US'
 
 Vue.use(VueI18n)
 

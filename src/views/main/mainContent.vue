@@ -8,13 +8,13 @@
         </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="now">
-              <svg-icon icon="flag"/>&nbsp;关闭当前
+              <svg-icon icon="flag"/>&nbsp;{{$t('tabsHandle.closeCurrent')}}
             </el-dropdown-item>
             <el-dropdown-item command="other">
-              <svg-icon icon="tag"/>&nbsp;关闭其他
+              <svg-icon icon="tag"/>&nbsp;{{$t('tabsHandle.closeOther')}}
             </el-dropdown-item>
             <el-dropdown-item command="all">
-              <svg-icon icon="tags"/>&nbsp;关闭全部
+              <svg-icon icon="tags"/>&nbsp;{{$t('tabsHandle.closeAll')}}
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -27,7 +27,7 @@
             :closable="tab.name!=='sys_home'"
             :class="{'iframe-wrapper':tab.isIframe}">
             <template slot="label">
-              <svg-icon :icon="tab.icon" v-if="tab.icon"/>
+              <svg-icon v-if="tab.icon" :icon="tab.icon"/>
               {{tab.name!=='sys_home'?tab.label:''}}
             </template>
             <template v-if="tab.isIframe">

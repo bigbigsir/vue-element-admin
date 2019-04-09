@@ -19,7 +19,6 @@ export default {
     tabActiveName: null, // 当前选中标签页的 name
     menuData: null, // 菜单数据
     menuActiveIndex: null, // 当前激活菜单的 index
-    addRouterIsComplete: false, // 动态路由是否增加完成
     userInfo: null, // 登录用户信息
     isCollapse: false, // 主页是否折叠
     tabRouterKey: 0, // 标签页中router标签的key，用于刷新
@@ -82,7 +81,7 @@ export default {
     changeSize (state, size) {
       state.size = size
       this._vm['$ELEMENT'].size = size
-      this.commit('refreshRouter')
+      this.commit('main/refreshRouter')
       localStorage.setItem('size', size)
     },
     // 设置登录用户信息

@@ -1,15 +1,13 @@
 <template>
   <div class="not-found-content">
     <h1 class="title">404</h1>
-    <h3 class="description">
-      抱歉！您访问的页面<span>失联</span>啦...
-    </h3>
+    <h3 class="description" v-html="$t('notFound.description')"></h3>
     <div>
       <el-button @click="$router.back()">
-        <svg-icon icon="rollback"/>&nbsp;上一页
+        <svg-icon icon="rollback"/>&nbsp;{{$t('notFound.back')}}
       </el-button>
       <el-button @click="toHomePage" type="primary">
-        <svg-icon icon="home"/>&nbsp;首页
+        <svg-icon icon="home"/>&nbsp;{{$t('notFound.home')}}
       </el-button>
     </div>
   </div>
@@ -24,8 +22,8 @@
     name: 'page404',
     methods: {
       toHomePage () {
-        this.$store.state.main.tabsActiveName = null
-        this.$router.push('/home')
+        this.$store.commit('main/setTabsActiveName', null)
+        this.$router.replace('/home')
       }
     }
   }

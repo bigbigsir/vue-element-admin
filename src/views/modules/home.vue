@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <el-progress :stroke-width="2" :show-text="false" :percentage="percentage"></el-progress>
-    <h1>This is home page</h1>
     <h3>language: {{$t('lang')}}</h3>
     <el-row class="row">
       <el-button>默认按钮</el-button>
@@ -37,15 +36,15 @@
     </el-row>
     <el-row :gutter="20" class="row">
       <el-col :span="6">
-        <el-date-picker type="date" placeholder="选择日期" style="width: 100%;"></el-date-picker>
+        <el-date-picker type="date" :placeholder="$t('el.datepicker.selectDate')" style="width: 100%;"></el-date-picker>
       </el-col>
       <el-col :span="6">
-        <el-input placeholder="请输入内容" prefix-icon="el-icon-search"></el-input>
+        <el-input :placeholder="$t('el.transfer.filterPlaceholder')" prefix-icon="el-icon-search"></el-input>
       </el-col>
     </el-row>
     <el-row :gutter="20" class="row">
       <el-col :span="6">
-        <el-select v-model="value" placeholder="请选择" value="" style="width: 100%;">
+        <el-select v-model="value" :placeholder="$t('el.select.placeholder')" value="" style="width: 100%;">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -65,7 +64,6 @@
         <el-date-picker
           v-model="value6"
           type="daterange"
-
           :start-placeholder="$t('el.datepicker.startDate')"
           :end-placeholder="$t('el.datepicker.endDate')">
         </el-date-picker>
@@ -107,17 +105,17 @@
         border>
         <el-table-column
           prop="date"
-          label="日期"
+          :label="$t('module.date')"
           width="180">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="姓名"
+          :label="$t('module.name')"
           width="180">
         </el-table-column>
         <el-table-column
           prop="address"
-          label="地址">
+          :label="$t('module.address')">
         </el-table-column>
         <el-table-column :label="$t('handle')" fixed="right" align="center" width="150">
           <template>

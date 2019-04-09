@@ -13,7 +13,8 @@
               </el-button>
             </LanguageSelect>
           </h3>
-          <el-form :model="loginForm" @keyup.enter.native="submitHandle" ref="loginForm" status-icon>
+          <el-form :model="loginForm" @keyup.enter.native="submitHandle" :rules="formRules"
+                   :validate-on-rule-change="false" ref="loginForm" status-icon>
             <el-form-item prop="code" required size="default">
               <el-input maxlength="20"
                         :placeholder="$t('login.username')"
@@ -126,6 +127,14 @@
     computed: {
       captchaUrl () {
         return this.$store.state.baseUrl + '/util/getCaptcha?' + this.uuId
+      },
+      formRules () {
+        let required = { required: true, message: this.$t('validate.required'), trigger: 'blur' }
+        return {
+          code: [required],
+          password: [required],
+          captcha: [required]
+        }
       }
     },
     created () {
@@ -228,11 +237,7 @@
     .login-captcha {
       min-width: 120px;
       font-size: 0;
-      background-color: #bfbfc0;
-      background: -webkit-linear-gradient(to right, #bfbfc0 0%, #f4f4f5 100%);
-      background: -o-linear-gradient(to right, #bfbfc0 0%, #f4f4f5 100%);
-      background: -moz-linear-gradient(to right, #bfbfc0 0%, #f4f4f5 100%);
-      background: linear-gradient(to right, #bfbfc0 0%, #f4f4f5 100%);
+      background-color: #c8c8c9;
     }
 
     .language {

@@ -1,16 +1,26 @@
 <template>
   <el-dialog
-    @open="dialogOpen"
+    @opened="dialogOpen"
     @closed="dialogClose"
     :visible.sync="visible"
     :title="formData.id ? $t('update') :$t('add')"
     custom-class="menu-add-dialog"
     :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-form :model="formData" @keyup.enter.native="submitForm()" ref="form" label-width="90px">
-      <el-form-item prop="label" label="菜单名称:" required>
-        <el-input v-model="formData.label"></el-input>
+    <el-form :model="formData" :rules="formRules" @keyup.enter.native="submitForm()"
+             :validate-on-rule-change="false" ref="form" label-width="120px" :status-icon="false">
+      <el-form-item prop="label" :label="$t('menu.name')" required>
+        <el-input v-model="formData.label" :placeholder="$t('menu.name')"></el-input>
       </el-form-item>
-      <el-form-item prop="parentName" label="上级菜单:" required>
+      <el-form-item prop="parentName" :label="$t('menu.parentName')" required>
+        <el-input v-model="formData.parentName"
+                  readonly class="cursor-pr"
+                  :placeholder="$t('menu.parentName')"
+                  v-popover:menuListPopover>
+          <i v-show="formData.parentId !== null"
+             @click.stop="setDefaultParent()" slot="suffix"
+             class="el-icon-circle-close el-input__icon">
+          </i>
+        </el-input>
         <el-popover v-model="menuListVisible" ref="menuListPopover" placement="bottom-start" trigger="click">
           <el-tree
             :data="menuData"
@@ -21,37 +31,29 @@
             @current-change="setParent">
           </el-tree>
         </el-popover>
-        <el-input v-model="formData.parentName"
-                  readonly class="cursor-pr"
-                  v-popover:menuListPopover
-                  :placeholder="$t('menu.parentName')">
-          <i v-show="formData.parentId !== null"
-             @click.stop="setDefaultParent()" slot="suffix"
-             class="el-icon-circle-close el-input__icon">
-          </i>
-        </el-input>
       </el-form-item>
-      <el-form-item prop="routerPath" label="路由地址:">
-        <el-input v-model="formData.routerPath"></el-input>
+      <el-form-item prop="routerPath" :label="$t('menu.routePath')">
+        <el-input v-model="formData.routerPath" :placeholder="$t('menu.routePath')"></el-input>
       </el-form-item>
-      <el-form-item prop="resourceUrl" label="资源地址:">
-        <el-input v-model="formData.resourceUrl"></el-input>
+      <el-form-item prop="resourceUrl" :label="$t('menu.resourceUrl')">
+        <el-input v-model="formData.resourceUrl" :placeholder="$t('menu.resourceUrl')"></el-input>
       </el-form-item>
       <el-row>
         <el-col :span="12">
-          <el-form-item prop="sort" label="排序:" required>
-            <el-input-number v-model="formData.sort" :min="1" :max="100"></el-input-number>
+          <el-form-item prop="sort" :label="$t('menu.sort')" required>
+            <el-input-number v-model="formData.sort" :min="1" :max="100"
+                             :placeholder="$t('menu.sort')"></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item prop="icon" label="菜单图标:">
+          <el-form-item prop="icon" :label="$t('menu.icon')">
             <el-button @click="openSelectIcon" class="icon-wrapper">
               <svg-icon :icon="formData.icon"/>
             </el-button>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item prop="openMode" label="打开方式:" required>
+      <el-form-item prop="openMode" :label="$t('menu.openMode')" required>
         <el-radio v-model="formData.openMode" label="tab">tab</el-radio>
         <el-radio v-model="formData.openMode" label="home">home</el-radio>
       </el-form-item>
@@ -97,7 +99,16 @@
           sort: 1,
           openMode: 'tab',
           icon: '',
-          parentName: '一级菜单'
+          parentName: this.$t('menu.parentNameDefault')
+        }
+      }
+    },
+    computed: {
+      formRules () {
+        return {
+          label: [
+            { required: true, message: this.$t('validate.required'), trigger: 'blur' }
+          ]
         }
       }
     },
@@ -109,9 +120,9 @@
           let params = { id: this.formData.id }
           this.$http.get(url, params).then(({ ok, data }) => {
             if (ok) {
-              this.formData = Object.assign(this.formData, data)
+              this.formData = Object.assign({}, this.formData, data)
               if (data.parentId) {
-                this.formData.parentName = this.findParentName(this.formData.parentId, this.menuData)
+                this.formData.parentName = this.findParentName(data.parentId, this.menuData)
               }
             }
           })
@@ -137,7 +148,7 @@
                 duration: 500,
                 onClose: () => {
                   this.visible = false
-                  this.$emit('getMenuData')
+                  this.$emit('refreshList')
                 }
               })
             })
@@ -174,7 +185,7 @@
             break
           }
           if (menus[i].children && menus[i].children.length) {
-            parentName = this.findParentName(menus[i].children, parentId)
+            parentName = this.findParentName(parentId, menus[i].children)
           }
         }
         return parentName
@@ -196,6 +207,10 @@
       input {
         cursor: pointer;
       }
+    }
+
+    .el-input__validateIcon {
+      display: none;
     }
   }
 </style>

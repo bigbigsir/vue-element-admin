@@ -5,23 +5,23 @@
     trigger="click">
     <div class="theme-picker-content">
       <div class="theme-item">
-        <h3>HeaderNavBar</h3>
-        <el-checkbox @change="toggleHeaderSkin" v-model="header">follow-theme&nbsp;鲜艳</el-checkbox>
+        <h3>{{$t('header.title')}}</h3>
+        <el-checkbox @change="toggleHeaderSkin" v-model="header">{{$t('header.status')}}</el-checkbox>
       </div>
       <div class="theme-item b-c-lighter">
-        <h3>SideMenu</h3>
-        <el-checkbox @change="toggleSideMenuSkin" v-model="sideMenu">dark&nbsp;黑色</el-checkbox>
+        <h3>{{$t('sideMenu.title')}}</h3>
+        <el-checkbox @change="toggleSideMenuSkin" v-model="sideMenu">{{$t('sideMenu.status')}}</el-checkbox>
       </div>
       <div class="theme-item b-c-lighter">
-        <h3>Theme</h3>
+        <h3>{{$t('theme.title')}}</h3>
         <el-radio-group @change="changeTheme" v-model="theme">
           <el-radio :key="item.name" :label="item.name" v-for="item in themeList">
-            <span :style="{color:item.color}">{{ `${item.name}&nbsp;${item.label}` }}</span>
+            <span :style="{color:item.color}">{{$t('theme.'+item.name)}}</span>
           </el-radio>
         </el-radio-group>
       </div>
     </div>
-    <span class="picker-toggle" slot="reference">
+    <span class="trigger" slot="reference">
       <slot></slot>
     </span>
   </el-popover>
@@ -72,9 +72,5 @@
         line-height: 28px;
       }
     }
-  }
-
-  .picker-toggle {
-    padding: 2px 0;
   }
 </style>

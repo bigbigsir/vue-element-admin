@@ -1,6 +1,6 @@
 <template>
   <el-dropdown @command="handleLangSelect" trigger="click" size="medium" placement="bottom">
-    <span class="el-dropdown-link">
+    <span class="trigger">
       <slot></slot>
     </span>
     <el-dropdown-menu slot="dropdown">
@@ -28,6 +28,11 @@
       // 语言选择
       handleLangSelect (lang) {
         this.$i18n.locale = lang
+        this.$message({
+          type: 'success',
+          message: this.$t('prompt.success'),
+          duration: 1000
+        })
         localStorage.setItem('language', lang)
       }
     }

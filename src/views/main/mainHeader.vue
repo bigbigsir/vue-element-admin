@@ -13,23 +13,25 @@
       </li>
       <li class="header-nav-item fr">
         <el-dropdown @command="handleCommand" trigger="click" size="medium" placement="bottom">
-          <div class="user-info el-dropdown-link">
-            <img alt="头像" :src="userAvatar">
+          <div class="user-info">
+            <img alt="" :src="userAvatar">
             <span class="user-name">{{userInfo&&userInfo['userName']}}</span>
             <i class="icon-down el-icon-arrow-down"></i>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="password">
-              <svg-icon icon="unlock"/>&nbsp;修改密码
-            </el-dropdown-item>
             <el-dropdown-item command="logout">
-              <svg-icon icon="logout"/>&nbsp;退出
+              <svg-icon icon="logout"/>&nbsp;{{$t('logout')}}
+            </el-dropdown-item>
+            <el-dropdown-item command="password">
+              <svg-icon icon="unlock"/>&nbsp;{{$t('updatePassword.title')}}
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </li>
       <li @click="toggleScreenFull" class="header-nav-item fr">
-        <svg-icon icon="fullscreen"/>
+        <span class="trigger">
+          <svg-icon icon="fullscreen"/>
+        </span>
       </li>
       <li class="header-nav-item fr">
         <LanguageSelect>
@@ -42,12 +44,14 @@
         </SizeSelect>
       </li>
       <li class="header-nav-item fr">
-        <ThemePicker ref="menuListPopover">
+        <ThemePicker>
           <svg-icon icon="skin"/>
         </ThemePicker>
       </li>
       <li @click="refreshRouter" class="header-nav-item fr">
-        <svg-icon icon="reload"/>
+        <span class="trigger">
+          <svg-icon icon="reload"/>
+        </span>
       </li>
     </ul>
   </header>
@@ -96,8 +100,19 @@
       // 用户中心操作
       handleCommand (type) {
         if (type === 'logout') {
-          cookies.remove('token')
-          this.$router.push('/login')
+          let title = this.$t('prompt.title')
+          let info = this.$t('prompt.info', {
+            'handle': this.$t('logout')
+          })
+          let confirmConfig = {
+            confirmButtonText: this.$t('confirm'),
+            cancelButtonText: this.$t('cancel'),
+            type: 'warning'
+          }
+          this.$confirm(info, title, confirmConfig).then(() => {
+            cookies.remove('token')
+            this.$router.push('/login')
+          }).catch(e => e)
         } else {
         }
       }

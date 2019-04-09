@@ -55,7 +55,7 @@ _http.interceptors.response.use(response => {
       statusText: 'Network Error'
     }
   }
-  if (response.status === 401 && response.data.code === 401) {
+  if (!response || (response.status === 401 && response.data.code === 401)) {
     cookies.remove('token')
     Router.replace({ name: 'login' })
   }

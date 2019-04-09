@@ -4,14 +4,14 @@ const moduleMixin = {
   data () {
     return {
       // 配置属性
-      mixinOptions: {
+      mixinConfig: {
         activatedAutoRequest: true, // 此页面是否在激活（进入）时，调用查询数据列表接口？
         getListDataURL: null, // 数据列表接口，API地址
-        getDetailsURL: null, // 数据单个详情接口，API地址
         getListDataIsPage: false, // 数据列表接口，是否需要分页？
         deleteURL: null, // 删除接口，API地址
         isBatchDelete: false, // 删除接口，是否需要批量？
         batchDeleteKey: 'id', // 删除接口，批量状态下由那个key进行标记操作？比如：pid，uid...
+        getDetailsURL: null, // 数据单个详情接口，API地址
         updateStatusURL: null, // 改变状态， API地址
         updateSortURL: null, // 改变排序， API地址
         exportURL: null // 导出接口，API地址
@@ -25,35 +25,36 @@ const moduleMixin = {
       order: null, // 排序顺序，asc | desc
       orderField: null, // 排序字段
       getDataLoading: false, // 获取数据，loading状态
-      listSelections: [], // 列表数据，多选项
-      isRenderDialog: false // 新增|更新，弹窗是否渲染
+      isRenderDialog: false, // 新增|更新，弹窗是否渲染
+      listSelections: [] // 列表数据，多选项
     }
   },
-  activated () {
-    if (this.mixinOptions.activatedAutoRequest) {
+  created () {
+    if (this.mixinConfig.activatedAutoRequest) {
       this.getListData()
     }
   },
   methods: {
     // 获取数据列表
     getListData () {
+      let url = this.mixinConfig.getListDataURL
       let params = {
         order: this.order,
         orderField: this.orderField,
-        page: this.mixinOptions.getListDataIsPage ? this.page : null,
-        pageSize: this.mixinOptions.getListDataIsPage ? this.pageSize : null,
+        page: this.mixinConfig.getListDataIsPage ? this.page : null,
+        pageSize: this.mixinConfig.getListDataIsPage ? this.pageSize : null,
         ...this.queryParams
       }
-      if (!this.mixinOptions.getListDataURL) return
+      if (!this.mixinConfig.getListDataURL) return
       this.getDataLoading = true
       for (let key in params) {
         if (!params[key]) delete params[key]
       }
-      return this.$http.get(this.mixinOptions.getListDataURL, params).then(({ ok, data }) => {
+      return this.$http.get(url, params).then(({ ok, data }) => {
         this.getDataLoading = false
         if (ok && data) {
-          this.listData = this.mixinOptions.getListDataIsPage ? (data.rows ? data.rows : data) : data
-          this.total = this.mixinOptions.getListDataIsPage ? data.total : 0
+          this.listData = this.mixinConfig.getListDataIsPage ? (data.rows ? data.rows : data) : data
+          this.total = this.mixinConfig.getListDataIsPage ? data.total : 0
         }
         return data
       }).catch(() => {
@@ -94,15 +95,15 @@ const moduleMixin = {
         cancelButtonText: this.$t('cancel'),
         type: 'warning'
       }
-      let url = this.mixinOptions.deleteURL
-      if (!id && this.mixinOptions.isBatchDelete && !this.listSelections.length) {
+      let url = this.mixinConfig.deleteURL
+      if (!id && this.mixinConfig.isBatchDelete && !this.listSelections.length) {
         return this.$message({
           message: this.$t('prompt.deleteSelect'),
           type: 'warning',
           duration: 1000
         })
       }
-      id = this.mixinOptions.isBatchDelete ? this.listSelections.map(item => item[this.mixinOptions.batchDeleteKey]) : id
+      id = this.mixinConfig.isBatchDelete ? this.listSelections.map(item => item[this.mixinConfig.batchDeleteKey]) : id
       this.$confirm(info, title, confirmConfig).then(() => {
         this.$http.delete(url, { [key]: id }).then(({ ok }) => {
           if (ok) {
@@ -127,7 +128,7 @@ const moduleMixin = {
         cancelButtonText: this.$t('cancel'),
         type: 'warning'
       }
-      let url = this.mixinOptions.updateStatusURL
+      let url = this.mixinConfig.updateStatusURL
       let params = {
         [idKey]: idVal,
         [statusKey]: statusVal
@@ -150,7 +151,7 @@ const moduleMixin = {
     },
     // 更新排序
     updateSort (idKey, idVal, sortKey, sortVal, method = 'put') {
-      let url = this.mixinOptions.updateSortURL
+      let url = this.mixinConfig.updateSortURL
       let params = {
         [idKey]: idVal,
         [sortKey]: sortVal

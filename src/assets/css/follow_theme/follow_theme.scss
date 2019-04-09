@@ -1,5 +1,6 @@
 @import "../../../../element-variables.scss";
 
+
 a {
   color: mix(#fff, $--color-primary, 20%);
   text-decoration: none;
@@ -29,14 +30,23 @@ a {
   }
 }
 
+/* Brand-color
+-------------------------- */
 .c-primary {
   color: $--color-primary;
+}
+
+.bg-c-primary {
+  background-color: $--color-primary;
 }
 
 .b-c-primary {
   border-color: $--color-primary;
 }
 
-.bg-c-primary {
-  background-color: $--color-primary;
+.login-main .login-captcha {
+  background: -webkit-linear-gradient(left top, $--color-primary-light-8 0%, #d9dadc 100%); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(bottom right, $--color-primary-light-8 0%, #d9dadc 100%); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(bottom right, $--color-primary-light-8 0%, #d9dadc 100%); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to bottom right, $--color-primary-light-8 0%, #d9dadc 100%); /* 标准的语法（必须放在最后） */
 }

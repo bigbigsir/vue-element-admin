@@ -102,20 +102,6 @@ img {
       Element-ui Colors Start
 ------------------------------ */
 
-/* Brand-color
--------------------------- */
-.c-primary {
-  color: $--color-primary;
-}
-
-.bg-c-primary {
-  background-color: $--color-primary;
-}
-
-.b-c-primary {
-  border-color: $--color-primary;
-}
-
 /* Secondary-color
 -------------------------- */
 .c-success {
@@ -341,6 +327,7 @@ img {
 }
 
 .disabled-b {
+  color: transparent;
   border-color: $--border-color-light;
 }
 
