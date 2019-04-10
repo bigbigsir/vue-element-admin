@@ -48,7 +48,6 @@
     },
     created () {
       this.windowResizeHandle()
-      if (this.userInfo && this.menuData) return (this.loading = false)
       Promise.all([this.getMenuData(), this.getUserInfo()]).then(() => {
         this.loading = false
       }).catch(() => {

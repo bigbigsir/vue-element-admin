@@ -113,9 +113,19 @@
           type: 'warning'
         }
         this.$confirm(info, title, confirmConfig).then(() => {
-          cookies.remove('token')
-          this.$router.push('/login')
+          this.$http.get('/user/signOut').then(({ ok, msg }) => {
+            if (ok) {
+              cookies.remove('token')
+              this.$router.push('/login')
+            } else {
+              this.$message.error(msg)
+            }
+          })
+
         }).catch(e => e)
+      },
+      // 修改密码
+      changePassword () {
       }
     }
   }

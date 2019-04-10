@@ -1,6 +1,6 @@
 # vue-element-admin
 
-> [预览地址](http://60kg.top/dist)
+> [预览地址](http://60kg.top/dist)  登录：admin admin
 
 - 生成ElementUi主题变量文件 element-variables.scss
 ```et -i```
