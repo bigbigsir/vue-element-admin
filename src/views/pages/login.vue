@@ -13,13 +13,13 @@
               </el-button>
             </LanguageSelect>
           </h3>
-          <el-form :model="loginForm" @keyup.enter.native="submitHandle" :rules="formRules"
-                   :validate-on-rule-change="false" ref="loginForm" status-icon>
+          <el-form :model="formData" @keyup.enter.native="submitHandle" :rules="formRules"
+                   :validate-on-rule-change="false" ref="form" status-icon>
             <el-form-item prop="code" required size="default">
               <el-input maxlength="20"
                         :placeholder="$t('login.userName')"
                         size="default"
-                        v-model="loginForm.code">
+                        v-model="formData.code">
               <span class="el-input__icon fs18px" slot="prefix">
                <svg-icon icon="user"/>
               </span>
@@ -31,7 +31,7 @@
                         show-password
                         size="default"
                         type="password"
-                        v-model="loginForm.password">
+                        v-model="formData.password">
               <span class="el-input__icon fs18px" slot="prefix">
                 <svg-icon icon="lock"/>
               </span>
@@ -44,7 +44,7 @@
                         :placeholder="$t('login.captcha')"
                         ref="captcha"
                         size="default"
-                        v-model="loginForm.captcha">
+                        v-model="formData.captcha">
               <span class="el-input__icon fs18px" slot="prefix">
                 <svg-icon icon="safetycertificate"/>
               </span>
@@ -114,10 +114,10 @@
     },
     data () {
       return {
-        nextTarget: null,
-        uuId: getUUId(),
+        nextTarget: '/',
         isLoading: false,
-        loginForm: {
+        formData: {
+          uuid: getUUId(),
           code: '',
           password: '',
           captcha: ''
@@ -126,10 +126,10 @@
     },
     computed: {
       captchaUrl () {
-        return this.$store.state.baseUrl + '/util/getCaptcha?' + this.uuId
+        return this.$store.state.baseUrl + '/util/getCaptcha?uuid=' + this.formData.uuid
       },
       formRules () {
-        let required = { required: true, message: this.$t('validate.required'), trigger: 'blur' }
+        let required = { required: true, message: this.$t('validate.required'), trigger: ['blur', 'change'] }
         return {
           code: [required],
           password: [required],
@@ -137,12 +137,10 @@
         }
       }
     },
-    created () {
-    },
     methods: {
       // 刷新验证码
       refreshCaptcha: debounce(function () {
-        this.uuId = getUUId()
+        this.formData.uuid = getUUId()
       }, 1000, { 'leading': true, 'trailing': false }),
       // 加密密码
       encrypt (key, plaintext) {
@@ -152,7 +150,7 @@
       },
       // 提交登录请求
       submitRequest ({ key }) {
-        let params = Object.assign({}, this.loginForm)
+        let params = { ...this.formData }
         params.password = this.encrypt(key, params.password)
         this.$http.post('/user/signIn', params).then(({ ok, msg, token }) => {
           this.isLoading = false
@@ -167,7 +165,7 @@
       },
       // 登录事件
       submitHandle: debounce(function () {
-        this.$refs.loginForm.validate((valid) => {
+        this.$refs.form.validate((valid) => {
           if (valid) {
             this.isLoading = true
             this.$http.get('/util/getPublicKey').then(this.submitRequest)
