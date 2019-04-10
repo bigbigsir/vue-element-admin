@@ -17,8 +17,8 @@
       <el-table-column :label="$t('menu.routePath')" prop="routerPath" align="center"></el-table-column>
       <el-table-column :label="$t('menu.resourceUrl')" prop="resourceUrl" min-width="150px" align="center">
       </el-table-column>
-      <el-table-column :label="$t('menu.openMode')" prop="openMode" align="center"></el-table-column>
-      <el-table-column :label="$t('menu.sort')" prop="sort" align="center">
+      <el-table-column :label="$t('menu.openMode')" prop="openMode" align="center" width="150"></el-table-column>
+      <el-table-column :label="$t('menu.sort')" prop="sort" align="center" width="150">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.sort"

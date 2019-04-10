@@ -11,7 +11,7 @@ import { isIE } from '../util/util'
 
 // 创建 axios 实例
 const _http = axios.create({
-  timeout: 1000 * 6,
+  timeout: 1000 * 30,
   withCredentials: true,
   baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://127.0.0.1:3000'
 })
