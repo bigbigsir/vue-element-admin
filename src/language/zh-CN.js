@@ -75,7 +75,7 @@ export default {
   // 更新密码
   updatePassword: {
     title: '修改密码',
-    username: '账号',
+    userName: '账号',
     password: '原密码',
     newPassword: '新密码',
     confirmPassword: '确认密码',
@@ -91,6 +91,7 @@ export default {
   },
   // 业务模块常用词
   module: {
+    code: '编码',
     date: '日期',
     time: '时间',
     address: '地址',
@@ -107,7 +108,7 @@ export default {
     enable: '正常',
     disable: '停用',
     gender: '性别',
-    username: '用戶名',
+    userName: '用戶名',
     deptName: '所属部门',
     password: '密码',
     confirmPassword: '确认密码'
@@ -121,7 +122,7 @@ export default {
   // 登录
   login: {
     title: '登录',
-    username: '用户名',
+    userName: '用户名',
     password: '密码',
     captcha: '验证码',
     demo: '在线演示',

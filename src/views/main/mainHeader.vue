@@ -22,7 +22,7 @@
             <el-dropdown-item command="logout">
               <svg-icon icon="logout"/>&nbsp;{{$t('logout')}}
             </el-dropdown-item>
-            <el-dropdown-item command="password">
+            <el-dropdown-item command="changePassword">
               <svg-icon icon="unlock"/>&nbsp;{{$t('updatePassword.title')}}
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -99,22 +99,23 @@
       },
       // 用户中心操作
       handleCommand (type) {
-        if (type === 'logout') {
-          let title = this.$t('prompt.title')
-          let info = this.$t('prompt.info', {
-            'handle': this.$t('logout')
-          })
-          let confirmConfig = {
-            confirmButtonText: this.$t('confirm'),
-            cancelButtonText: this.$t('cancel'),
-            type: 'warning'
-          }
-          this.$confirm(info, title, confirmConfig).then(() => {
-            cookies.remove('token')
-            this.$router.push('/login')
-          }).catch(e => e)
-        } else {
+        this[type]()
+      },
+      // 退出登录
+      logout () {
+        let title = this.$t('prompt.title')
+        let info = this.$t('prompt.info', {
+          'handle': this.$t('logout')
+        })
+        let confirmConfig = {
+          confirmButtonText: this.$t('confirm'),
+          cancelButtonText: this.$t('cancel'),
+          type: 'warning'
         }
+        this.$confirm(info, title, confirmConfig).then(() => {
+          cookies.remove('token')
+          this.$router.push('/login')
+        }).catch(e => e)
       }
     }
   }

@@ -17,7 +17,7 @@
                    :validate-on-rule-change="false" ref="loginForm" status-icon>
             <el-form-item prop="code" required size="default">
               <el-input maxlength="20"
-                        :placeholder="$t('login.username')"
+                        :placeholder="$t('login.userName')"
                         size="default"
                         v-model="loginForm.code">
               <span class="el-input__icon fs18px" slot="prefix">

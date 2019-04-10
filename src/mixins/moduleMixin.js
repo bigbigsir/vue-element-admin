@@ -45,16 +45,20 @@ const moduleMixin = {
         pageSize: this.mixinConfig.getListDataIsPage ? this.pageSize : null,
         ...this.queryParams
       }
-      if (!this.mixinConfig.getListDataURL) return
+      if (!url) return
       this.getDataLoading = true
       for (let key in params) {
         if (!params[key]) delete params[key]
       }
-      return this.$http.get(url, params).then(({ ok, data }) => {
+      return this.$http.get(url, params).then(({ ok, data, msg }) => {
         this.getDataLoading = false
-        if (ok && data) {
+        if (ok) {
           this.listData = this.mixinConfig.getListDataIsPage ? (data.rows ? data.rows : data) : data
           this.total = this.mixinConfig.getListDataIsPage ? data.total : 0
+          this.getListDataAfter(this.listData)
+        } else {
+          this.$message.error(msg)
+          return Promise.reject(msg)
         }
         return data
       }).catch(() => {
@@ -66,13 +70,13 @@ const moduleMixin = {
       this.listSelections = rows
     },
     // 每页条数发生变化时事件处理
-    pageSizeChangeHandle (pageSize) {
+    handlePageSizeChange (pageSize) {
       this.page = (this.total / pageSize >= this.page) ? this.page : 0
       this.pageSize = pageSize
       this.getListData()
     },
     // 当前页发生变化时事件处理
-    currentPageChangeHandle (page) {
+    handleCurrentPageChange (page) {
       this.page = page
       this.getListData()
     },
@@ -96,6 +100,7 @@ const moduleMixin = {
         type: 'warning'
       }
       let url = this.mixinConfig.deleteURL
+      if (!url) return
       if (!id && this.mixinConfig.isBatchDelete && !this.listSelections.length) {
         return this.$message({
           message: this.$t('prompt.deleteSelect'),
@@ -105,7 +110,7 @@ const moduleMixin = {
       }
       id = this.mixinConfig.isBatchDelete ? this.listSelections.map(item => item[this.mixinConfig.batchDeleteKey]) : id
       this.$confirm(info, title, confirmConfig).then(() => {
-        this.$http.delete(url, { [key]: id }).then(({ ok }) => {
+        this.$http.delete(url, { [key]: id }).then(({ ok, msg }) => {
           if (ok) {
             this.$message({
               message: this.$t('prompt.success'),
@@ -113,6 +118,8 @@ const moduleMixin = {
               duration: 1000,
               onClose: () => this.getListData()
             })
+          } else {
+            this.$message.error(msg)
           }
         }).catch(() => null)
       }).catch(() => null)
@@ -133,8 +140,9 @@ const moduleMixin = {
         [idKey]: idVal,
         [statusKey]: statusVal
       }
+      if (!url) return
       this.$confirm(info, title, confirmConfig).then(() => {
-        this.$http[method](url, params).then(({ ok }) => {
+        this.$http[method](url, params).then(({ ok, msg }) => {
           if (ok) {
             this.$message({
               message: this.$t('prompt.success'),
@@ -145,6 +153,8 @@ const moduleMixin = {
                 this.getListData()
               }
             })
+          } else {
+            this.$message.error(msg)
           }
         }).catch(() => this.getListData())
       }).catch(() => this.getListData())
@@ -156,7 +166,8 @@ const moduleMixin = {
         [idKey]: idVal,
         [sortKey]: sortVal
       }
-      this.$http[method](url, params).then(({ ok }) => {
+      if (!url) return
+      this.$http[method](url, params).then(({ ok, msg }) => {
         if (ok) {
           this.$message({
             message: this.$t('prompt.success'),
@@ -167,6 +178,8 @@ const moduleMixin = {
               this.getListData()
             }
           })
+        } else {
+          this.$message.error(msg)
         }
       }).catch(() => this.getListData())
     },
@@ -174,6 +187,10 @@ const moduleMixin = {
     sortChangeHandle (data) {
       if (this.order !== 'asc' || this.order !== 'desc' || !this.orderField) return
       this.getListData()
+    },
+    // 数据请求成功之后的回调
+    getListDataAfter () {
+      return null
     }
   }
 }

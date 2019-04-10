@@ -140,17 +140,20 @@
             let url = `/api/menu/${this.formData.id ? 'updateOne' : 'add'}`
             let params = { ...this.formData }
             delete params.parentName
-            this.$http.post(url, params).then(({ ok }) => {
-              if (!ok) return
-              this.$message({
-                message: this.$t('prompt.success'),
-                type: 'success',
-                duration: 500,
-                onClose: () => {
-                  this.visible = false
-                  this.$emit('refreshList')
-                }
-              })
+            this.$http.post(url, params).then(({ ok, msg }) => {
+              if (ok) {
+                this.$message({
+                  message: this.$t('prompt.success'),
+                  type: 'success',
+                  duration: 500,
+                  onClose: () => {
+                    this.visible = false
+                    this.$emit('refreshList')
+                  }
+                })
+              } else {
+                this.$message.error(msg)
+              }
             })
           }
         })
