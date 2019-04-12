@@ -1,8 +1,8 @@
 <template>
   <div id="main"
-       :class="{collapse:isCollapse}"
        v-loading.fullscreen.lock="loading"
-       :element-loading-text="'Loading···'"
+       :class="{collapse:isCollapse,opacity0:loading}"
+       :element-loading-text="$t('loading')"
        class="main-container reset-element-ui clearfix">
     <MainHeader></MainHeader>
     <MainSideMenu></MainSideMenu>
@@ -14,6 +14,7 @@
   /**
    * Created by XiaoJie on 2019/3/28
    */
+  import cookies from 'js-cookie'
   import MainHeader from './mainHeader.vue'
   import MainContent from './mainContent.vue'
   import MainSideMenu from './mainSideMenu.vue'
@@ -51,34 +52,39 @@
       Promise.all([this.getMenuData(), this.getUserInfo()]).then(() => {
         this.loading = false
       }).catch(() => {
+        cookies.remove('token')
         this.$router.replace('/login')
       })
     },
     computed: {
-      ...mapState('main', ['tabs', 'userInfo', 'menuData', 'isCollapse'])
+      ...mapState('main', ['tabs', 'menuData', 'isCollapse'])
     },
     methods: {
+      ...mapMutations(['setUserInfo']),
       ...mapMutations('main', [
         'addTab',
         'setMenuData',
-        'setUserInfo',
         'toggleCollapse',
         'setMenuActiveIndex',
         'setTabsActiveName'
       ]),
       // 获取菜单数据
       getMenuData () {
-        return this.$http.get('/api/menu/tree').then(({ ok, data }) => {
+        return this.$http.get('/api/menu/tree').then(({ ok, data, msg }) => {
           if (ok) {
             this.setMenuData(data)
+          } else {
+            return Promise.reject(msg)
           }
         })
       },
       // 获取用户信息
       getUserInfo () {
-        return this.$http.get('user/getUserInfo').then(({ ok, data }) => {
+        return this.$http.get('/user/getUserInfo').then(({ ok, data, msg }) => {
           if (ok && data) {
             this.setUserInfo(data)
+          } else {
+            return Promise.reject(msg)
           }
         })
       },

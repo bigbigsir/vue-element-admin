@@ -1,5 +1,18 @@
 // import qs from 'qs'
 
+// 操作成功后刷新列表数据
+function actionSuccessAfter () {
+  this.$message({
+    message: this.$t('prompt.success'),
+    type: 'success',
+    duration: 1000,
+    showClose: true,
+    onClose: () => {
+      this.getListData()
+    }
+  })
+}
+
 const moduleMixin = {
   data () {
     return {
@@ -108,21 +121,18 @@ const moduleMixin = {
           duration: 1000
         })
       }
-      id = this.mixinConfig.isBatchDelete ? this.listSelections.map(item => item[this.mixinConfig.batchDeleteKey]) : id
-      this.$confirm(info, title, confirmConfig).then(() => {
-        this.$http.delete(url, { [key]: id }).then(({ ok, msg }) => {
+      id = (!id && this.mixinConfig.isBatchDelete) ? this.listSelections.map(item => item[this.mixinConfig.batchDeleteKey]) : id
+      return this.$confirm(info, title, confirmConfig).then(() => {
+        return this.$http.delete(url, { [key]: id }).then(({ ok, msg = 'error' }) => {
           if (ok) {
-            this.$message({
-              message: this.$t('prompt.success'),
-              type: 'success',
-              duration: 1000,
-              onClose: () => this.getListData()
-            })
+            actionSuccessAfter.call(this)
+            return true
           } else {
             this.$message.error(msg)
+            return Promise.reject(msg)
           }
-        }).catch(() => null)
-      }).catch(() => null)
+        })
+      }).catch(() => false)
     },
     // 更新状态
     updateStatus (idKey, idVal, statusKey, statusVal, method = 'put') {
@@ -141,23 +151,20 @@ const moduleMixin = {
         [statusKey]: statusVal
       }
       if (!url) return
-      this.$confirm(info, title, confirmConfig).then(() => {
-        this.$http[method](url, params).then(({ ok, msg }) => {
+      return this.$confirm(info, title, confirmConfig).then(() => {
+        return this.$http[method](url, params).then(({ ok, msg = 'error' }) => {
           if (ok) {
-            this.$message({
-              message: this.$t('prompt.success'),
-              type: 'success',
-              duration: 1000,
-              showClose: true,
-              onClose: () => {
-                this.getListData()
-              }
-            })
+            actionSuccessAfter.call(this)
+            return true
           } else {
             this.$message.error(msg)
+            return Promise.reject(msg)
           }
-        }).catch(() => this.getListData())
-      }).catch(() => this.getListData())
+        })
+      }).catch(() => {
+        this.getListData()
+        return false
+      })
     },
     // 更新排序
     updateSort (idKey, idVal, sortKey, sortVal, method = 'put') {
@@ -167,28 +174,25 @@ const moduleMixin = {
         [sortKey]: sortVal
       }
       if (!url) return
-      this.$http[method](url, params).then(({ ok, msg }) => {
+      return this.$http[method](url, params).then(({ ok, msg = 'error' }) => {
         if (ok) {
-          this.$message({
-            message: this.$t('prompt.success'),
-            type: 'success',
-            duration: 1000,
-            showClose: true,
-            onClose: () => {
-              this.getListData()
-            }
-          })
+          actionSuccessAfter.call(this)
+          return true
         } else {
           this.$message.error(msg)
+          return Promise.reject(msg)
         }
-      }).catch(() => this.getListData())
+      }).catch(() => {
+        this.getListData()
+        return false
+      })
     },
     // 排序变化时事件方法
     sortChangeHandle (data) {
       if (this.order !== 'asc' || this.order !== 'desc' || !this.orderField) return
       this.getListData()
     },
-    // 数据请求成功之后的回调
+    // 数据请求成功之后的回调（默认占位，以防业务组件不需要该方法而报错is not func）
     getListDataAfter () {
       return null
     }

@@ -52,28 +52,28 @@
     }
   }
 
-  .form-dialog-500px {
-    .el-dialog {
-      width: 500px;
-    }
-  }
-
-  .form-dialog-600px {
-    .el-dialog {
-      width: 600px;
-    }
-  }
-
-  .form-dialog-700px {
-    .el-dialog {
-      width: 700px;
-    }
-  }
-
   .el-pagination {
     margin-top: 14px;
     text-align: right;
   }
+
+  .el-dialog {
+    .el-form {
+      &.mask-to-dialog {
+        position: inherit !important;
+      }
+
+      & > .margin-b-0 {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.el-form-item.is-required:not(.is-no-asterisk) .el-form-item__label:before {
+  content: "*";
+  color: #f56c6c;
+  margin-right: 4px;
 }
 
 /* Reset element-ui end

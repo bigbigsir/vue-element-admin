@@ -23,6 +23,7 @@ Vue.use(ElementUI, {
 Vue.component('svg-icon', SvgIcon)
 Vue.filter('moment', function (value, formatString) {
   formatString = formatString || 'YYYY-MM-DD HH:mm:ss'
+  if (!value) return null
   return moment(value).format(formatString)
 })
 

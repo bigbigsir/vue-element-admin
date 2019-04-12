@@ -15,7 +15,7 @@
         <el-dropdown @command="handleCommand" trigger="click" size="medium" placement="bottom">
           <div class="user-info">
             <img alt="" :src="userAvatar">
-            <span class="user-name">{{userInfo&&userInfo['userName']}}</span>
+            <span class="user-name">{{userInfo&&userInfo.username}}</span>
             <i class="icon-down el-icon-arrow-down"></i>
           </div>
           <el-dropdown-menu slot="dropdown">
@@ -54,6 +54,9 @@
         </span>
       </li>
     </ul>
+    <changePassword v-if="renderChangePassword" :isChangePassword="true"
+                    ref="changePassword" append-to-body>
+    </changePassword>
   </header>
 </template>
 
@@ -67,21 +70,26 @@
   import SizeSelect from '@/components/SizeSelect.vue'
   import ThemePicker from '@/components/ThemePicker.vue'
   import LanguageSelect from '@/components/LanguageSelect.vue'
+  import changePassword from '../modules/user/addOrUpdate.vue'
 
   export default {
     name: 'mainHeader',
     components: {
       SizeSelect,
       ThemePicker,
-      LanguageSelect
+      LanguageSelect,
+      changePassword
     },
     data () {
-      return {}
+      return {
+        renderChangePassword: false
+      }
     },
     created () {
     },
     computed: {
-      ...mapState('main', ['userInfo', 'isCollapse', 'headerFollowTheme']),
+      ...mapState(['userInfo']),
+      ...mapState('main', ['isCollapse', 'headerFollowTheme']),
       userAvatar () {
         return (this.userInfo && this.userInfo['photo']) || require('@/assets/img/avatar.png')
       }
@@ -113,19 +121,18 @@
           type: 'warning'
         }
         this.$confirm(info, title, confirmConfig).then(() => {
-          this.$http.get('/user/signOut').then(({ ok, msg }) => {
-            if (ok) {
-              cookies.remove('token')
-              this.$router.push('/login')
-            } else {
-              this.$message.error(msg)
-            }
+          this.$http.get('/user/signOut').then(() => {
+            cookies.remove('token')
+            this.$router.push('/login')
           })
-
         }).catch(e => e)
       },
       // 修改密码
       changePassword () {
+        this.renderChangePassword = true
+        this.$nextTick(() => {
+          this.$refs.changePassword.visible = true
+        })
       }
     }
   }

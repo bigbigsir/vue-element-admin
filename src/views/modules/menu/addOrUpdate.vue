@@ -4,14 +4,16 @@
     @closed="dialogClose"
     :visible.sync="visible"
     :title="formData.id ? $t('update') :$t('add')"
-    custom-class="menu-add-dialog"
+    custom-class="menu-dialog min-w-600px"
     :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-form :model="formData" :rules="formRules" @keyup.enter.native="submitForm()"
-             :validate-on-rule-change="false" ref="form" label-width="120px" :status-icon="false">
-      <el-form-item prop="label" :label="$t('menu.name')" required>
-        <el-input v-model="formData.label" :placeholder="$t('menu.name')"></el-input>
+    <el-form :model="formData" :rules="formRules" ref="form" @keyup.enter.native="submitHandle()"
+             v-loading="submitLoading" :validate-on-rule-change="false" label-width="auto">
+
+      <el-form-item prop="label" :label="$t('menu.name')">
+        <el-input v-model="formData.label" :placeholder="$t('menu.name')" maxlength="20"></el-input>
       </el-form-item>
-      <el-form-item prop="parentName" :label="$t('menu.parentName')" required>
+
+      <el-form-item prop="parentName" :label="$t('menu.parentName')">
         <el-input v-model="formData.parentName"
                   readonly class="cursor-pr"
                   :placeholder="$t('menu.parentName')"
@@ -32,15 +34,18 @@
           </el-tree>
         </el-popover>
       </el-form-item>
+
       <el-form-item prop="routerPath" :label="$t('menu.routePath')">
-        <el-input v-model="formData.routerPath" :placeholder="$t('menu.routePath')"></el-input>
+        <el-input v-model="formData.routerPath" :placeholder="$t('menu.routePath')" maxlength="20"></el-input>
       </el-form-item>
+
       <el-form-item prop="resourceUrl" :label="$t('menu.resourceUrl')">
-        <el-input v-model="formData.resourceUrl" :placeholder="$t('menu.resourceUrl')"></el-input>
+        <el-input v-model="formData.resourceUrl" :placeholder="$t('menu.resourceUrl')" maxlength="100"></el-input>
       </el-form-item>
+
       <el-row>
         <el-col :span="12">
-          <el-form-item prop="sort" :label="$t('menu.sort')" required>
+          <el-form-item prop="sort" :label="$t('menu.sort')">
             <el-input-number v-model="formData.sort" :min="1" :max="100"
                              :placeholder="$t('menu.sort')"></el-input-number>
           </el-form-item>
@@ -53,14 +58,16 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item prop="openMode" :label="$t('menu.openMode')" required>
+
+      <el-form-item prop="openMode" :label="$t('menu.openMode')" class="margin-b-0">
         <el-radio v-model="formData.openMode" label="tab">tab</el-radio>
         <el-radio v-model="formData.openMode" label="home">home</el-radio>
       </el-form-item>
+
     </el-form>
     <template slot="footer">
       <el-button @click="visible = false" type="text">{{ $t('cancel') }}</el-button>
-      <el-button @click="submitForm()" type="primary">{{ $t('confirm') }}</el-button>
+      <el-button @click="submitHandle()" type="primary">{{ $t('confirm') }}</el-button>
     </template>
     <iconSelect @getIcon="getIcon" v-if="renderIconSelect" :showIconSelect.sync="showIconSelect"></iconSelect>
   </el-dialog>
@@ -87,15 +94,16 @@
     data () {
       return {
         visible: false,
+        submitLoading: false,
         menuListVisible: false,
         renderIconSelect: false,
         showIconSelect: false,
         formData: {
           id: null,
-          label: '',
+          label: null,
           parentId: null,
-          routerPath: '',
-          resourceUrl: '',
+          routerPath: null,
+          resourceUrl: null,
           sort: 1,
           openMode: 'tab',
           icon: '',
@@ -105,10 +113,11 @@
     },
     computed: {
       formRules () {
+        let required = { required: true, message: this.$t('validate.required'), trigger: 'blur' }
         return {
-          label: [
-            { required: true, message: this.$t('validate.required'), trigger: 'blur' }
-          ]
+          label: [required],
+          parentName: [required],
+          openMode: [required]
         }
       }
     },
@@ -118,12 +127,14 @@
         if (this.formData.id) {
           let url = '/api/menu/findOne'
           let params = { id: this.formData.id }
-          this.$http.get(url, params).then(({ ok, data }) => {
+          this.$http.get(url, params).then(({ ok, data, msg }) => {
             if (ok) {
               this.formData = Object.assign({}, this.formData, data)
               if (data.parentId) {
                 this.formData.parentName = this.findParentName(data.parentId, this.menuData)
               }
+            } else {
+              this.$message.error(msg)
             }
           })
         }
@@ -134,13 +145,15 @@
         this.$refs.form.resetFields()
       },
       // 提交表单
-      submitForm: debounce(function () {
+      submitHandle: debounce(function () {
         this.$refs.form.validate((valid) => {
           if (valid) {
             let url = `/api/menu/${this.formData.id ? 'updateOne' : 'add'}`
             let params = { ...this.formData }
             delete params.parentName
+            this.submitLoading = true
             this.$http.post(url, params).then(({ ok, msg }) => {
+              this.submitLoading = false
               if (ok) {
                 this.$message({
                   message: this.$t('prompt.success'),
@@ -198,9 +211,7 @@
 </script>
 
 <style lang="scss">
-  .menu-add-dialog {
-    min-width: 600px;
-
+  .menu-dialog {
     .icon-wrapper {
       padding: 8px;
       font-size: 18px;

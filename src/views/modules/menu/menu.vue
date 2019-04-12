@@ -1,11 +1,15 @@
 <template>
   <el-card class="box-card" shadow="never">
     <div slot="header">
-      <el-button @click="addOrUpdateHandle(null)" type="primary">{{ $t('add') }}</el-button>
+      <el-button @click="addOrUpdateHandle(null)" type="primary">
+        <svg-icon icon="plus"></svg-icon>
+        {{ $t('add') }}
+      </el-button>
     </div>
-    <el-table v-loading="getDataLoading" :data="listData" border>
+    <el-table :data="menuData" v-loading="getDataLoading" border>
       <table-tree-column :label="$t('menu.name')" prop="label"
-                         :menuData="listData"
+                         :menuData="menuData"
+                         :childKey="childKey"
                          @updateMenuData="updateMenuData"
                          min-width="150px">
       </table-tree-column>
@@ -18,12 +22,11 @@
       <el-table-column :label="$t('menu.resourceUrl')" prop="resourceUrl" min-width="150px" align="center">
       </el-table-column>
       <el-table-column :label="$t('menu.openMode')" prop="openMode" align="center" width="150"></el-table-column>
-      <el-table-column :label="$t('menu.sort')" prop="sort" align="center" width="150">
+      <el-table-column :label="$t('menu.sort')" prop="sort" align="center" width="180">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.sort"
             @change="updateSort('id',scope.row.id,'sort',scope.row.sort)"
-            controls-position="right"
             :min="1" :max="100"
             size="small">
           </el-input-number>
@@ -36,10 +39,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <addOrUpdate :menuData="copyMenuData"
-                 @refreshList="getListData"
-                 v-if="isRenderDialog"
-                 ref="addOrUpdate">
+    <addOrUpdate :menuData="copyMenuData" @refreshList="getListData"
+                 v-if="isRenderDialog" ref="addOrUpdate">
     </addOrUpdate>
   </el-card>
 </template>
@@ -58,6 +59,8 @@
     components: { TableTreeColumn, addOrUpdate },
     data () {
       return {
+        childKey: 'child',
+        menuData: [],
         copyMenuData: [],
         mixinConfig: {
           getListDataURL: '/api/menu/tree',
@@ -72,11 +75,24 @@
     methods: {
       // 数据请求成功之后的回调
       getListDataAfter (data) {
-        this.copyMenuData = [...data]
+        this.copyMenuData = JSON.parse(JSON.stringify(data))
+        // ElementUi官方2.7.0支持树表格，检测到children会强行使用官方组件
+        recursion.call(this, data)
+        this.menuData = data
+
+        function recursion (nodes) {
+          nodes.forEach(item => {
+            item[this.childKey] = item.children
+            delete item.children
+            if (item[this.childKey].length) {
+              recursion.call(this, item[this.childKey])
+            }
+          })
+        }
       },
       // 更新菜单数据
       updateMenuData (data) {
-        this.listData = data
+        this.menuData = data
       },
       // 删除菜单
       deleteMenu (row) {

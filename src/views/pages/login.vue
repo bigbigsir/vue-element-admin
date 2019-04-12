@@ -15,17 +15,17 @@
           </h3>
           <el-form :model="formData" @keyup.enter.native="submitHandle" :rules="formRules"
                    :validate-on-rule-change="false" ref="form" status-icon>
-            <el-form-item prop="code" required size="default">
+            <el-form-item prop="username" size="default">
               <el-input maxlength="20"
-                        :placeholder="$t('login.userName')"
+                        :placeholder="$t('login.username')"
                         size="default"
-                        v-model="formData.code">
+                        v-model="formData.username">
               <span class="el-input__icon fs18px" slot="prefix">
                <svg-icon icon="user"/>
               </span>
               </el-input>
             </el-form-item>
-            <el-form-item prop="password" required size="default">
+            <el-form-item prop="password" size="default">
               <el-input maxlength="20"
                         :placeholder="$t('login.password')"
                         show-password
@@ -37,7 +37,7 @@
               </span>
               </el-input>
             </el-form-item>
-            <el-form-item prop="captcha" required size="default">
+            <el-form-item prop="captcha" size="default">
               <el-input @clear="$refs.captcha.focus()" class="w200px"
                         clearable
                         maxlength="4"
@@ -55,7 +55,7 @@
             </el-form-item>
             <el-form-item size="default">
               <el-button @click="submitHandle"
-                         :loading="isLoading"
+                         :loading="submitLoading"
                          class="w100" size="default"
                          type="primary">
                 {{ $t('login.title') }}
@@ -115,10 +115,10 @@
     data () {
       return {
         nextTarget: '/',
-        isLoading: false,
+        submitLoading: false,
         formData: {
           uuid: getUUId(),
-          code: '',
+          username: '',
           password: '',
           captcha: ''
         }
@@ -129,13 +129,16 @@
         return this.$store.state.baseUrl + '/util/getCaptcha?uuid=' + this.formData.uuid
       },
       formRules () {
-        let required = { required: true, message: this.$t('validate.required'), trigger: ['blur', 'change'] }
+        let required = { required: true, message: this.$t('validate.required'), trigger: ['blur'] }
         return {
-          code: [required],
+          username: [required],
           password: [required],
           captcha: [required]
         }
       }
+    },
+    created () {
+      this.$store.commit('setUserInfo', null)
     },
     methods: {
       // 刷新验证码
@@ -149,17 +152,17 @@
         return crypto.encrypt(plaintext)
       },
       // 提交登录请求
-      submitRequest ({ key }) {
+      submitForm (key) {
         let params = { ...this.formData }
         params.password = this.encrypt(key, params.password)
-        this.$http.post('/user/signIn', params).then(({ ok, msg, token }) => {
-          this.isLoading = false
+        return this.$http.post('/user/signIn', params).then(({ ok, msg, token }) => {
           if (ok && token) {
             cookies.set('token', token, { expires: 1 })
             this.$router.replace(this.nextTarget)
           } else {
             this.refreshCaptcha()
             this.$message.error(msg)
+            return Promise.reject(msg)
           }
         })
       },
@@ -167,8 +170,17 @@
       submitHandle: debounce(function () {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            this.isLoading = true
-            this.$http.get('/util/getPublicKey').then(this.submitRequest)
+            this.submitLoading = true
+            this.$http.get('/util/getPublicKey').then(({ ok, key, msg }) => {
+              if (ok) {
+                return this.submitForm(key)
+              } else {
+                this.$message.error(msg)
+                return Promise.reject(msg)
+              }
+            }).catch(() => {
+              this.submitLoading = false
+            })
           }
         })
       }, 1000, { 'leading': true, 'trailing': false })

@@ -6,7 +6,7 @@ export default {
   update: 'Edit',
   query: 'Query',
   export: 'Export',
-  handle: 'Handle',
+  handle: 'Actions',
   confirm: 'Confirm',
   cancel: 'Cancel',
   logout: 'Sign Out',
@@ -55,7 +55,8 @@ export default {
     info: 'Confirm to carry out [{handle}] operation?',
     success: 'Succeeded',
     failed: 'Failed',
-    deleteSelect: 'Please select delete item'
+    deleteSelect: 'Please select delete item',
+    restartLogin: 'Please login again'
   },
   // 验证信息
   validate: {
@@ -75,7 +76,7 @@ export default {
   // 更新密码
   updatePassword: {
     title: 'Change Password',
-    userName: 'Account',
+    username: 'Account',
     password: 'Original',
     newPassword: 'New Password',
     confirmPassword: 'Confirm',
@@ -108,10 +109,18 @@ export default {
     enable: 'Enable',
     disable: 'Disable',
     gender: 'Gender',
-    userName: 'Username',
+    username: 'Username',
+    realName: 'Real Name',
     deptName: 'Department',
     password: 'Password',
-    confirmPassword: 'Confirm'
+    confirmPassword: 'Confirm',
+    originalPassword: 'Original'
+  },
+  // 性别
+  gender: {
+    'gender_0': 'Secure',
+    'gender_1': 'Male',
+    'gender_2': 'Female'
   },
   // 404页面
   notFound: {
@@ -122,7 +131,7 @@ export default {
   // 登录
   login: {
     title: 'Sign In',
-    userName: 'Username',
+    username: 'Username',
     password: 'Password',
     captcha: 'Verification Code',
     demo: 'Demo',

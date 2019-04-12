@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import main from '../views/main/main.vue'
 import cookies from 'js-cookie'
 import store from '../store/store'
 import { isURL } from '@/util/util'
@@ -13,7 +12,7 @@ const router = new Router({
     {
       path: '/',
       name: 'sys_main',
-      component: main,
+      component: () => import(/* webpackChunkName: "main" */ '../views/main/main.vue'),
       redirect: { name: 'sys_home' },
       children: [
         {
@@ -26,6 +25,16 @@ const router = new Router({
             openMode: 'tab'
           },
           component: () => import(/* webpackChunkName: "home" */'../views/modules/home.vue')
+        }, {
+          path: '/_menu',
+          name: 'sys_menu',
+          meta: {
+            id: null,
+            icon: 'menu',
+            label: '菜单管理',
+            openMode: 'tab'
+          },
+          component: () => import(/* webpackChunkName: "menu" */'../views/modules/menu/menu.vue')
         }
       ]
     }, {
@@ -65,7 +74,7 @@ function addRouter (menus) {
     {
       path: '/',
       name: 'main-dynamic-route',
-      component: main,
+      component: () => import(/* webpackChunkName: "main" */ '../views/main/main.vue'),
       redirect: { name: 'sys_home' },
       children: routers
     }, {

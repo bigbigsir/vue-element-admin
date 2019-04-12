@@ -55,7 +55,8 @@ export default {
     info: '确定进行[{handle}]操作?',
     success: '操作成功',
     failed: '操作失败',
-    deleteSelect: '请选择删除项'
+    deleteSelect: '请选择删除项',
+    restartLogin: '请重新登录'
   },
   // 验证信息
   validate: {
@@ -75,7 +76,7 @@ export default {
   // 更新密码
   updatePassword: {
     title: '修改密码',
-    userName: '账号',
+    username: '账号',
     password: '原密码',
     newPassword: '新密码',
     confirmPassword: '确认密码',
@@ -107,11 +108,19 @@ export default {
     mobile: '手机号',
     enable: '正常',
     disable: '停用',
+    username: '用戶名',
+    realName: '真实姓名',
     gender: '性别',
-    userName: '用戶名',
     deptName: '所属部门',
     password: '密码',
-    confirmPassword: '确认密码'
+    confirmPassword: '确认密码',
+    originalPassword: '原密码'
+  },
+  // 性别
+  gender: {
+    'gender_0': '保密',
+    'gender_1': '男',
+    'gender_2': '女'
   },
   // 404页面
   notFound: {
@@ -122,7 +131,7 @@ export default {
   // 登录
   login: {
     title: '登录',
-    userName: '用户名',
+    username: '用户名',
     password: '密码',
     captcha: '验证码',
     demo: '在线演示',

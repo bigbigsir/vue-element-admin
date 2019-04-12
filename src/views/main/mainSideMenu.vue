@@ -2,12 +2,13 @@
   <aside :class="{'dark':sideMenuDarkSkin}" class="main-side-menu fl">
     <el-scrollbar>
       <el-menu
+        ref="menu"
         @select="selectMenuHandle"
         :collapse="isCollapse"
         :collapse-transition="false"
         class="side-menu-root"
         :default-active="menuActiveIndex">
-        <SubMenu v-for="menu in menuData" :key="menu.id" :menu="menu"></SubMenu>
+        <SubMenu ref="el_menu" v-for="menu in menuData" :key="menu.id" :menu="menu"></SubMenu>
       </el-menu>
     </el-scrollbar>
   </aside>
@@ -27,6 +28,11 @@
       return {}
     },
     created () {
+    },
+    watch: {
+      menuActiveIndex: function (n) {
+        if (n === null) this.$refs.menu.activeIndex = n
+      }
     },
     computed: {
       ...mapState('main', [

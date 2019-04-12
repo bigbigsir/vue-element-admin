@@ -31,8 +31,8 @@ _http.interceptors.request.use(config => {
     let symbol = ~config.url.indexOf('?') ? '&' : '?'
     config.url += symbol + '_=' + Date.now()
   }
-  config.headers.Language = localStorage.getItem('language') || 'zh-CN'
-  config.headers.Authorization = cookies.get('token') || null
+  config.headers['Accept-Language'] = localStorage.getItem('language') || 'zh-CN'
+  config.headers['Authorization'] = cookies.get('token') || null
   return config
 }, error => {
   return Promise.reject(error)

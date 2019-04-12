@@ -19,7 +19,6 @@ export default {
     tabActiveName: null, // 当前选中标签页的 name
     menuData: null, // 菜单数据
     menuActiveIndex: null, // 当前激活菜单的 index
-    userInfo: null, // 登录用户信息
     isCollapse: false, // 主页是否折叠
     tabRouterKey: 0, // 标签页中router标签的key，用于刷新
     headerFollowTheme: localStorage.getItem('header') !== 'false', // Header背景是否跟随主题
@@ -83,10 +82,6 @@ export default {
       this._vm['$ELEMENT'].size = size
       this.commit('main/refreshRouter')
       localStorage.setItem('size', size)
-    },
-    // 设置登录用户信息
-    setUserInfo (state, user) {
-      state.userInfo = user
     },
     // 设置当前激活菜单的 index
     setMenuActiveIndex (state, index) {
