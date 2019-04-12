@@ -9,6 +9,17 @@
     :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="formData" :rules="formRules" ref="form" @keyup.enter.native="submitHandle()"
              v-loading="submitLoading" :validate-on-rule-change="false" label-width="auto">
+      <el-form-item v-if="isChangePassword" label-width='0'>
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
 
       <el-form-item prop="username" :label="$t('module.username')">
         <el-input v-model="formData.username" :placeholder="$t('module.username')" :readonly="!!formData.id"
@@ -80,6 +91,7 @@
     },
     data () {
       return {
+        imageUrl: null,
         visible: false,
         submitLoading: false,
         formData: {
@@ -214,10 +226,62 @@
             return Promise.reject(msg)
           }
         })
+      },
+      handleAvatarSuccess (res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw)
+      },
+      beforeAvatarUpload (file) {
+        const isJPG = file.type === 'image/jpeg'
+        const isLt2M = file.size / 1024 / 1024 < 2
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!')
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!')
+        }
+        return isJPG && isLt2M
       }
     }
   }
 </script>
 
 <style lang="scss">
+  .user-dialog {
+    .el-dialog__body {
+      padding-top: 0;
+    }
+  }
+
+  .avatar-uploader {
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    display: block;
+  }
 </style>
