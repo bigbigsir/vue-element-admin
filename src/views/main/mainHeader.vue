@@ -169,7 +169,7 @@
           return this.$message.error(this.$t('validate.imageSize', { 'size': '2MB' }))
         }
         formData = new FormData()
-        formData.append(this.name, image)
+        formData.append(fileInput.name, image)
         this.uploadRequest(formData)
       },
       // 上传头像请求
