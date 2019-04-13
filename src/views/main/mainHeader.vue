@@ -111,7 +111,7 @@
       }
     },
     methods: {
-      ...mapMutations('main', ['toggleCollapse', 'refreshRouter1']),
+      ...mapMutations('main', ['toggleCollapse', 'refreshRouter']),
       // 切换全屏
       toggleScreenFull () {
         if (screenFull.enabled) return screenFull.toggle(null)
@@ -150,7 +150,7 @@
           this.$refs.changePassword.visible = true
         })
       },
-      // 上传头像
+      // 上传头像1
       uploadAvatar () {
         let input = document.getElementById('uploadAvatar')
         input.click()
