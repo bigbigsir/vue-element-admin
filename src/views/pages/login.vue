@@ -161,7 +161,6 @@
             this.$router.replace(this.nextTarget)
           } else {
             this.refreshCaptcha()
-            this.$message.error(msg)
             return Promise.reject(msg)
           }
         })
@@ -175,10 +174,10 @@
               if (ok) {
                 return this.submitForm(key)
               } else {
-                this.$message.error(msg)
                 return Promise.reject(msg)
               }
-            }).catch(() => {
+            }).catch((err) => {
+              this.$message.error(err)
               this.submitLoading = false
             })
           }
