@@ -111,7 +111,7 @@
       }
     },
     methods: {
-      ...mapMutations('main', ['toggleCollapse', 'refreshRouter']),
+      ...mapMutations('main', ['toggleCollapse', 'refreshRouter1']),
       // 切换全屏
       toggleScreenFull () {
         if (screenFull.enabled) return screenFull.toggle(null)
