@@ -61,7 +61,12 @@ export default {
   // 验证信息
   validate: {
     required: 'Required field cannot be empty',
-    format: '{attr} format error'
+    // email: 'email is not a valid email',
+    // mobile: 'mobile is not a valid mobile',
+    format: '{attr} format error',
+    passwordMismatch: 'Confirm password is not consistent with password input',
+    maxLength: 'The maximum character length is {maxLength} bits',
+    imageSize: 'Image size shall not exceed {size}'
   },
   // 上传文件
   upload: {
@@ -92,6 +97,7 @@ export default {
   },
   // 业务模块常用词
   module: {
+    image: 'Image',
     code: 'Code',
     date: 'Date',
     time: 'Time',

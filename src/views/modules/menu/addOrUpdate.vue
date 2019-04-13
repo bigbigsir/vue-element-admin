@@ -113,11 +113,10 @@
     },
     computed: {
       formRules () {
-        let required = { required: true, message: this.$t('validate.required'), trigger: 'blur' }
         return {
-          label: [required],
-          parentName: [required],
-          openMode: [required]
+          label: this.$rules({ type: 'required' }),
+          parentName: this.$rules({ type: 'required' }),
+          openMode: this.$rules({ type: 'required' })
         }
       }
     },

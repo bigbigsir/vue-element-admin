@@ -11,11 +11,13 @@ import ElementUI from 'element-ui'
 import moment from 'moment'
 
 import i18n from './language'
-import http from './api/http.js'
+import http from './api/http'
+import rules from './util/rules'
 import SvgIcon from './components/SvgIcon.vue'
 
 Vue.config.productionTip = false
 Vue.use(http)
+Vue.use(rules)
 Vue.use(ElementUI, {
   size: localStorage.getItem('size') || 'medium',
   i18n: (key, value) => i18n.t(key, value)

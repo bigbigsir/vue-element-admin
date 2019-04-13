@@ -60,7 +60,7 @@ _http.interceptors.response.use(response => {
     Router.replace({ name: 'login' })
   }
   console.error(info)
-  return Promise.reject(info)
+  return Promise.reject(info.statusText)
 })
 
 // 封装常用请求方法

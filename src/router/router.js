@@ -54,6 +54,9 @@ router.beforeEach((to, from, next) => {
         addRouter(data)
         next({ ...to, replace: true })
       }
+    }).catch(() => {
+      cookies.remove('token')
+      next({ name: 'login' })
     })
   } else if (to.name === 'login') {
     next()

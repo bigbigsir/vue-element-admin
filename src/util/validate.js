@@ -21,7 +21,7 @@ export const VDT = {
     postal: '请输入正确的邮编格式'
   },
   required: (value, param) => {
-    return value != undefined ? (value.toString().length > 0) : false
+    return value !== undefined ? (value.toString().length > 0) : false
   },
   email: (value) => {
     return /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(value)

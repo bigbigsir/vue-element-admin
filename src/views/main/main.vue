@@ -19,7 +19,7 @@
   import MainContent from './mainContent.vue'
   import MainSideMenu from './mainSideMenu.vue'
   import debounce from 'lodash/debounce'
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations,mapActions } from 'vuex'
 
   export default {
     name: 'mainPage',
@@ -60,7 +60,7 @@
       ...mapState('main', ['tabs', 'menuData', 'isCollapse'])
     },
     methods: {
-      ...mapMutations(['setUserInfo']),
+      ...mapActions(['getUserInfo']),
       ...mapMutations('main', [
         'addTab',
         'setMenuData',
@@ -73,16 +73,6 @@
         return this.$http.get('/api/menu/tree').then(({ ok, data, msg }) => {
           if (ok) {
             this.setMenuData(data)
-          } else {
-            return Promise.reject(msg)
-          }
-        })
-      },
-      // 获取用户信息
-      getUserInfo () {
-        return this.$http.get('/user/getUserInfo').then(({ ok, data, msg }) => {
-          if (ok && data) {
-            this.setUserInfo(data)
           } else {
             return Promise.reject(msg)
           }

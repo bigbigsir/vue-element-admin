@@ -9,41 +9,30 @@
     :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="formData" :rules="formRules" ref="form" @keyup.enter.native="submitHandle()"
              v-loading="submitLoading" :validate-on-rule-change="false" label-width="auto">
-      <el-form-item v-if="isChangePassword" label-width='0'>
-        <el-upload
-          class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
 
       <el-form-item prop="username" :label="$t('module.username')">
-        <el-input v-model="formData.username" :placeholder="$t('module.username')" :readonly="!!formData.id"
+        <el-input v-model.trim="formData.username" :placeholder="$t('module.username')" :readonly="!!formData.id"
                   maxlength="30"></el-input>
       </el-form-item>
 
       <el-form-item prop="originalPassword" :label="$t('module.originalPassword')" v-if="isChangePassword">
-        <el-input v-model="formData.originalPassword" :placeholder="$t('module.originalPassword')"
+        <el-input v-model.trim="formData.originalPassword" :placeholder="$t('module.originalPassword')"
                   maxlength="30"></el-input>
       </el-form-item>
 
       <el-form-item prop="password" :label="$t('module.password')"
                     v-if="isChangePassword||!formData.id">
-        <el-input v-model="formData.password" :placeholder="$t('module.password')" maxlength="30"></el-input>
+        <el-input v-model.trim="formData.password" :placeholder="$t('module.password')" maxlength="30"></el-input>
       </el-form-item>
 
       <el-form-item prop="confirmPassword" :label="$t('module.confirmPassword')"
                     v-if="isChangePassword||!formData.id">
-        <el-input v-model="formData.confirmPassword" :placeholder="$t('module.confirmPassword')"
+        <el-input v-model.trim="formData.confirmPassword" :placeholder="$t('module.confirmPassword')"
                   maxlength="30"></el-input>
       </el-form-item>
 
       <el-form-item prop="realName" :label="$t('module.realName')">
-        <el-input v-model="formData.realName" :placeholder="$t('module.realName')" maxlength="30"></el-input>
+        <el-input v-model.trim="formData.realName" :placeholder="$t('module.realName')" maxlength="30"></el-input>
       </el-form-item>
 
       <el-form-item prop="gender" :label="$t('module.gender')">
@@ -53,11 +42,11 @@
       </el-form-item>
 
       <el-form-item prop="email" :label="$t('module.email')">
-        <el-input v-model="formData.email" :placeholder="$t('module.email')" maxlength="30"></el-input>
+        <el-input v-model.trim="formData.email" :placeholder="$t('module.email')" maxlength="30"></el-input>
       </el-form-item>
 
-      <el-form-item prop="mobile" :label="$t('module.mobile')">
-        <el-input v-model="formData.mobile" :placeholder="$t('module.mobile')" maxlength="30"></el-input>
+      <el-form-item prop="mobile" :label="$t('module.mobile')" :class="{'margin-b-0':isChangePassword}">
+        <el-input v-model.trim="formData.mobile" :placeholder="$t('module.mobile')" maxlength="30"></el-input>
       </el-form-item>
 
       <el-form-item prop="status" :label="$t('module.status')" v-if="!isChangePassword" class="margin-b-0">
@@ -110,17 +99,16 @@
     },
     computed: {
       formRules () {
-        let required = { required: true, message: this.$t('validate.required'), trigger: 'blur' }
         return {
-          username: [required],
-          originalPassword: [required],
-          password: [required],
-          confirmPassword: [required],
-          realName: [required],
-          gender: [required],
-          email: [required],
-          mobile: [required],
-          status: [required]
+          username: this.$rules([{ type: 'required' }, { type: 'username' }]),
+          originalPassword: this.$rules([{ type: 'required' }, { type: 'password' }]),
+          password: this.$rules([{ type: 'required' }, { type: 'password' }]),
+          confirmPassword: this.$rules([{ type: 'required' }, { type: 'confirmPassword' }]),
+          realName: this.$rules([{ type: 'required' }]),
+          gender: this.$rules({ type: 'required' }),
+          email: this.$rules([{ type: 'required' }, { type: 'email' }]),
+          mobile: this.$rules([{ type: 'required' }, { type: 'mobile' }]),
+          status: this.$rules({ type: 'required' })
         }
       }
     },
@@ -226,62 +214,48 @@
             return Promise.reject(msg)
           }
         })
-      },
-      handleAvatarSuccess (res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw)
-      },
-      beforeAvatarUpload (file) {
-        const isJPG = file.type === 'image/jpeg'
-        const isLt2M = file.size / 1024 / 1024 < 2
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!')
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!')
-        }
-        return isJPG && isLt2M
       }
     }
   }
 </script>
 
 <style lang="scss">
-  .user-dialog {
-    .el-dialog__body {
-      padding-top: 0;
-    }
-  }
+  /*.user-dialog {*/
+  /*  .el-dialog__body {*/
+  /*    padding-top: 0;*/
+  /*  }*/
+  /*}*/
 
-  .avatar-uploader {
-    overflow: hidden;
-    text-align: center;
-  }
+  /*.avatar-uploader {*/
+  /*  height: 82px;*/
+  /*  overflow: hidden;*/
+  /*  text-align: center;*/
+  /*}*/
 
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
+  /*.avatar-uploader .el-upload {*/
+  /*  border: 1px dashed #d9d9d9;*/
+  /*  border-radius: 50%;*/
+  /*  cursor: pointer;*/
+  /*  position: relative;*/
+  /*  overflow: hidden;*/
+  /*}*/
 
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
+  /*.avatar-uploader .el-upload:hover {*/
+  /*  border-color: #409EFF;*/
+  /*}*/
 
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    text-align: center;
-  }
+  /*.avatar-uploader-icon {*/
+  /*  font-size: 28px;*/
+  /*  color: #8c939d;*/
+  /*  width: 80px;*/
+  /*  height: 80px;*/
+  /*  line-height: 80px;*/
+  /*  text-align: center;*/
+  /*}*/
 
-  .avatar {
-    width: 80px;
-    height: 80px;
-    display: block;
-  }
+  /*.avatar {*/
+  /*  width: 80px;*/
+  /*  height: 80px;*/
+  /*  display: block;*/
+  /*}*/
 </style>

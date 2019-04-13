@@ -56,24 +56,26 @@
     margin-top: 14px;
     text-align: right;
   }
+}
 
-  .el-dialog {
-    .el-form {
-      &.mask-to-dialog {
-        position: inherit !important;
-      }
+.el-dialog {
+  .el-form {
+    &.mask-to-dialog {
+      position: inherit !important;
+    }
 
-      & > .margin-b-0 {
-        margin-bottom: 0;
-      }
+    & > .margin-b-0 {
+      margin-bottom: 0;
     }
   }
 }
 
-.el-form-item.is-required:not(.is-no-asterisk) .el-form-item__label:before {
-  content: "*";
-  color: #f56c6c;
-  margin-right: 4px;
+.el-form-item.is-required:not(.is-no-asterisk) {
+  .el-form-item__label:before {
+    content: "*";
+    color: #f56c6c;
+    margin-right: 4px;
+  }
 }
 
 /* Reset element-ui end

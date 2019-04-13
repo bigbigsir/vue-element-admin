@@ -16,7 +16,18 @@ export default new Vuex.Store({
       state.userInfo = user
     }
   },
-  actions: {},
+  actions: {
+    // 获取用户信息
+    getUserInfo () {
+      return this._vm['$http'].get('/user/getUserInfo').then(({ ok, data, msg }) => {
+        if (ok && data) {
+          this.commit('setUserInfo', data)
+        } else {
+          return Promise.reject(msg)
+        }
+      })
+    }
+  },
   modules: {
     main
   }

@@ -112,16 +112,32 @@ $--el-tabs__header-height: 40px;
   }
 
   .user-info {
+    overflow: hidden;
     min-width: 56px;
     padding: 0 12px;
     height: $--herder-height;
 
-    img {
+    .avatar-wrapper {
+      overflow: hidden;
       margin-top: 7px;
       margin-right: 8px;
       width: 36px;
+      height: 36px;
       border-radius: 50%;
+      text-align: center;
+      background: #eee;
+    }
+
+    img {
+      width: 36px;
       vertical-align: top;
+      transition: all ease .3s;
+
+      &:hover {
+        zoom: 1;
+        transform: scale(1.1);
+        -ms-transform: scale(1.1);
+      }
     }
   }
 
