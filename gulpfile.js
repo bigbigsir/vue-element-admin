@@ -18,11 +18,16 @@ const sass = require('gulp-sass') // 编译scss
 const cleanCss = require('gulp-clean-css') // 压缩css
 const autoPrefixer = require('gulp-autoprefixer') // 自动添加css前缀
 // const rename = require('gulp-rename') // 改变文件名字
+// 使用module.exports，vue打包后会报错，为了满足页面使用，这里只有使用字符串
+let themeConfig = fs.readFileSync('./src/theme_config/config.js', 'utf8')
+let index = themeConfig.indexOf('[')
+let lastIndex = themeConfig.lastIndexOf(']')
+let str = themeConfig.substring(index, lastIndex + 1)
+let themeList = eval(str).filter(item => !item.hasBuild) // 主题配置列表
 
 let nowTheme = null // 当前构建中的主题名字
 let etConfig = require('./package.json')['element-theme'] // element-theme配置信息
 let variablesScss = etConfig.config.replace(/.*\/(.+\.scss)/, '$1') // 变量样式文件名
-let themeList = require('./src/theme_config/config.js').filter(item => !item.hasBuild) // 主题配置列表
 let styleFileDir = './src/assets/css/follow_theme' // 需要跟随主题切换颜色的样式文件存放目录
 let styleFileNames = fs.readdirSync(styleFileDir) // 样式目录下所有文件名
 let styleFileTempDir = `${styleFileDir}_temp` // 打包时自动创建的临时目录地址

@@ -6,6 +6,7 @@
  * true ：  已构建，不再构建
  * false：  未构建，执行命令后会自动构建
  */
+
 export default [
   { name: 'default', color: '#409EFF', label: '默认色', hasBuild: true },
   { name: 'cyan', color: '#0BB2D4', label: '青色', hasBuild: false },
