@@ -24,7 +24,7 @@
 │   ├── router                 # 路由文件
 │   ├── store                  # 全局 store管理
 │   ├── theme_config           # 主题配置文件
-│   ├── util				   # 公用、工具类存放文件夹
+│   ├── util                   # 公用、工具类存放文件夹
 │   │   ├──util.js             # 公用方法
 │   │   ├──rules.js            # el表单验证常用规则
 │   ├── views                  # views 所有页面
