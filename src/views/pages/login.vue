@@ -67,12 +67,12 @@
       <div class="login-footer">
         <p>
           <svg-icon icon="github-fill"/>
-          <a href="https://github.com/yomojie" target="_blank">vue-element-admin</a>
-          <a href="https://github.com/yomojie/nodeJs" target="_blank">nodeJs</a>
+          <a href="https://github.com/bigbigsir/vue-element-admin" target="_blank">vue-element-admin</a>
+          <a href="https://github.com/bigbigsir/nodeJs" target="_blank">nodeJs</a>
         </p>
         <p>
           <a href="http://opensource.org/licenses/MIT" rel="nofollow" target="_blank">MIT</a>
-          <span>Copyright (c) 2019-present yomojie</span>
+          <span>Copyright (c) 2019-present bigBigSir</span>
         </p>
       </div>
     </div>

@@ -142,8 +142,7 @@ export default {
     username: 'Username',
     password: 'Password',
     captcha: 'Verification Code',
-    demo: 'Demo',
-    copyright: 'Copyright (c) 2019-present yomojie'
+    demo: 'Demo'
   },
   // 菜单模块
   menu: {
