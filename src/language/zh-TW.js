@@ -10,6 +10,7 @@ export default {
   confirm: '確定',
   cancel: '取消',
   logout: '退出',
+  searchList: '請輸入{searchName}',
   // 平台信息
   brand: {
     name: 'TG管理平台',

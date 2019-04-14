@@ -10,6 +10,7 @@ export default {
   confirm: 'Confirm',
   cancel: 'Cancel',
   logout: 'Sign Out',
+  searchList: 'Please enter a {searchName}',
   // 平台信息
   brand: {
     name: 'TG Company',

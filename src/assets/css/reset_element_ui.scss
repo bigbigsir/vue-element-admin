@@ -78,5 +78,16 @@
   }
 }
 
+.el-button + .search-wrapper {
+  margin-left: 10px;
+}
+
+.search-wrapper {
+  .el-input-group__append {
+    position: relative;
+    overflow: hidden;
+  }
+}
+
 /* Reset element-ui end
 ------------------------------ */

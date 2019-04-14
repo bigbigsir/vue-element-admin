@@ -30,6 +30,10 @@ a {
   }
 }
 
+.ripple:after {
+  background-image: radial-gradient(circle, $--color-primary 10%, transparent 20%);
+}
+
 /* Brand-color
 -------------------------- */
 .c-primary {

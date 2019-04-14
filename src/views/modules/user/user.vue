@@ -9,6 +9,11 @@
         <svg-icon icon="close"></svg-icon>
         {{ $t('delete') }}
       </el-button>
+      <div class="search-wrapper">
+        <el-input :placeholder="$t('searchList',{searchName:$t('module.username')})" v-model="queryParams.username">
+          <el-button @click="getListData" class="ripple" slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </div>
     </div>
     <el-table @selection-change="selectionChangeHandle" :data="listData" v-loading="getDataLoading" border>
       <el-table-column type="selection" width="50" align="center"></el-table-column>
@@ -70,7 +75,9 @@
     components: { addOrUpdate },
     data () {
       return {
-        copyMenuData: [],
+        queryParams: {
+          username: null
+        },
         mixinConfig: {
           isBatchDelete: true,
           getListDataIsPage: true,
@@ -98,7 +105,8 @@
 </script>
 
 <style lang="scss" scoped>
-  .box-card {
-    height: 100% !important;
+  .search-wrapper {
+    display: inline-block;
+    width: 300px;
   }
 </style>
