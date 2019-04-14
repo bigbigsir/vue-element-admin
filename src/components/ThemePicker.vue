@@ -32,6 +32,7 @@
    * Created by bigBigSir on 2019/3/31
    */
   import { mapState, mapMutations } from 'vuex'
+  import themeList from '@/theme_config/config'
 
   export default {
     name: 'ThemePicker',
@@ -40,7 +41,7 @@
         theme: localStorage.getItem('theme') || 'default',
         header: false,
         sideMenu: false,
-        themeList: require('@/theme_config/config.js')
+        themeList: themeList
       }
     },
     created () {
