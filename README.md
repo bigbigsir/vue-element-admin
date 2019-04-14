@@ -3,7 +3,7 @@
 >本项目是一个后台管理平台基础模板，技术栈基于: ES2015+、vue(2.6.10)、vuex、vue-router 、vue-cli(3.6.1)、axios、element-ui(2.7.2)、scss、i18n  
 >主要实现功能i18国际化、动态路由、token权限、主题生成、换肤、element组件大小动态切换等  
 >本项目的定位是管理平台基础模板、业务层面只涉及菜单及用户的管理，简单易上手，项目还有很多不足，欢迎交流  
->项目后台采用的node，[飞机票](https://github.com/bigbigsir/nodeJs)  
+>项目后台采用的node，[node项目飞机票](https://github.com/bigbigsir/nodeJs)  
 > [项目预览](http://60kg.top/dist)  登录：admin1 admin1  
 > 部分思路来源于[PanJiaChen](https://github.com/PanJiaChen)大神的经典[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
