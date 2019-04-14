@@ -16,7 +16,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/4/3
+   * Created by bigBigSir on 2019/4/3
    */
   import Clipboard from 'clipboard'
   import { getSvgIconList } from '@/util/util'

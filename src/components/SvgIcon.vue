@@ -6,7 +6,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/3/28
+   * Created by bigBigSir on 2019/3/28
    */
   export default {
     name: 'SvgIcon',

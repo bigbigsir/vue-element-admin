@@ -63,7 +63,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/4/10
+   * Created by bigBigSir on 2019/4/10
    */
   import cookies from 'js-cookie'
   import addOrUpdate from './addOrUpdate.vue'

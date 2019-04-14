@@ -6,7 +6,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/3/26
+   * Created by bigBigSir on 2019/3/26
    */
   export default {
     name: 'App',

@@ -75,7 +75,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/4/5
+   * Created by bigBigSir on 2019/4/5
    */
   import iconSelect from '@/components/iconSelect.vue'
   import debounce from 'lodash/debounce'

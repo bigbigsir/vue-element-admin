@@ -16,7 +16,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/3/28
+   * Created by bigBigSir on 2019/3/28
    */
   import SubMenu from './subMenu.vue'
   import { mapState } from 'vuex'

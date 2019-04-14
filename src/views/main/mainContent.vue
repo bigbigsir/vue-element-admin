@@ -57,7 +57,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/3/28
+   * Created by bigBigSir on 2019/3/28
    */
   import { mapState, mapMutations } from 'vuex'
 

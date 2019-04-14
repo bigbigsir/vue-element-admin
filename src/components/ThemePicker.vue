@@ -29,7 +29,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/3/31
+   * Created by bigBigSir on 2019/3/31
    */
   import { mapState, mapMutations } from 'vuex'
 

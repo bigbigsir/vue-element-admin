@@ -1,5 +1,5 @@
 /**
- * Created by XiaoJie on 2019/3/30
+ * Created by bigBigSir on 2019/3/30
  *
  * 主题配置信息，gulp打包生成时与切换主题时使用
  * hasBuild 是否已构建？

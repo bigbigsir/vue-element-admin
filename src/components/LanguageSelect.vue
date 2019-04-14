@@ -13,7 +13,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/4/3
+   * Created by bigBigSir on 2019/4/3
    */
   import { messages } from '../language/index'
 

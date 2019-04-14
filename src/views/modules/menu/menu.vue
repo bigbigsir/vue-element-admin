@@ -47,7 +47,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/4/3
+   * Created by bigBigSir on 2019/4/3
    */
   import addOrUpdate from './addOrUpdate.vue'
   import moduleMixin from '@/mixins/moduleMixin'

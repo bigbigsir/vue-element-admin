@@ -64,7 +64,7 @@
 
 <script>
   /**
-   * Created by XiaoJie on 2019/4/5
+   * Created by bigBigSir on 2019/4/5
    */
   import cookies from 'js-cookie'
   import JSEncrypt from 'jsencrypt'

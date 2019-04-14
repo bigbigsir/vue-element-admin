@@ -1,5 +1,5 @@
 /**
- * Created by XiaoJie on 2019/3/30
+ * Created by bigBigSir on 2019/3/30
  * gulp打包配置文件
  * 根据主题颜色配置文件（theme_config/config.js）生成不同颜色的element-theme
  * 并将依赖于element-variables.scss样式变量的项目其他样式文件，根据不同主题生成不同样式文件，以便不同主题下的颜色统一

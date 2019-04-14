@@ -1,5 +1,5 @@
 /**
- * Created by XiaoJie on 2019/4/13
+ * Created by bigBigSir on 2019/4/13
  * @description            常用ElementUi表单验证
  * @param  {Array} options 接受一个或多个规则的配置
  * type    {Stying}        规则名称
