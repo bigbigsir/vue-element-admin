@@ -138,8 +138,16 @@
         }
         this.$confirm(info, title, confirmConfig).then(() => {
           this.$http.get('/user/signOut').then(() => {
-            cookies.remove('token')
-            this.$router.push('/login')
+            this.$message({
+              message: this.$t('prompt.success'),
+              type: 'success',
+              duration: 1000,
+              showClose: true,
+              onClose: () => {
+                cookies.remove('token')
+                this.$router.push('/login')
+              }
+            })
           })
         }).catch(e => e)
       },
@@ -150,7 +158,7 @@
           this.$refs.changePassword.visible = true
         })
       },
-      // 上传头像1
+      // 上传头像
       uploadAvatar () {
         let input = document.getElementById('uploadAvatar')
         input.click()

@@ -66,7 +66,8 @@ export default {
     format: '{attr}格式錯誤',
     passwordMismatch: '確認密碼與密碼輸入不一致',
     maxLength: '字符長度最大為{maxLength}位',
-    imageSize: '圖片大小不能超過 {size}'
+    imageSize: '圖片大小不能超過 {size}',
+    onlyUsername: '用戶名已經存在'
   },
   // 上传文件
   upload: {

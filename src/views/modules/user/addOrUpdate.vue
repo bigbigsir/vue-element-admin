@@ -99,8 +99,12 @@
     },
     computed: {
       formRules () {
+        let onlyUsername = {
+          validator: this.onlyUsername,
+          trigger: 'blur'
+        }
         return {
-          username: this.$rules([{ type: 'required' }, { type: 'username' }]),
+          username: [...this.$rules([{ type: 'required' }, { type: 'username' }]), (this.formData.id ? null : onlyUsername)],
           originalPassword: this.$rules([{ type: 'required' }, { type: 'password' }]),
           password: this.$rules([{ type: 'required' }, { type: 'password' }]),
           confirmPassword: this.$rules([{ type: 'required' }, { type: 'confirmPassword' }]),
@@ -133,6 +137,16 @@
       // dialog关闭回调
       dialogClose () {
         this.$refs.form.resetFields()
+      },
+      // 验证username唯一
+      onlyUsername (rule, value, callback) {
+        this.$http.post('/api/user/findOne', { username: value }).then(({ ok, data }) => {
+          if (ok && !data) {
+            callback()
+          } else {
+            callback(this.$t('validate.onlyUsername'))
+          }
+        }).catch(e => e)
       },
       // 加密密码
       encrypt (key, plaintext) {
@@ -218,44 +232,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  /*.user-dialog {*/
-  /*  .el-dialog__body {*/
-  /*    padding-top: 0;*/
-  /*  }*/
-  /*}*/
-
-  /*.avatar-uploader {*/
-  /*  height: 82px;*/
-  /*  overflow: hidden;*/
-  /*  text-align: center;*/
-  /*}*/
-
-  /*.avatar-uploader .el-upload {*/
-  /*  border: 1px dashed #d9d9d9;*/
-  /*  border-radius: 50%;*/
-  /*  cursor: pointer;*/
-  /*  position: relative;*/
-  /*  overflow: hidden;*/
-  /*}*/
-
-  /*.avatar-uploader .el-upload:hover {*/
-  /*  border-color: #409EFF;*/
-  /*}*/
-
-  /*.avatar-uploader-icon {*/
-  /*  font-size: 28px;*/
-  /*  color: #8c939d;*/
-  /*  width: 80px;*/
-  /*  height: 80px;*/
-  /*  line-height: 80px;*/
-  /*  text-align: center;*/
-  /*}*/
-
-  /*.avatar {*/
-  /*  width: 80px;*/
-  /*  height: 80px;*/
-  /*  display: block;*/
-  /*}*/
-</style>

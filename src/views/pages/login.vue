@@ -160,7 +160,6 @@
             cookies.set('token', token, { expires: 1 })
             this.$router.replace(this.nextTarget)
           } else {
-            this.refreshCaptcha()
             return Promise.reject(msg)
           }
         })
@@ -177,6 +176,7 @@
                 return Promise.reject(msg)
               }
             }).catch((err) => {
+              this.refreshCaptcha()
               this.$message.error(err)
               this.submitLoading = false
             })

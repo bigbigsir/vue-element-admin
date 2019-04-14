@@ -13,6 +13,12 @@
     created () {
       let theme = localStorage.getItem('theme') || 'default'
       this.$store.commit('main/changeTheme', theme)
+    },
+    mounted () {
+      let resourceLoading = document.getElementById('resourceLoading')
+      let resourceLoadingStyle = document.getElementById('resourceLoadingStyle')
+      resourceLoading.parentNode.removeChild(resourceLoading)
+      resourceLoadingStyle.parentNode.removeChild(resourceLoadingStyle)
     }
   }
 </script>

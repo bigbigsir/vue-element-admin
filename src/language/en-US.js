@@ -66,7 +66,8 @@ export default {
     format: '{attr} format error',
     passwordMismatch: 'Confirm password is not consistent with password input',
     maxLength: 'The maximum character length is {maxLength} bits',
-    imageSize: 'Image size shall not exceed {size}'
+    imageSize: 'Image size shall not exceed {size}',
+    onlyUsername: 'The user name already exists'
   },
   // 上传文件
   upload: {

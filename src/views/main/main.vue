@@ -49,7 +49,7 @@
     },
     created () {
       this.windowResizeHandle()
-      Promise.all([this.getMenuData(), this.getUserInfo()]).then(() => {
+      this.getUserInfo().then(() => {
         this.loading = false
       }).catch(() => {
         cookies.remove('token')
@@ -57,27 +57,16 @@
       })
     },
     computed: {
-      ...mapState('main', ['tabs', 'menuData', 'isCollapse'])
+      ...mapState('main', ['tabs', 'isCollapse'])
     },
     methods: {
       ...mapActions(['getUserInfo']),
       ...mapMutations('main', [
         'addTab',
-        'setMenuData',
         'toggleCollapse',
         'setMenuActiveIndex',
         'setTabsActiveName'
       ]),
-      // 获取菜单数据
-      getMenuData () {
-        return this.$http.get('/api/menu/tree').then(({ ok, data, msg }) => {
-          if (ok) {
-            this.setMenuData(data)
-          } else {
-            return Promise.reject(msg)
-          }
-        })
-      },
       // 监听窗口大小改变
       windowResizeHandle () {
         this.toggleCollapse(document.body.clientWidth < 1000)

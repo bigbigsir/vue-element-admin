@@ -48,16 +48,24 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (cookies.get('token')) {
     if (store.state.addRouterIsComplete) return next()
-    Vue.prototype['$http'].get('/api/menu/tree').then(({ ok, data }) => {
-      if (ok) {
-        store.state.addRouterIsComplete = true
-        addRouter(data)
-        next({ ...to, replace: true })
-      }
-    }).catch(() => {
+    store.dispatch('getMenuData').then(data => {
+      store.state.addRouterIsComplete = true
+      addRouter(data)
+      next({ ...to, replace: true })
+    }).catch((err) => {
       cookies.remove('token')
       next({ name: 'login' })
     })
+    // Vue.prototype['$http'].get('/api/menu/tree').then(({ ok, data }) => {
+    //   if (ok) {
+    //     store.state.addRouterIsComplete = true
+    //     addRouter(data)
+    //     next({ ...to, replace: true })
+    //   }
+    // }).catch(() => {
+    //   cookies.remove('token')
+    //   next({ name: 'login' })
+    // })
   } else if (to.name === 'login') {
     next()
   } else {

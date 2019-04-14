@@ -35,8 +35,8 @@
       }
     },
     computed: {
+      ...mapState(['menuData']),
       ...mapState('main', [
-        'menuData',
         'menuKey',
         'isCollapse',
         'menuActiveIndex',
