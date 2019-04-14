@@ -104,7 +104,7 @@
           trigger: 'blur'
         }
         return {
-          username: [...this.$rules([{ type: 'required' }, { type: 'username' }]), (this.formData.id ? null : onlyUsername)],
+          username: [...this.$rules([{ type: 'required' }, { type: 'username' }]), (this.formData.id ? {} : onlyUsername)],
           originalPassword: this.$rules([{ type: 'required' }, { type: 'password' }]),
           password: this.$rules([{ type: 'required' }, { type: 'password' }]),
           confirmPassword: this.$rules([{ type: 'required' }, { type: 'confirmPassword' }]),
