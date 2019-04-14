@@ -19,7 +19,7 @@
   import MainContent from './mainContent.vue'
   import MainSideMenu from './mainSideMenu.vue'
   import debounce from 'lodash/debounce'
-  import { mapState, mapMutations,mapActions } from 'vuex'
+  import { mapState, mapMutations, mapActions } from 'vuex'
 
   export default {
     name: 'mainPage',
