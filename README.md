@@ -1,5 +1,9 @@
 # vue-element-admin
-
+## 项目简介
+>本项目是一个后台管理平台基础模板，技术栈基于 ES2015+、vue、vuex、vue-router 、vue-cli 、axios 和 element-ui
+>主要实现功能i18国际化、动态路由、token权限、换肤、element组件大小动态切换等
+>本项目的定位是管理平台基础模板、业务层面只涉及菜单及用户的管理，简单易上手
+>项目后台采用的nodejs，[飞机票](https://github.com/bigbigsir/nodeJs)
 > [预览地址](http://60kg.top/dist)  登录：admin1 admin1
 
 - 生成ElementUi主题变量文件 element-variables.scss
