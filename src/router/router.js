@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import cookies from 'js-cookie'
 import store from '../store/store'
-import { isURL } from '@/util/util'
+import { isURL } from '@/utils/util'
 
 Vue.use(Router)
 
@@ -52,20 +52,10 @@ router.beforeEach((to, from, next) => {
       store.state.addRouterIsComplete = true
       addRouter(data)
       next({ ...to, replace: true })
-    }).catch((err) => {
+    }).catch(() => {
       cookies.remove('token')
       next({ name: 'login' })
     })
-    // Vue.prototype['$http'].get('/api/menu/tree').then(({ ok, data }) => {
-    //   if (ok) {
-    //     store.state.addRouterIsComplete = true
-    //     addRouter(data)
-    //     next({ ...to, replace: true })
-    //   }
-    // }).catch(() => {
-    //   cookies.remove('token')
-    //   next({ name: 'login' })
-    // })
   } else if (to.name === 'login') {
     next()
   } else {

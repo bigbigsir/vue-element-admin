@@ -17,7 +17,6 @@ const plumber = require('gulp-plumber') // 检测错误
 const sass = require('gulp-sass') // 编译scss
 const cleanCss = require('gulp-clean-css') // 压缩css
 const autoPrefixer = require('gulp-autoprefixer') // 自动添加css前缀
-// const rename = require('gulp-rename') // 改变文件名字
 // 使用module.exports，vue打包后会报错，为了满足页面使用，这里只有使用字符串
 let themeConfig = fs.readFileSync('./src/theme_config/config.js', 'utf8')
 let index = themeConfig.indexOf('[')

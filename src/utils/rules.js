@@ -85,6 +85,18 @@ const createRule = function (options = []) {
           callback(new Error(rule.message))
         }
       }
+    },
+    // 不能存在空格
+    noSpaces: {
+      message: this.$t('validate.noSpaces'),
+      regex: /\s/,
+      validator (rule, value, callback) {
+        if (!this.regex.test(value)) {
+          callback()
+        } else {
+          callback(new Error(rule.message))
+        }
+      }
     }
   }
   const result = []

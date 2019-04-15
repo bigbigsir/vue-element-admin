@@ -10,7 +10,7 @@
              v-loading="submitLoading" :validate-on-rule-change="false" label-width="auto">
 
       <el-form-item prop="label" :label="$t('menu.name')">
-        <el-input v-model="formData.label" :placeholder="$t('menu.name')" maxlength="20"></el-input>
+        <el-input v-model.trim="formData.label" :placeholder="$t('menu.name')" maxlength="20"></el-input>
       </el-form-item>
 
       <el-form-item prop="parentName" :label="$t('menu.parentName')">
@@ -36,11 +36,11 @@
       </el-form-item>
 
       <el-form-item prop="routerPath" :label="$t('menu.routePath')">
-        <el-input v-model="formData.routerPath" :placeholder="$t('menu.routePath')" maxlength="20"></el-input>
+        <el-input v-model.trim="formData.routerPath" :placeholder="$t('menu.routePath')" maxlength="20"></el-input>
       </el-form-item>
 
       <el-form-item prop="resourceUrl" :label="$t('menu.resourceUrl')">
-        <el-input v-model="formData.resourceUrl" :placeholder="$t('menu.resourceUrl')" maxlength="100"></el-input>
+        <el-input v-model.trim="formData.resourceUrl" :placeholder="$t('menu.resourceUrl')" maxlength="100"></el-input>
       </el-form-item>
 
       <el-row>
@@ -116,7 +116,9 @@
         return {
           label: this.$rules({ type: 'required' }),
           parentName: this.$rules({ type: 'required' }),
-          openMode: this.$rules({ type: 'required' })
+          openMode: this.$rules({ type: 'required' }),
+          routerPath: this.$rules({ type: 'noSpaces' }),
+          resourceUrl: this.$rules({ type: 'noSpaces' })
         }
       }
     },

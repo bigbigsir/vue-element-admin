@@ -7,7 +7,7 @@
 import axios from 'axios'
 import cookies from 'js-cookie'
 import Router from '../router/router'
-import { isIE } from '../util/util'
+import { isIE } from '../utils/util'
 
 // 创建 axios 实例
 const _http = axios.create({

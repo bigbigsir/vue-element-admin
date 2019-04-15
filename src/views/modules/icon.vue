@@ -19,7 +19,7 @@
    * Created by bigBigSir on 2019/4/3
    */
   import Clipboard from 'clipboard'
-  import { getSvgIconList } from '@/util/util'
+  import { getSvgIconList } from '@/utils/util'
 
   export default {
     name: 'sys_icon',

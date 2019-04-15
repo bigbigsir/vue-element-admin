@@ -86,7 +86,7 @@
   import cookies from 'js-cookie'
   import JSEncrypt from 'jsencrypt'
   import debounce from 'lodash/debounce'
-  import { getUUId } from '../../util/util'
+  import { getUUId } from '../../utils/util'
   import LanguageSelect from '@/components/LanguageSelect.vue'
 
   export default {

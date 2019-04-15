@@ -12,7 +12,7 @@ import moment from 'moment'
 
 import i18n from './language'
 import http from './api/http'
-import rules from './util/rules'
+import rules from './utils/rules'
 import SvgIcon from './components/SvgIcon.vue'
 
 Vue.config.productionTip = false

@@ -126,6 +126,7 @@ $--el-tabs__header-height: 40px;
       border-radius: 50%;
       text-align: center;
       background: #eee;
+      border: 1px solid #606266;
     }
 
     img {
@@ -154,6 +155,20 @@ $--el-tabs__header-height: 40px;
 
   .trigger {
     padding: 6px 12px;
+  }
+}
+
+.main-header.follow-theme {
+  .header-nav-item {
+    color: #f0f0f0;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .avatar-wrapper {
+    border: 1px solid transparent;
   }
 }
 
