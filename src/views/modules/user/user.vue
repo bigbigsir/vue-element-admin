@@ -107,6 +107,6 @@
 <style lang="scss" scoped>
   .search-wrapper {
     display: inline-block;
-    width: 300px;
+    width: 280px;
   }
 </style>
