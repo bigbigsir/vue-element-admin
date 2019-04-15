@@ -138,16 +138,8 @@
         }
         this.$confirm(info, title, confirmConfig).then(() => {
           this.$http.get('/user/signOut').then(() => {
-            this.$message({
-              message: this.$t('prompt.success'),
-              type: 'success',
-              duration: 1000,
-              showClose: true,
-              onClose: () => {
-                cookies.remove('token')
-                this.$router.push('/login')
-              }
-            })
+            cookies.remove('token')
+            this.$router.push('/login')
           })
         }).catch(e => e)
       },

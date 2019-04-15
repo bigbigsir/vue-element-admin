@@ -4,9 +4,13 @@
 'use strict'
 
 const path = require('path')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
+const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? './' : '/', // 打包时相对路径
+  publicPath: isProduction ? './' : '/', // 打包时相对路径
   lintOnSave: false, // 关闭eslint
   productionSourceMap: true, // 生产环境下css 分离文件
   devServer: { // 配置服务
@@ -25,19 +29,6 @@ module.exports = {
     //     changeOrigin: true
     //   }
     // }
-  },
-  configureWebpack: { // 配置目录别名
-    resolve: {
-      alias: {
-        '@': path.join(__dirname, 'src')
-        // 'assets': path.join(__dirname, '/src/assets')
-        // 'components': path.resolve(__dirname, '/src/components'),
-        // 'api': path.resolve(__dirname, '/src/api'),
-        // 'utils': path.resolve(__dirname, '/src/utils'),
-        // 'store': path.resolve(__dirname, '/src/store'),
-        // 'router': path.resolve(__dirname, '/src/router')
-      }
-    }
   },
   chainWebpack: config => {
     const svgRule = config.module.rule('svg')
@@ -61,5 +52,26 @@ module.exports = {
       .end()
       .use('file-loader')
       .loader('file-loader')
+  },
+  configureWebpack: config => {
+    if (isProduction) {
+      config.plugins.push(new CompressionWebpackPlugin({
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
+      }))
+      config.plugins.push(new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+            drop_debugger: true,
+            drop_console: true
+          }
+        },
+        sourceMap: false,
+        parallel: true
+      }))
+    }
   }
 }
