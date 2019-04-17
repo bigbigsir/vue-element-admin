@@ -5,6 +5,7 @@
 
 /**
  * @description 判断浏览器是否是IE
+ *
  * @return {boolean}
  */
 export function isIE () {
@@ -13,6 +14,7 @@ export function isIE () {
 
 /**
  * @description 获取uuid
+ *
  * @return {string} uuid
  */
 export function getUUId () {
@@ -23,6 +25,7 @@ export function getUUId () {
 
 /**
  * @description 判断参数是否为对象
+ *
  * @param  {*} target
  * @return {boolean}
  */
@@ -32,6 +35,7 @@ export function isObject (target) {
 
 /**
  * @description 判断参数是否为数组
+ *
  * @param  {*} target
  * @return {boolean}
  */
@@ -41,6 +45,7 @@ export function isArray (target) {
 
 /**
  * @description 判断参数是否为方法
+ *
  * @param  {*} target
  * @return {boolean}
  */
@@ -50,6 +55,7 @@ export function isFunction (target) {
 
 /**
  * @description 判断参数是否为正则表达式
+ *
  * @param  {*} target
  * @return {boolean}
  */
@@ -59,6 +65,7 @@ export function isRegExp (target) {
 
 /**
  * @description 判断参数是否为日期对象
+ *
  * @param  {*} target
  * @return {boolean}
  */
@@ -68,6 +75,7 @@ export function isDate (target) {
 
 /**
  * 获取svg图标(id)列表
+ *
  * @return {Array} list 全部svg-icon的id数组
  */
 export function getSvgIconList () {
@@ -76,9 +84,26 @@ export function getSvgIconList () {
 
 /**
  * 判断参数是否为URL地址
+ *
  * @param {String} str
  * @return {Boolean}
  */
 export function isURL (str) {
   return /^http[s]?:\/\/.*/.test(str)
+}
+
+/**
+ * 多维数组降维
+ *
+ * @param {Array} arr
+ * @return {Array} arr
+ */
+export function reductionDeep (arr) {
+  if (Array.isArray(arr)) {
+    return arr.reduce((a, b) => {
+      return [...reductionDeep(a), ...reductionDeep(b)]
+    }, [])
+  } else {
+    return [arr]
+  }
 }

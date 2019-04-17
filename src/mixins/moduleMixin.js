@@ -192,7 +192,7 @@ const moduleMixin = {
       if (this.order !== 'asc' || this.order !== 'desc' || !this.orderField) return
       this.getListData()
     },
-    // 数据请求成功之后的回调（默认占位，以防业务组件不需要该方法而报错is not func）
+    // 数据请求成功之后的回调（默认占位，以防业务组件不需要该方法而报错getListDataAfter is undefined）
     getListDataAfter () {
       return null
     }
