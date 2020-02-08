@@ -7,7 +7,8 @@ import { isURL } from '@/utils/util'
 Vue.use(Router)
 
 const router = new Router({
-  scrollBehavior: () => ({ y: 0 }),
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -42,7 +43,8 @@ const router = new Router({
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '../views/pages/login.vue')
     }
-  ]
+  ],
+  scrollBehavior: () => ({ y: 0 })
 })
 
 router.beforeEach((to, from, next) => {

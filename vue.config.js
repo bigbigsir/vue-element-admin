@@ -10,25 +10,12 @@ const productionGzipExtensions = ['js', 'css']
 const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  publicPath: isProduction ? './' : '/', // 打包时相对路径
-  lintOnSave: false, // 关闭eslint
-  productionSourceMap: true, // 生产环境下css 分离文件
+  outputDir: 'admin',
+  publicPath: '/admin', // 打包时相对路径
+  lintOnSave: false, // 保存是执行eslint
   devServer: { // 配置服务
-    port: 8080, // 端口号
-    open: true, // 配置是否自动启动浏览器
-    https: false,
-    overlay: {
-      warnings: true,
-      errors: true
-    }
-    // proxy: { // 配置代理
-    //   '': {
-    //     target: 'http://127.0.0.1:3000',
-    //     // pathRewrite: { '/node': '' },
-    //     ws: false, // 代理 websockets
-    //     changeOrigin: true
-    //   }
-    // }
+    port: 8081, // 端口号
+    open: true // 配置是否自动启动浏览器
   },
   chainWebpack: config => {
     const svgRule = config.module.rule('svg')
@@ -55,12 +42,12 @@ module.exports = {
   },
   configureWebpack: config => {
     if (isProduction) {
-      config.plugins.push(new CompressionWebpackPlugin({
-        algorithm: 'gzip',
-        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
-        threshold: 10240,
-        minRatio: 0.8
-      }))
+      // config.plugins.push(new CompressionWebpackPlugin({
+      //   algorithm: 'gzip',
+      //   test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+      //   threshold: 10240,
+      //   minRatio: 0.8
+      // }))
       config.plugins.push(new UglifyJsPlugin({
         uglifyOptions: {
           compress: {

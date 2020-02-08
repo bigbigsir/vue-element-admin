@@ -1,13 +1,13 @@
 /**
  * Created by bigBigSir on 2019/3/30
  *
- * 主题配置信息，gulp打包生成时与切换主题时使用
+ * 主题配置信息，gulp打包生成时与切换主题时使用,属性名要加''，不然JSON.parse会失败
  * hasBuild 是否已构建？
  * true ：  已构建，不再构建
  * false：  未构建，执行命令后会自动构建
  */
 
-export default [
+const themeList = [
   { name: 'default', color: '#409EFF', label: '默认色', hasBuild: true },
   { name: 'cyan', color: '#0BB2D4', label: '青色', hasBuild: false },
   { name: 'blue', color: '#3E8EF7', label: '蓝色', hasBuild: false },
@@ -22,3 +22,5 @@ export default [
   { name: 'yellow', color: '#FCB900', label: '黄色', hasBuild: false },
   { name: 'red', color: '#FF4C52', label: '红色', hasBuild: false }
 ]
+
+export default themeList
