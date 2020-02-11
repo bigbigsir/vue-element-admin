@@ -1,5 +1,5 @@
-@import 'normalize.css';
-@import 'base.scss';
-@import 'reset_element_ui.scss';
-@import 'main';
-@import 'follow_theme/follow_theme';
+@import '~@/assets/css/normalize.css';
+@import './base.scss';
+@import './reset_element_ui.scss';
+@import './main.scss';
+@import './follow_theme/follow_theme.scss';

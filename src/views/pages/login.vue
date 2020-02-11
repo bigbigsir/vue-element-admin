@@ -80,111 +80,128 @@
 </template>
 
 <script>
-  /**
-   * Created by bigBigSir on 2019/3/26
-   */
-  import cookies from 'js-cookie'
-  import JSEncrypt from 'jsencrypt'
-  import debounce from 'lodash/debounce'
-  import { getUUId } from '../../utils/util'
-  import LanguageSelect from '@/components/LanguageSelect.vue'
+/**
+ * Created by bigBigSir on 2019/3/26
+ */
+import cookies from 'js-cookie'
+import JSEncrypt from 'jsencrypt'
+import debounce from 'lodash/debounce'
+import {getUUId} from '../../utils/util'
+import LanguageSelect from '@/components/LanguageSelect.vue'
 
-  export default {
-    name: 'login',
-    components: {
-      LanguageSelect
+export default {
+  name: 'login',
+  components: {
+    LanguageSelect
+  },
+  // 进入页面的路由拦截
+  beforeRouteEnter(to, from, next) {
+    const nextTarget = {
+      query: {...from.query},
+      params: {...from.params}
+    }
+    if (from.name) {
+      nextTarget.name = from.name
+    } else {
+      nextTarget.path = from.path
+    }
+    if (cookies.get('token')) {
+      return next(nextTarget)
+    }
+    next(vm => {
+      vm.nextTarget = nextTarget
+    })
+  },
+  data() {
+    return {
+      nextTarget: '/',
+      submitLoading: false,
+      formData: {
+        uuid: getUUId(),
+        username: '',
+        password: '',
+        captcha: ''
+      }
+    }
+  },
+  computed: {
+    captchaUrl() {
+      return this.$store.state.baseUrl + '/util/getCaptcha?uuid=' + this.formData.uuid
     },
-    // 进入页面的路由拦截
-    beforeRouteEnter (to, from, next) {
-      let nextTarget = {
-        query: { ...from.query },
-        params: { ...from.params }
+    formRules() {
+      const required = {
+        required: true,
+        message: this.$t('validate.required'),
+        trigger: ['blur']
       }
-      if (from.name) {
-        nextTarget.name = from.name
-      } else {
-        nextTarget.path = from.path
+      return {
+        username: [required],
+        password: [required],
+        captcha: [required]
       }
-      if (cookies.get('token')) {
-        return next(nextTarget)
-      }
-      next(vm => {
-        vm.nextTarget = nextTarget
+    }
+  },
+  created() {
+    this.$store.commit('setUserInfo', null)
+  },
+  methods: {
+    // 刷新验证码
+    refreshCaptcha: debounce(function () {
+      this.formData.uuid = getUUId()
+    }, 1000, {
+      leading: true,
+      trailing: false
+    }),
+    // 加密密码
+    encrypt(key, plaintext) {
+      const crypto = new JSEncrypt()
+      crypto.setPublicKey(key)
+      return crypto.encrypt(plaintext)
+    },
+    // 提交登录请求
+    submitForm(key) {
+      const params = {...this.formData}
+      params.password = this.encrypt(key, params.password)
+      return this.$http.post('/user/signIn', params).then(({ok, msg, token}) => {
+        if (ok && token) {
+          cookies.set('token', token, {expires: 1})
+          this.$router.replace(this.nextTarget)
+        } else {
+          return Promise.reject(msg)
+        }
       })
     },
-    data () {
-      return {
-        nextTarget: '/',
-        submitLoading: false,
-        formData: {
-          uuid: getUUId(),
-          username: '',
-          password: '',
-          captcha: ''
+    // 注册
+    signUp(key) {
+      return this.$http.post('/user/signUp', {
+        username: 'admin1',
+        password: this.encrypt(key, 'admin1')
+      })
+    },
+    // 登录事件
+    submitHandle: debounce(function () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.submitLoading = true
+          this.$http.get('/util/getPublicKey').then(({ok, key, msg}) => {
+            if (ok) {
+              return this.submitForm(key)
+            } else {
+              return Promise.reject(msg)
+            }
+          }).catch((err) => {
+            this.refreshCaptcha()
+            this.$message.error(err)
+            this.submitLoading = false
+          })
         }
-      }
-    },
-    computed: {
-      captchaUrl () {
-        return this.$store.state.baseUrl + '/util/getCaptcha?uuid=' + this.formData.uuid
-      },
-      formRules () {
-        let required = { required: true, message: this.$t('validate.required'), trigger: ['blur'] }
-        return {
-          username: [required],
-          password: [required],
-          captcha: [required]
-        }
-      }
-    },
-    created () {
-      this.$store.commit('setUserInfo', null)
-    },
-    methods: {
-      // 刷新验证码
-      refreshCaptcha: debounce(function () {
-        this.formData.uuid = getUUId()
-      }, 1000, { 'leading': true, 'trailing': false }),
-      // 加密密码
-      encrypt (key, plaintext) {
-        let crypto = new JSEncrypt()
-        crypto.setPublicKey(key)
-        return crypto.encrypt(plaintext)
-      },
-      // 提交登录请求
-      submitForm (key) {
-        let params = { ...this.formData }
-        params.password = this.encrypt(key, params.password)
-        return this.$http.post('/user/signIn', params).then(({ ok, msg, token }) => {
-          if (ok && token) {
-            cookies.set('token', token, { expires: 1 })
-            this.$router.replace(this.nextTarget)
-          } else {
-            return Promise.reject(msg)
-          }
-        })
-      },
-      // 登录事件
-      submitHandle: debounce(function () {
-        this.$refs.form.validate((valid) => {
-          if (valid) {
-            this.submitLoading = true
-            this.$http.get('/util/getPublicKey').then(({ ok, key, msg }) => {
-              if (ok) {
-                return this.submitForm(key)
-              } else {
-                return Promise.reject(msg)
-              }
-            }).catch((err) => {
-              this.refreshCaptcha()
-              this.$message.error(err)
-              this.submitLoading = false
-            })
-          }
-        })
-      }, 1000, { 'leading': true, 'trailing': false })
-    }
+      })
+    }, 1000, {
+      leading: true,
+      trailing: false
+    })
   }
+}
 </script>
 
 <style lang="scss" scoped>

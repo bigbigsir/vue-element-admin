@@ -15,54 +15,54 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/3/28
    */
-  import SubMenu from './subMenu.vue'
-  import { mapState } from 'vuex'
+import SubMenu from './subMenu.vue'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'mainSideMenu',
-    components: { SubMenu },
-    data () {
-      return {}
+export default {
+  name: 'mainSideMenu',
+  components: { SubMenu },
+  data () {
+    return {}
+  },
+  created () {
+  },
+  watch: {
+    menuActiveIndex: function (n) {
+      if (n === null) this.$refs.menu.activeIndex = n
+    }
+  },
+  computed: {
+    ...mapState(['menuData']),
+    ...mapState('main', [
+      'menuKey',
+      'isCollapse',
+      'menuActiveIndex',
+      'sideMenuDarkSkin'
+    ])
+  },
+  methods: {
+    // 点击菜单项时触发
+    selectMenuHandle (menuId) {
+      const menu = this.findMenuItem(this.menuData, menuId)
+      if (menu) this.$router.push(menu.routerPath)
     },
-    created () {
-    },
-    watch: {
-      menuActiveIndex: function (n) {
-        if (n === null) this.$refs.menu.activeIndex = n
-      }
-    },
-    computed: {
-      ...mapState(['menuData']),
-      ...mapState('main', [
-        'menuKey',
-        'isCollapse',
-        'menuActiveIndex',
-        'sideMenuDarkSkin'
-      ])
-    },
-    methods: {
-      // 点击菜单项时触发
-      selectMenuHandle (menuId) {
-        let menu = this.findMenuItem(this.menuData, menuId)
-        if (menu) this.$router.push(menu.routerPath)
-      },
-      // 依据菜单ID在菜单数据中查找该项菜单
-      findMenuItem (menus, menuId) {
-        let menu = null
-        for (let i = menus.length; i--;) {
-          if (menus[i].id === menuId) {
-            menu = menus[i]
-            break
-          }
-          if (menus[i].children && menus[i].children.length) {
-            menu = this.findMenuItem(menus[i].children, menuId)
-          }
+    // 依据菜单ID在菜单数据中查找该项菜单
+    findMenuItem (menus, menuId) {
+      let menu = null
+      for (let i = menus.length; i--;) {
+        if (menus[i].id === menuId) {
+          menu = menus[i]
+          break
         }
-        return menu
+        if (menus[i].children && menus[i].children.length) {
+          menu = this.findMenuItem(menus[i].children, menuId)
+        }
       }
+      return menu
     }
   }
+}
 </script>

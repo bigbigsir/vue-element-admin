@@ -9,7 +9,7 @@ export default new Vuex.Store({
     userInfo: null, // 登录用户信息
     menuData: null, // 菜单数据
     addRouterIsComplete: false, // 动态路由是否增加完成
-    baseUrl: process.env.NODE_ENV === 'production' ? '' : 'http://127.0.0.1:3000' // 用于图片请求前缀
+    baseUrl: process.env.NODE_ENV === 'production' ? '' : 'https://192.168.1.6' // 用于图片请求前缀
   },
   mutations: {
     // 设置登录用户信息
@@ -24,7 +24,7 @@ export default new Vuex.Store({
   actions: {
     // 获取用户信息
     getUserInfo () {
-      return this._vm['$http'].get('/user/getUserInfo').then(({ ok, data, msg }) => {
+      return this._vm.$http.post('/user/getUserInfo').then(({ ok, data, msg }) => {
         if (ok && data) {
           this.commit('setUserInfo', data)
         } else {
@@ -34,7 +34,7 @@ export default new Vuex.Store({
     },
     // 获取菜单数据
     getMenuData () {
-      return this._vm['$http'].get('/api/menu/tree').then(({ ok, data, msg }) => {
+      return this._vm.$http.post('/api/menu/tree').then(({ ok, data, msg }) => {
         if (ok) {
           this.commit('setMenuData', data)
           return data

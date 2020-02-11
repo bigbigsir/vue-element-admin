@@ -4,9 +4,6 @@
 'use strict'
 
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
-const productionGzipExtensions = ['js', 'css']
 const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
@@ -42,23 +39,6 @@ module.exports = {
   },
   configureWebpack: config => {
     if (isProduction) {
-      // config.plugins.push(new CompressionWebpackPlugin({
-      //   algorithm: 'gzip',
-      //   test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
-      //   threshold: 10240,
-      //   minRatio: 0.8
-      // }))
-      config.plugins.push(new UglifyJsPlugin({
-        uglifyOptions: {
-          compress: {
-            warnings: false,
-            drop_debugger: true,
-            drop_console: true
-          }
-        },
-        sourceMap: false,
-        parallel: true
-      }))
     }
   }
 }

@@ -1,7 +1,3 @@
-import './element-ui/index.css'
-import './assets/css/index.scss'
-
-import 'babel-polyfill'
 import './icons'
 import Vue from 'vue'
 import App from './App.vue'

@@ -22,8 +22,6 @@ const themeConfig = fs.readFileSync('./src/theme_config/config.js', 'utf8')
 const index = themeConfig.indexOf('[')
 const lastIndex = themeConfig.lastIndexOf(']')
 const str = themeConfig.substring(index, lastIndex + 1)
-console.log(str)
-console.log(JSON.parse(str))
 const themeList = eval(str).filter(item => !item.hasBuild) // 主题配置列表
 
 let nowTheme = null // 当前构建中的主题名字

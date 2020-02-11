@@ -13,7 +13,7 @@ import { isIE } from '../utils/util'
 const _http = axios.create({
   timeout: 1000 * 30,
   withCredentials: true,
-  baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://127.0.0.1:3000'
+  baseURL: process.env.NODE_ENV === 'production' ? '' : 'https://192.168.1.6'
 })
 
 // // 设置 post、put 默认 Content-Type

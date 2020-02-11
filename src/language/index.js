@@ -11,17 +11,17 @@ Vue.use(VueI18n)
 
 export const messages = {
   'zh-CN': {
-    '_lang': '简体中文',
+    _lang: '简体中文',
     ...zhCN,
     ...zhCNLocale
   },
   'zh-TW': {
-    '_lang': '繁體中文',
+    _lang: '繁體中文',
     ...zhTW,
     ...zhTWLocale
   },
   'en-US': {
-    '_lang': 'English',
+    _lang: 'English',
     ...enUS,
     ...enLocale
   }
