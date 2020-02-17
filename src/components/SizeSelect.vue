@@ -16,40 +16,40 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/4/2
    */
-  import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
-  export default {
-    name: 'SizeSelect',
-    data () {
-      return {
-        sizeOptions: [
-          { label: 'default', value: 'default' },
-          { label: 'medium', value: 'medium' },
-          { label: 'small', value: 'small' },
-          { label: 'mini', value: 'mini' }
-        ]
-      }
-    },
-    created () {
-    },
-    computed: {
-      ...mapState('main', ['size'])
-    },
-    methods: {
-      ...mapMutations('main', ['changeSize']),
-      _changeSize (size) {
-        this.changeSize(size)
-        this.$message({
-          type: 'success',
-          message: this.$t('prompt.success'),
-          duration: 1000
-        })
-      }
+export default {
+  name: 'SizeSelect',
+  data () {
+    return {
+      sizeOptions: [
+        { label: 'default', value: 'default' },
+        { label: 'medium', value: 'medium' },
+        { label: 'small', value: 'small' },
+        { label: 'mini', value: 'mini' }
+      ]
+    }
+  },
+  created () {
+  },
+  computed: {
+    ...mapState('main', ['size'])
+  },
+  methods: {
+    ...mapMutations('main', ['changeSize']),
+    _changeSize (size) {
+      this.changeSize(size)
+      this.$message({
+        type: 'success',
+        message: this.$t('prompt.success'),
+        duration: 1000
+      })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

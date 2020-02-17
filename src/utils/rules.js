@@ -18,7 +18,7 @@ const createRule = function (options = []) {
     required: { required: true, message: this.$t('validate.required'), trigger },
     // 用户名
     username: {
-      message: this.$t('validate.format', { 'attr': this.$t('module.username') }),
+      message: this.$t('validate.format', { attr: this.$t('module.username') }),
       regex: /^[A-z][\w]{3,20}$/,
       validator (rule, value, callback) {
         if (this.regex.test(value)) {
@@ -30,7 +30,7 @@ const createRule = function (options = []) {
     },
     // 密码
     password: {
-      message: this.$t('validate.format', { 'attr': this.$t('module.password') }),
+      message: this.$t('validate.format', { attr: this.$t('module.password') }),
       regex: /^[\w]{6,20}$/,
       validator (rule, value, callback) {
         if (this.regex.test(value)) {
@@ -53,7 +53,7 @@ const createRule = function (options = []) {
     },
     // 邮箱
     email: {
-      message: this.$t('validate.format', { 'attr': this.$t('module.email') }),
+      message: this.$t('validate.format', { attr: this.$t('module.email') }),
       regex: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
       validator (rule, value, callback) {
         if (this.regex.test(value)) {
@@ -65,7 +65,7 @@ const createRule = function (options = []) {
     },
     // 手机号
     mobile: {
-      message: this.$t('validate.format', { 'attr': this.$t('module.mobile') }),
+      message: this.$t('validate.format', { attr: this.$t('module.mobile') }),
       regex: /^1[34578]\d{9}$/,
       validator (rule, value, callback) {
         if (this.regex.test(value)) {
@@ -78,7 +78,7 @@ const createRule = function (options = []) {
     // 最长长度
     maxLength: {
       validator: (rule, value, callback) => {
-        rule.message = rule.message || this.$t('validate.maxLength', { 'maxLength': rule.params.max })
+        rule.message = rule.message || this.$t('validate.maxLength', { maxLength: rule.params.max })
         if (value.length <= rule.params.max) {
           callback()
         } else {

@@ -15,37 +15,37 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/4/3
    */
-  import Clipboard from 'clipboard'
-  import { getSvgIconList } from '@/utils/util'
+import Clipboard from 'clipboard'
+import { getSvgIconList } from '@/utils/util'
 
-  export default {
-    name: 'sys_icon',
-    data () {
-      return {
-        iconList: [],
-        fullscreenLoading: true
-      }
-    },
-    created () {
-      console.log('sys_icon')
-      this.iconList = getSvgIconList()
-    },
-    beforeDestroy () {
-      this.clipboard.destroy()
-    },
-    mounted () {
-      let $message = null
-      this.fullscreenLoading = false
-      this.clipboard = new Clipboard('.name').on('success', (e) => {
-        $message && $message.close()
-        $message = this.$message.success(`${e.text} 文本复制成功`)
-        e.clearSelection()
-      })
+export default {
+  name: 'sys_icon',
+  data () {
+    return {
+      iconList: [],
+      fullscreenLoading: true
     }
+  },
+  created () {
+    console.log('sys_icon')
+    this.iconList = getSvgIconList()
+  },
+  beforeDestroy () {
+    this.clipboard.destroy()
+  },
+  mounted () {
+    let $message = null
+    this.fullscreenLoading = false
+    this.clipboard = new Clipboard('.name').on('success', (e) => {
+      $message && $message.close()
+      $message = this.$message.success(`${e.text} 文本复制成功`)
+      e.clearSelection()
+    })
   }
+}
 </script>
 
 <style lang="scss" scoped>

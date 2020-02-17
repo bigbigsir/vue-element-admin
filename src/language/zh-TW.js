@@ -127,9 +127,9 @@ export default {
   },
   // 性别
   gender: {
-    'gender_0': '保密',
-    'gender_1': '男',
-    'gender_2': '女'
+    gender_0: '保密',
+    gender_1: '男',
+    gender_2: '女'
   },
   // 404页面
   notFound: {

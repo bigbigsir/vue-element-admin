@@ -12,29 +12,29 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/4/3
    */
-  import { messages } from '../language/index'
+import { messages } from '../language/index'
 
-  export default {
-    name: 'LanguageSelect',
-    data () {
-      return {
-        messages
-      }
-    },
-    methods: {
-      // 语言选择
-      handleLangSelect (lang) {
-        this.$i18n.locale = lang
-        this.$message({
-          type: 'success',
-          message: this.$t('prompt.success'),
-          duration: 1000
-        })
-        localStorage.setItem('language', lang)
-      }
+export default {
+  name: 'LanguageSelect',
+  data () {
+    return {
+      messages
+    }
+  },
+  methods: {
+    // 语言选择
+    handleLangSelect (lang) {
+      this.$i18n.locale = lang
+      this.$message({
+        type: 'success',
+        message: this.$t('prompt.success'),
+        duration: 1000
+      })
+      localStorage.setItem('language', lang)
     }
   }
+}
 </script>

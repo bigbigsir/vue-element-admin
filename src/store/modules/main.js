@@ -50,7 +50,7 @@ export default {
     },
     // 改变Element主题
     changeTheme (state, theme) {
-      let styleList = [
+      const styleList = [
         {
           id: 'elementTheme',
           url: `${process.env.BASE_URL}element-theme/${theme}/index.css`
@@ -59,7 +59,7 @@ export default {
           url: `${process.env.BASE_URL}element-theme/${theme}/follow_theme.css`
         }
       ]
-      let headTag = document.getElementsByTagName('head')[0]
+      const headTag = document.getElementsByTagName('head')[0]
       localStorage.setItem('theme', theme)
       styleList.forEach(style => {
         let linkTag = document.getElementById(style.id)
@@ -79,7 +79,7 @@ export default {
     // 改变Element全局大小
     changeSize (state, size) {
       state.size = size
-      this._vm['$ELEMENT'].size = size
+      this._vm.$ELEMENT.size = size
       this.commit('main/refreshRouter')
       localStorage.setItem('size', size)
     },

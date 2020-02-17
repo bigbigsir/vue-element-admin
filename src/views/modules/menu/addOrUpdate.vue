@@ -74,141 +74,141 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/4/5
    */
-  import iconSelect from '@/components/iconSelect.vue'
-  import debounce from 'lodash/debounce'
+import iconSelect from '@/components/iconSelect.vue'
+import debounce from 'lodash/debounce'
 
-  export default {
-    name: 'addOrUpdate',
-    components: { iconSelect },
-    props: {
-      menuData: {
-        type: Array,
-        default () {
-          return []
-        }
+export default {
+  name: 'addOrUpdate',
+  components: { iconSelect },
+  props: {
+    menuData: {
+      type: Array,
+      default () {
+        return []
       }
-    },
-    data () {
+    }
+  },
+  data () {
+    return {
+      visible: false,
+      submitLoading: false,
+      menuListVisible: false,
+      renderIconSelect: false,
+      showIconSelect: false,
+      formData: {
+        id: null,
+        label: null,
+        parentId: null,
+        routerPath: null,
+        resourceUrl: null,
+        sort: 1,
+        openMode: 'tab',
+        icon: '',
+        parentName: this.$t('menu.parentNameDefault')
+      }
+    }
+  },
+  computed: {
+    formRules () {
       return {
-        visible: false,
-        submitLoading: false,
-        menuListVisible: false,
-        renderIconSelect: false,
-        showIconSelect: false,
-        formData: {
-          id: null,
-          label: null,
-          parentId: null,
-          routerPath: null,
-          resourceUrl: null,
-          sort: 1,
-          openMode: 'tab',
-          icon: '',
-          parentName: this.$t('menu.parentNameDefault')
-        }
+        label: this.$rules({ type: 'required' }),
+        parentName: this.$rules({ type: 'required' }),
+        openMode: this.$rules({ type: 'required' }),
+        routerPath: this.$rules({ type: 'noSpaces' }),
+        resourceUrl: this.$rules({ type: 'noSpaces' })
+      }
+    }
+  },
+  methods: {
+    // dialog打开回调
+    dialogOpen () {
+      if (this.formData.id) {
+        const url = '/api/menu/findOne'
+        const params = { id: this.formData.id }
+        this.$http.get(url, params).then(({ ok, data, msg }) => {
+          if (ok) {
+            this.formData = Object.assign({}, this.formData, data)
+            if (data.parentId) {
+              this.formData.parentName = this.findParentName(data.parentId, this.menuData)
+            }
+          } else {
+            this.$message.error(msg)
+          }
+        })
       }
     },
-    computed: {
-      formRules () {
-        return {
-          label: this.$rules({ type: 'required' }),
-          parentName: this.$rules({ type: 'required' }),
-          openMode: this.$rules({ type: 'required' }),
-          routerPath: this.$rules({ type: 'noSpaces' }),
-          resourceUrl: this.$rules({ type: 'noSpaces' })
-        }
-      }
+    // dialog关闭回调
+    dialogClose () {
+      this.formData.parentId = null
+      this.$refs.form.resetFields()
     },
-    methods: {
-      // dialog打开回调
-      dialogOpen () {
-        if (this.formData.id) {
-          let url = '/api/menu/findOne'
-          let params = { id: this.formData.id }
-          this.$http.get(url, params).then(({ ok, data, msg }) => {
+    // 提交表单
+    submitHandle: debounce(function () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          const url = `/api/menu/${this.formData.id ? 'updateOne' : 'add'}`
+          const params = { ...this.formData }
+          delete params.parentName
+          this.submitLoading = true
+          this.$http.post(url, params).then(({ ok, msg }) => {
+            this.submitLoading = false
             if (ok) {
-              this.formData = Object.assign({}, this.formData, data)
-              if (data.parentId) {
-                this.formData.parentName = this.findParentName(data.parentId, this.menuData)
-              }
+              this.$message({
+                message: this.$t('prompt.success'),
+                type: 'success',
+                duration: 500,
+                onClose: () => {
+                  this.visible = false
+                  this.$emit('refreshList')
+                }
+              })
             } else {
               this.$message.error(msg)
             }
           })
         }
-      },
-      // dialog关闭回调
-      dialogClose () {
-        this.formData.parentId = null
-        this.$refs.form.resetFields()
-      },
-      // 提交表单
-      submitHandle: debounce(function () {
-        this.$refs.form.validate((valid) => {
-          if (valid) {
-            let url = `/api/menu/${this.formData.id ? 'updateOne' : 'add'}`
-            let params = { ...this.formData }
-            delete params.parentName
-            this.submitLoading = true
-            this.$http.post(url, params).then(({ ok, msg }) => {
-              this.submitLoading = false
-              if (ok) {
-                this.$message({
-                  message: this.$t('prompt.success'),
-                  type: 'success',
-                  duration: 500,
-                  onClose: () => {
-                    this.visible = false
-                    this.$emit('refreshList')
-                  }
-                })
-              } else {
-                this.$message.error(msg)
-              }
-            })
-          }
-        })
-      }, 1000, { 'leading': true, 'trailing': false }),
-      // 设置为一级菜单
-      setDefaultParent () {
-        this.formData.parentId = null
-        this.formData.parentName = this.$t('menu.parentNameDefault')
-      },
-      // 上级菜单树, 选中
-      setParent (data) {
-        this.formData.parentId = data.id
-        this.formData.parentName = data.label
-        this.menuListVisible = false
-      },
-      // 打开图标选择弹窗
-      openSelectIcon () {
-        this.renderIconSelect = true
-        this.showIconSelect = true
-      },
-      // 选择icon后的回调
-      getIcon (icon) {
-        this.formData.icon = icon
-        this.showIconSelect = false
-      },
-      // 查询上级菜单名称
-      findParentName (parentId, menus) {
-        let parentName = ''
-        for (let i = menus.length; i--;) {
-          if (parentId === menus[i].id) {
-            parentName = menus[i].label
-            break
-          }
-          if (menus[i].children && menus[i].children.length) {
-            parentName = this.findParentName(parentId, menus[i].children)
-          }
+      })
+    }, 1000, { leading: true, trailing: false }),
+    // 设置为一级菜单
+    setDefaultParent () {
+      this.formData.parentId = null
+      this.formData.parentName = this.$t('menu.parentNameDefault')
+    },
+    // 上级菜单树, 选中
+    setParent (data) {
+      this.formData.parentId = data.id
+      this.formData.parentName = data.label
+      this.menuListVisible = false
+    },
+    // 打开图标选择弹窗
+    openSelectIcon () {
+      this.renderIconSelect = true
+      this.showIconSelect = true
+    },
+    // 选择icon后的回调
+    getIcon (icon) {
+      this.formData.icon = icon
+      this.showIconSelect = false
+    },
+    // 查询上级菜单名称
+    findParentName (parentId, menus) {
+      let parentName = ''
+      for (let i = menus.length; i--;) {
+        if (parentId === menus[i].id) {
+          parentName = menus[i].label
+          break
         }
-        return parentName
+        if (menus[i].children && menus[i].children.length) {
+          parentName = this.findParentName(parentId, menus[i].children)
+        }
       }
+      return parentName
     }
   }
+}
 </script>
 
 <style lang="scss">

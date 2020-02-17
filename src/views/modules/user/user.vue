@@ -62,46 +62,46 @@
 </template>
 
 <script>
-  /**
-   * Created by bigBigSir on 2019/4/10
-   */
-  import cookies from 'js-cookie'
-  import addOrUpdate from './addOrUpdate.vue'
-  import moduleMixin from '@/mixins/moduleMixin'
+/**
+ * Created by bigBigSir on 2019/4/10
+ */
+import cookies from 'js-cookie'
+import addOrUpdate from './addOrUpdate.vue'
+import moduleMixin from '@/mixins/moduleMixin'
 
-  export default {
-    name: 'user',
-    mixins: [moduleMixin],
-    components: { addOrUpdate },
-    data () {
-      return {
-        queryParams: {
-          username: null
-        },
-        mixinConfig: {
-          isBatchDelete: true,
-          getListDataIsPage: true,
-          getListDataURL: '/api/user/findPage',
-          updateStatusURL: '/api/user/updateOne',
-          deleteURL: '/api/user/remove'
-        }
-      }
-    },
-    created () {
-      console.log('user')
-    },
-    methods: {
-      _deleteHandle (id) {
-        this.deleteHandle(id).then((result) => {
-          if (result && id === this.$store.state.userInfo.id) {
-            cookies.remove('token')
-            this.$router.push('/login')
-            this.$http.get('/user/signOut')
-          }
-        })
+export default {
+  name: 'user',
+  mixins: [moduleMixin],
+  components: { addOrUpdate },
+  data () {
+    return {
+      queryParams: {
+        username: null
+      },
+      mixinConfig: {
+        isBatchDelete: true,
+        getListDataIsPage: true,
+        getListDataURL: '/api/user/findPage',
+        updateStatusURL: '/api/user/updateOne',
+        deleteURL: '/api/user/remove'
       }
     }
+  },
+  created () {
+    console.log('user')
+  },
+  methods: {
+    _deleteHandle (id) {
+      this.deleteHandle(id).then((result) => {
+        if (result && id === this.$store.state.userInfo.id) {
+          cookies.remove('token')
+          this.$router.push('/login')
+          this.$http.get('/user/signOut')
+        }
+      })
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>

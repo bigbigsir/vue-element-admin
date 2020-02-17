@@ -86,7 +86,7 @@
 import cookies from 'js-cookie'
 import JSEncrypt from 'jsencrypt'
 import debounce from 'lodash/debounce'
-import {getUUId} from '../../utils/util'
+import { getUUId } from '../../utils/util'
 import LanguageSelect from '@/components/LanguageSelect.vue'
 
 export default {
@@ -95,10 +95,10 @@ export default {
     LanguageSelect
   },
   // 进入页面的路由拦截
-  beforeRouteEnter(to, from, next) {
+  beforeRouteEnter (to, from, next) {
     const nextTarget = {
-      query: {...from.query},
-      params: {...from.params}
+      query: { ...from.query },
+      params: { ...from.params }
     }
     if (from.name) {
       nextTarget.name = from.name
@@ -112,7 +112,7 @@ export default {
       vm.nextTarget = nextTarget
     })
   },
-  data() {
+  data () {
     return {
       nextTarget: '/',
       submitLoading: false,
@@ -125,10 +125,10 @@ export default {
     }
   },
   computed: {
-    captchaUrl() {
+    captchaUrl () {
       return this.$store.state.baseUrl + '/util/getCaptcha?uuid=' + this.formData.uuid
     },
-    formRules() {
+    formRules () {
       const required = {
         required: true,
         message: this.$t('validate.required'),
@@ -141,7 +141,7 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     this.$store.commit('setUserInfo', null)
   },
   methods: {
@@ -153,18 +153,18 @@ export default {
       trailing: false
     }),
     // 加密密码
-    encrypt(key, plaintext) {
+    encrypt (key, plaintext) {
       const crypto = new JSEncrypt()
       crypto.setPublicKey(key)
       return crypto.encrypt(plaintext)
     },
     // 提交登录请求
-    submitForm(key) {
-      const params = {...this.formData}
+    submitForm (key) {
+      const params = { ...this.formData }
       params.password = this.encrypt(key, params.password)
-      return this.$http.post('/user/signIn', params).then(({ok, msg, token}) => {
+      return this.$http.post('/user/signIn', params).then(({ ok, msg, token }) => {
         if (ok && token) {
-          cookies.set('token', token, {expires: 1})
+          cookies.set('token', token, { expires: 1 })
           this.$router.replace(this.nextTarget)
         } else {
           return Promise.reject(msg)
@@ -172,7 +172,7 @@ export default {
       })
     },
     // 注册
-    signUp(key) {
+    signUp (key) {
       return this.$http.post('/user/signUp', {
         username: 'admin1',
         password: this.encrypt(key, 'admin1')
@@ -183,7 +183,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.submitLoading = true
-          this.$http.get('/util/getPublicKey').then(({ok, key, msg}) => {
+          this.$http.get('/util/getPublicKey').then(({ ok, key, msg }) => {
             if (ok) {
               return this.submitForm(key)
             } else {

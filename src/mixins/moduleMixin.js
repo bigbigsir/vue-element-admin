@@ -50,8 +50,8 @@ const moduleMixin = {
   methods: {
     // 获取数据列表
     getListData () {
-      let url = this.mixinConfig.getListDataURL
-      let params = {
+      const url = this.mixinConfig.getListDataURL
+      const params = {
         order: this.order,
         orderField: this.orderField,
         page: this.mixinConfig.getListDataIsPage ? this.page : null,
@@ -60,7 +60,7 @@ const moduleMixin = {
       }
       if (!url) return
       this.getDataLoading = true
-      for (let key in params) {
+      for (const key in params) {
         if (!params[key]) delete params[key]
       }
       return this.$http.get(url, params).then(({ ok, data, msg }) => {
@@ -103,16 +103,16 @@ const moduleMixin = {
     },
     // 删除数据
     deleteHandle (id = null, key = 'id') {
-      let title = this.$t('prompt.title')
-      let info = this.$t('prompt.info', {
-        'handle': this.$t('delete')
+      const title = this.$t('prompt.title')
+      const info = this.$t('prompt.info', {
+        handle: this.$t('delete')
       })
-      let confirmConfig = {
+      const confirmConfig = {
         confirmButtonText: this.$t('confirm'),
         cancelButtonText: this.$t('cancel'),
         type: 'warning'
       }
-      let url = this.mixinConfig.deleteURL
+      const url = this.mixinConfig.deleteURL
       if (!url) return
       if (!id && this.mixinConfig.isBatchDelete && !this.listSelections.length) {
         return this.$message({
@@ -136,17 +136,17 @@ const moduleMixin = {
     },
     // 更新状态
     updateStatus (idKey, idVal, statusKey, statusVal, method = 'put') {
-      let title = this.$t('prompt.title')
-      let info = this.$t('prompt.info', {
-        'handle': this.$t('update')
+      const title = this.$t('prompt.title')
+      const info = this.$t('prompt.info', {
+        handle: this.$t('update')
       })
-      let confirmConfig = {
+      const confirmConfig = {
         confirmButtonText: this.$t('confirm'),
         cancelButtonText: this.$t('cancel'),
         type: 'warning'
       }
-      let url = this.mixinConfig.updateStatusURL
-      let params = {
+      const url = this.mixinConfig.updateStatusURL
+      const params = {
         [idKey]: idVal,
         [statusKey]: statusVal
       }
@@ -168,8 +168,8 @@ const moduleMixin = {
     },
     // 更新排序
     updateSort (idKey, idVal, sortKey, sortVal, method = 'put') {
-      let url = this.mixinConfig.updateSortURL
-      let params = {
+      const url = this.mixinConfig.updateSortURL
+      const params = {
         [idKey]: idVal,
         [sortKey]: sortVal
       }

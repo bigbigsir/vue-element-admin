@@ -79,7 +79,7 @@ export function isDate (target) {
  * @return {Array} list 全部svg-icon的id数组
  */
 export function getSvgIconList () {
-  return [...document.querySelectorAll('svg symbol')].map(item => item['id'])
+  return [...document.querySelectorAll('svg symbol')].map(item => item.id)
 }
 
 /**

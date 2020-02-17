@@ -13,7 +13,7 @@ import { isIE } from '../utils/util'
 const _http = axios.create({
   timeout: 1000 * 30,
   withCredentials: true,
-  baseURL: process.env.NODE_ENV === 'production' ? '' : 'https://192.168.1.6'
+  baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:80'
 })
 
 // // 设置 post、put 默认 Content-Type
@@ -28,11 +28,11 @@ _http.interceptors.request.use(config => {
   // }
   if (config.method === 'get' && isIE()) {
     // 给GET 请求后追加时间戳， 解决IE GET 请求缓存问题
-    let symbol = ~config.url.indexOf('?') ? '&' : '?'
+    const symbol = ~config.url.indexOf('?') ? '&' : '?'
     config.url += symbol + '_=' + Date.now()
   }
   config.headers['Accept-Language'] = localStorage.getItem('language') || 'zh-CN'
-  config.headers['Authorization'] = cookies.get('token') || null
+  config.headers.Authorization = cookies.get('token') || null
   return config
 }, error => {
   return Promise.reject(error)
@@ -66,7 +66,7 @@ _http.interceptors.response.use(response => {
 // 封装常用请求方法
 const http = {
   get (url, params, headers) {
-    let options = {}
+    const options = {}
     if (params) {
       options.params = params
     }
@@ -76,21 +76,21 @@ const http = {
     return _http.get(url, options)
   },
   post (url, params, headers) {
-    let options = {}
+    const options = {}
     if (headers) {
       options.headers = headers
     }
     return _http.post(url, params, options)
   },
   put (url, params, headers) {
-    let options = {}
+    const options = {}
     if (headers) {
       options.headers = headers
     }
     return _http.put(url, params, options)
   },
   delete (url, params, headers) {
-    let options = {}
+    const options = {}
     if (params) {
       options.params = params
     }

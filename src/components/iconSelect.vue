@@ -17,48 +17,48 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/4/5
    */
-  import { getSvgIconList } from '@/utils/util'
+import { getSvgIconList } from '@/utils/util'
 
-  export default {
-    name: 'iconSelect',
-    props: {
-      showIconSelect: {
-        type: Boolean,
-        required: true,
-        default: false
-      }
-    },
-    data () {
-      return {
-        loading: true,
-        iconList: []
-      }
-    },
-    computed: {
-      visible: {
-        get () {
-          return this.showIconSelect
-        },
-        set (value) {
-          this.$emit('update:showIconSelect', value)
-        }
-      }
-    },
-    created () {
-      this.iconList = getSvgIconList()
-    },
-    mounted () {
-      this.loading = false
-    },
-    methods: {
-      handleClick (icon) {
-        this.$emit('getIcon', icon)
+export default {
+  name: 'iconSelect',
+  props: {
+    showIconSelect: {
+      type: Boolean,
+      required: true,
+      default: false
+    }
+  },
+  data () {
+    return {
+      loading: true,
+      iconList: []
+    }
+  },
+  computed: {
+    visible: {
+      get () {
+        return this.showIconSelect
+      },
+      set (value) {
+        this.$emit('update:showIconSelect', value)
       }
     }
+  },
+  created () {
+    this.iconList = getSvgIconList()
+  },
+  mounted () {
+    this.loading = false
+  },
+  methods: {
+    handleClick (icon) {
+      this.$emit('getIcon', icon)
+    }
   }
+}
 </script>
 
 <style lang="scss">

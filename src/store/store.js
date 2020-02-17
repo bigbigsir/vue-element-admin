@@ -9,7 +9,7 @@ export default new Vuex.Store({
     userInfo: null, // 登录用户信息
     menuData: null, // 菜单数据
     addRouterIsComplete: false, // 动态路由是否增加完成
-    baseUrl: process.env.NODE_ENV === 'production' ? '' : 'https://192.168.1.6' // 用于图片请求前缀
+    baseUrl: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:80' // 用于图片请求前缀
   },
   mutations: {
     // 设置登录用户信息

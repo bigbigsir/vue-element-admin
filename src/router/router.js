@@ -1,50 +1,55 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import cookies from 'js-cookie'
 import store from '../store/store'
 import { isURL } from '@/utils/util'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-const router = new Router({
+const routes = [
+  {
+    path: '/',
+    name: 'sys_main',
+    component: () => import(/* webpackChunkName: "main" */ '../views/main/main.vue'),
+    redirect: { name: 'sys_home' },
+    children: [
+      {
+        path: '/home',
+        name: 'sys_home',
+        meta: {
+          id: null,
+          icon: 'home',
+          label: '首页',
+          openMode: 'tab'
+        },
+        component: () => import(/* webpackChunkName: "home" */'../views/modules/home.vue')
+      }, {
+        path: '/_menu',
+        name: 'sys_menu',
+        meta: {
+          id: null,
+          icon: 'menu',
+          label: '菜单管理',
+          openMode: 'tab'
+        },
+        component: () => import(/* webpackChunkName: "menu" */'../views/modules/menu/menu.vue')
+      }
+    ]
+  }, {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/pages/login.vue')
+  }
+]
+
+const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'sys_main',
-      component: () => import(/* webpackChunkName: "main" */ '../views/main/main.vue'),
-      redirect: { name: 'sys_home' },
-      children: [
-        {
-          path: '/home',
-          name: 'sys_home',
-          meta: {
-            id: null,
-            icon: 'home',
-            label: '首页',
-            openMode: 'tab'
-          },
-          component: () => import(/* webpackChunkName: "home" */'../views/modules/home.vue')
-        }, {
-          path: '/_menu',
-          name: 'sys_menu',
-          meta: {
-            id: null,
-            icon: 'menu',
-            label: '菜单管理',
-            openMode: 'tab'
-          },
-          component: () => import(/* webpackChunkName: "menu" */'../views/modules/menu/menu.vue')
-        }
-      ]
-    }, {
-      path: '/login',
-      name: 'login',
-      component: () => import(/* webpackChunkName: "login" */ '../views/pages/login.vue')
-    }
-  ],
-  scrollBehavior: () => ({ y: 0 })
+  routes,
+  scrollBehavior: () => ({
+    x: 0,
+    y: 0
+  })
 })
 
 router.beforeEach((to, from, next) => {
@@ -53,7 +58,10 @@ router.beforeEach((to, from, next) => {
     store.dispatch('getMenuData').then(data => {
       store.state.addRouterIsComplete = true
       addRouter(data)
-      next({ ...to, replace: true })
+      next({
+        ...to,
+        replace: true
+      })
     }).catch(() => {
       cookies.remove('token')
       next({ name: 'login' })
@@ -68,7 +76,7 @@ router.beforeEach((to, from, next) => {
 export default router
 
 // 设置动态路由
-function addRouter (menus) {
+function addRouter(menus) {
   let routers = []
   menus.forEach(menu => {
     recursionPushRoute(menu, routers)
@@ -88,7 +96,7 @@ function addRouter (menus) {
 }
 
 // 组装路由数据
-function recursionPushRoute (menu, routers) {
+function recursionPushRoute(menu, routers) {
   let route
   if (menu.routerPath && menu.resourceUrl) {
     route = {

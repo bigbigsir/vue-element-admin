@@ -10,11 +10,11 @@
  */
 export default {
   name: 'App',
-  created() {
+  created () {
     const theme = localStorage.getItem('theme') || 'default'
     this.$store.commit('main/changeTheme', theme)
   },
-  mounted() {
+  mounted () {
     const resourceLoading = document.getElementById('resourceLoading')
     const resourceLoadingStyle = document.getElementById('resourceLoadingStyle')
     resourceLoading.parentNode.removeChild(resourceLoading)

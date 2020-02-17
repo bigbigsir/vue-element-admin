@@ -13,17 +13,17 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/4/3
    */
 
-  export default {
-    name: 'subMenu',
-    props: {
-      menu: {
-        type: Object,
-        required: true
-      }
+export default {
+  name: 'subMenu',
+  props: {
+    menu: {
+      type: Object,
+      required: true
     }
   }
+}
 </script>

@@ -46,67 +46,67 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/4/3
    */
-  import addOrUpdate from './addOrUpdate.vue'
-  import moduleMixin from '@/mixins/moduleMixin'
-  import TableTreeColumn from '@/components/TableTreeColumn.vue'
+import addOrUpdate from './addOrUpdate.vue'
+import moduleMixin from '@/mixins/moduleMixin'
+import TableTreeColumn from '@/components/TableTreeColumn.vue'
 
-  export default {
-    name: 'sys_menu',
-    mixins: [moduleMixin],
-    components: { TableTreeColumn, addOrUpdate },
-    data () {
-      return {
-        childKey: 'child',
-        menuData: [],
-        copyMenuData: [],
-        mixinConfig: {
-          getListDataURL: '/api/menu/tree',
-          deleteURL: '/api/menu/remove',
-          updateSortURL: '/api/menu/updateOne'
-        }
-      }
-    },
-    created () {
-      console.log('sys_menu')
-    },
-    methods: {
-      // 数据请求成功之后的回调
-      getListDataAfter (data) {
-        this.copyMenuData = JSON.parse(JSON.stringify(data))
-        // ElementUi官方2.7.0支持树表格，检测到children会强行使用官方组件
-        recursion.call(this, data)
-        this.menuData = data
-
-        function recursion (nodes) {
-          nodes.forEach(item => {
-            item[this.childKey] = item.children
-            delete item.children
-            if (item[this.childKey].length) {
-              recursion.call(this, item[this.childKey])
-            }
-          })
-        }
-      },
-      // 更新菜单数据
-      updateMenuData (data) {
-        this.menuData = data
-      },
-      // 删除菜单
-      deleteMenu (row) {
-        let id = this.recursionPushId(row)
-        this.deleteHandle(id)
-      },
-      // 添加指定节点及下面子节点的id
-      recursionPushId (node, arr = []) {
-        arr.push(node.id)
-        if (node.children && node.children.length) {
-          node.children.forEach(item => this.recursionPushId(item, arr))
-        }
-        return arr
+export default {
+  name: 'sys_menu',
+  mixins: [moduleMixin],
+  components: { TableTreeColumn, addOrUpdate },
+  data () {
+    return {
+      childKey: 'child',
+      menuData: [],
+      copyMenuData: [],
+      mixinConfig: {
+        getListDataURL: '/api/menu/tree',
+        deleteURL: '/api/menu/remove',
+        updateSortURL: '/api/menu/updateOne'
       }
     }
+  },
+  created () {
+    console.log('sys_menu')
+  },
+  methods: {
+    // 数据请求成功之后的回调
+    getListDataAfter (data) {
+      this.copyMenuData = JSON.parse(JSON.stringify(data))
+      // ElementUi官方2.7.0支持树表格，检测到children会强行使用官方组件
+      recursion.call(this, data)
+      this.menuData = data
+
+      function recursion (nodes) {
+        nodes.forEach(item => {
+          item[this.childKey] = item.children
+          delete item.children
+          if (item[this.childKey].length) {
+            recursion.call(this, item[this.childKey])
+          }
+        })
+      }
+    },
+    // 更新菜单数据
+    updateMenuData (data) {
+      this.menuData = data
+    },
+    // 删除菜单
+    deleteMenu (row) {
+      const id = this.recursionPushId(row)
+      this.deleteHandle(id)
+    },
+    // 添加指定节点及下面子节点的id
+    recursionPushId (node, arr = []) {
+      arr.push(node.id)
+      if (node.children && node.children.length) {
+        node.children.forEach(item => this.recursionPushId(item, arr))
+      }
+      return arr
+    }
   }
+}
 </script>

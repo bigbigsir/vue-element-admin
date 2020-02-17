@@ -28,33 +28,33 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/3/31
    */
-  import { mapState, mapMutations } from 'vuex'
-  import themeList from '@/theme_config/config'
+import { mapState, mapMutations } from 'vuex'
+import themeList from '@/theme_config/config'
 
-  export default {
-    name: 'ThemePicker',
-    data () {
-      return {
-        theme: localStorage.getItem('theme') || 'default',
-        header: false,
-        sideMenu: false,
-        themeList: themeList
-      }
-    },
-    created () {
-      this.header = this.headerFollowTheme
-      this.sideMenu = this.sideMenuDarkSkin
-    },
-    computed: {
-      ...mapState('main', ['headerFollowTheme', 'sideMenuDarkSkin'])
-    },
-    methods: {
-      ...mapMutations('main', ['changeTheme', 'toggleHeaderSkin', 'toggleSideMenuSkin'])
+export default {
+  name: 'ThemePicker',
+  data () {
+    return {
+      theme: localStorage.getItem('theme') || 'default',
+      header: false,
+      sideMenu: false,
+      themeList: themeList
     }
+  },
+  created () {
+    this.header = this.headerFollowTheme
+    this.sideMenu = this.sideMenuDarkSkin
+  },
+  computed: {
+    ...mapState('main', ['headerFollowTheme', 'sideMenuDarkSkin'])
+  },
+  methods: {
+    ...mapMutations('main', ['changeTheme', 'toggleHeaderSkin', 'toggleSideMenuSkin'])
   }
+}
 </script>
 
 <style lang="scss">

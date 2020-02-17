@@ -5,33 +5,33 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/3/28
    */
-  export default {
-    name: 'SvgIcon',
-    props: {
-      icon: {
-        type: String,
-        required: true,
-        default: ''
-      },
-      className: {
-        type: String,
-        default: ''
-      }
+export default {
+  name: 'SvgIcon',
+  props: {
+    icon: {
+      type: String,
+      required: true,
+      default: ''
     },
-    computed: {
-      iconName () {
-        return `#icon-${this.icon.replace(/^icon-/g, '')}`
-      },
-      svgClass () {
-        if (this.className) {
-          return 'svg-icon ' + this.className
-        } else {
-          return 'svg-icon'
-        }
+    className: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    iconName () {
+      return `#icon-${this.icon.replace(/^icon-/g, '')}`
+    },
+    svgClass () {
+      if (this.className) {
+        return 'svg-icon ' + this.className
+      } else {
+        return 'svg-icon'
       }
     }
   }
+}
 </script>

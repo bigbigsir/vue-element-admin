@@ -14,19 +14,19 @@
 </template>
 
 <script>
-  /**
+/**
    * Created by bigBigSir on 2019/4/2
    */
 
-  export default {
-    name: 'page404',
-    methods: {
-      toHomePage () {
-        this.$store.commit('main/setTabsActiveName', null)
-        this.$router.replace('/home')
-      }
+export default {
+  name: 'page404',
+  methods: {
+    toHomePage () {
+      this.$store.commit('main/setTabsActiveName', null)
+      this.$router.replace('/home')
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
