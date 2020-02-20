@@ -76,8 +76,8 @@ router.beforeEach((to, from, next) => {
 export default router
 
 // 设置动态路由
-function addRouter(menus) {
-  let routers = []
+function addRouter (menus) {
+  const routers = []
   menus.forEach(menu => {
     recursionPushRoute(menu, routers)
   })
@@ -96,7 +96,7 @@ function addRouter(menus) {
 }
 
 // 组装路由数据
-function recursionPushRoute(menu, routers) {
+function recursionPushRoute (menu, routers) {
   let route
   if (menu.routerPath && menu.resourceUrl) {
     route = {
@@ -113,7 +113,7 @@ function recursionPushRoute(menu, routers) {
       route.meta.isIframe = true
       route.meta.resourceUrl = menu.resourceUrl
     } else {
-      route.component = () => import(`@/${menu.resourceUrl.replace(/^src\//, '')}`)
+      route.component = () => import(`@/${menu.resourceUrl.replace(/^.*src\//, '')}`)
     }
     routers.push(route)
   }
